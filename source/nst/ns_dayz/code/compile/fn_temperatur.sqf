@@ -1,6 +1,8 @@
 /*
 Author: TeeTime
 
+Enhanced for DayZ: Namalsk by Sumrak.
+
 Does: Manages the body temperatur of a Player
 
 Possible Problems:
@@ -19,7 +21,7 @@ Missing:
 */
 
 
-	private ["_looptime","_sun_factor","_warm_clothes","_building_factor","_vehicle_factor","_fire_factor","_water_factor","_snow_factor","_rain_factor","_night_factor","_wind_factor","_height_mod","_difference","_hasfireffect","_isinbuilding","_isinvehicle","_raining","_sunrise","_building"];
+	private ["_looptime","_sun_factor","_warm_clothes","_ghillie_clothes","_building_factor","_vehicle_factor","_fire_factor","_water_factor","_snow_factor","_rain_factor","_night_factor","_wind_factor","_height_mod","_difference","_hasfireffect","_isinbuilding","_isinvehicle","_raining","_sunrise","_building"];
 
 	_looptime 			= _this;
 	
@@ -27,16 +29,17 @@ Missing:
 	//All Values can be seen as x of 100: 100 / x = minutes from min temperetaure to max temperature (without other effects)
 	_vehicle_factor		=	4;
 	_moving_factor 		=	7;
-	_fire_factor		=	15; //Should be always:  _rain_factor + _night_factor + _wind_factor OR higher !
+	_fire_factor		=	16; //Should be always:  _rain_factor + _night_factor + _wind_factor OR higher !
 	_building_factor 	=	4;  // DayZ: Namalsk, was 7
 	_sun_factor			=	4;  //max sunfactor linear over the day. highest value in the middle of the day
-	_warm_clothes		=	30; // DayZ: Namalsk
+	_warm_clothes		=	35; // DayZ: Namalsk
+	_ghillie_clothes	=	8; // DayZ: Namalsk
 	
-	_water_factor		=	-8;
+	_water_factor		=	-40;
 	_snow_factor		=	-16; // DayZ: Namalsk
-	_rain_factor		=	-3;
-	_night_factor		=	-8.5; // DayZ: Namalsk, was -1.5
-	_wind_factor		=	-5;   // DayZ: Namalsk, was -1
+	_rain_factor		=	-8;
+	_night_factor		=	-8; // DayZ: Namalsk, was -1.5
+	_wind_factor		=	-1;   // DayZ: Namalsk, was -1
 	
 	_difference 	= 0;
 	_hasfireffect	= false;
@@ -45,19 +48,19 @@ Missing:
 	
 	_raining 		= if(rain > 0) then {true} else {false};
 	_sunrise		= call world_sunRise;
-	
-	//POSITIV EFFECTS
+
+	//POSITIVE EFFECTS
 	
 	//vehicle
 	if((vehicle player) != player) then {
 		_difference 	= _difference + _vehicle_factor;
 		_isinvehicle 	= true;
 	} else {
-		//speed factor
+		//speed factor  0 - 6 -  18 - 23
 		private["_vel","_speed"];
 		_vel = 		velocity player;
 		_speed = 	round((_vel distance [0,0,0]) * 3.5);
-		_difference = (_moving_factor * (_speed / 20)) min 1;
+		_difference = (_moving_factor * (_speed / 20)) min 7;
 	};
 	
 	//fire
@@ -110,14 +113,18 @@ Missing:
 		Zero Points are always at sunrise and sunset -> Only Positiv Values Possible
 		*/
 		
-		_difference = _difference + (-((_sun_factor / (12 - _sunrise)^2)) * ((daytime - 12)^2) + _sun_factor);	
+		_difference = _difference + (-((_sun_factor / (12 - _sunrise)^2)) * ((daytime - 12)^2) + _sun_factor);
 	};
 	
 	//DayZ: Namalsk warm clothing
 	if ((typeOf player) == "CamoWinter_DZN") then {
 		_difference 	= _difference + _warm_clothes;
 	};
-
+	
+	//DayZ: Namalsk ghillie suit
+	if ((typeOf player) == "Sniper1_DZ") then {
+		_difference 	= _difference + _ghillie_clothes;
+	};
 
 
 	//NEGATIVE  EFFECTS
@@ -134,9 +141,14 @@ Missing:
 	
 	//night
 	private ["_daytime"];
-	if((daytime < _sunrise || daytime < (24 - _sunrise)) && !_isinvehicle && !_isinbuilding) then {
+	if((daytime < _sunrise || daytime > (24 - _sunrise)) && !_isinvehicle) then {
 		_daytime 	= if(daytime < 12) then {daytime + 24} else {daytime};
-		_difference = _difference + (((_night_factor * -1) / (_sunrise^2)) * ((_daytime - 24)^2) + _night_factor);
+		if (_isinbuilding) then {
+			_difference = _difference + ((((_night_factor * -1) / (_sunrise^2)) * ((_daytime - 24)^2) + _night_factor))/2;
+		} else {
+			_difference = _difference + (((_night_factor * -1) / (_sunrise^2)) * ((_daytime - 24)^2) + _night_factor);
+		};
+		
 	};
 	
 	//wind
@@ -154,6 +166,8 @@ Missing:
 	if(!_isinvehicle && !_isinbuilding && ((surfaceType getPos player) == "#nam_snow")) then {
 		_difference = _difference + _snow_factor;
 	};
+	
+	//diag_log format ["DAYZ: NAMALSK TEMP PRECALC DIFF %1", _difference];
 	
 	//Calculate Change Value			Basic Factor			Looptime Correction			Adjust Value to current used temperatur scala
 	_difference = _difference * SleepTemperatur / (60 / _looptime)		* ((dayz_temperaturmax - dayz_temperaturmin) / 100);

@@ -4,6 +4,15 @@ call gear_ui_init;
 _onLadder =		(getNumber (configFile >> "CfgMovesMaleSdr" >> "States" >> (animationState player) >> "onLadder")) == 1;
 if (_onLadder) exitWith {cutText [(localize "str_player_21") , "PLAIN DOWN"]};
 
+_hasclothesitem = _this in magazines player;
+
+_config = configFile >> "CfgMagazines" >> _item;
+_text = getText (_config >> "displayName");
+
+if (!_hasclothesitem) exitWith {cutText [format[(localize "str_player_31"),_text,"wear"] , "PLAIN DOWN"]};
+
+if (vehicle player != player) exitWith {cutText ["You may not change clothes while in a vehicle", "PLAIN DOWN"]};
+
 if (typeOf player == "SurvivorW2_DZ") exitWith {cutText ["Currently Female Characters cannot change skins. This will change in a future update.", "PLAIN DOWN"]};
 if (typeOf player == "BanditW1_DZ") exitWith {cutText ["Currently Female Characters cannot change skins. This will change in a future update.", "PLAIN DOWN"]};
 

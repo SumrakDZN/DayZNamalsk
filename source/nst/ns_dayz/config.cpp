@@ -3,28 +3,42 @@ class CfgPatches
 	class ns_dayz
 	{
 		units[] =
-	{
-		"Mi17_Civilian_Nam",
-		"Ka60_GL_NAC",
-		"Ka60_NAC"
-	};
+		{
+			"Mi17_Civilian_Nam",
+			"Ka60_GL_NAC",
+			"Ka60_NAC"
+		};
 		weapons[] =
-    {
-		"57mmLauncher_NAC",
-		"M32_heli_NAC"
-    };
+		{
+			"57mmLauncher_NAC",
+			"M32_heli_NAC"
+		};
+		
 		requiredVersion = 0.100000;
 		requiredAddons[] = 
-	{
-		//"dayz_code"
-	};
-	author[] = {
-		"Sumrak"
-	};
+		{
+			//"dayz_code"
+		};
+		
+		author[] = {
+			"Sumrak"
+		};
 	};
 };
 
+class CfgMods {
+  class nc_dzn {
+   dir = "@NC";
+   name = "DayZ: Namalsk";
+   picture = "nst\ns_dayz\data\dayznamalsk_logo_ca.paa";
+   hidePicture = "false";
+   hideName = "false";
+   action = "http://www.nightstalkers.cz/en_index_dn.php";
+   version = "0.60";
+  };
+};
 /*
+
 INSERT INTO `spawns` (`pos`, `otype`, `uuid`, `world`, `chance`) VALUES
 	('[219,[4148.12,6579.55,3.866]]', 'Ka60_GL_NAC', 4578512, 'namalsk',0.25),
 	('[182,[4127.6,6703.51,0.00146484]]', 'UAZ_RU', 4578513, 'namalsk',0.65),
@@ -361,6 +375,7 @@ class CfgVehicles {
  
  class CamoWinter_DZN: CamoWinter_DZNBase {
   scope = 2;
+  side = 1;
   accuracy = 3.9;
   displayName = "$STR_DZN_SPECNAZ_OPERATOR_WINTER";
   model = "\nst\ns_dayz\characters\cw\camowinter_dzn.p3d";
@@ -870,28 +885,102 @@ class CfgVehicles {
  
 };
 
+class CfgSurvivalNamalsk
+{
+ class Inventory
+ {
+  class Default
+  {
+   magazines[] = {"ItemBandage","ItemPainkiller"};
+   weapons[] = {"ItemFlashlight"};
+   backpackWeapon = "";
+   backpack = "DZ_Patrol_Pack_EP1";
+  };
+ };
+ class Meat
+ {
+  class Default
+  {
+   yield = 1; //2
+  };
+  class Cow: Default
+  {
+   yield = 4; //8
+  };
+  class Cow01: Cow{};
+  class Cow02: Cow{};
+  class Cow03: Cow{};
+  class Cow04: Cow{};
+  class Goat: Default
+  {
+   yield = 2; //3
+  };
+  class Sheep: Default
+  {
+   yield = 2; //5
+  };
+  class WildBoar: Default
+  {
+   yield = 3; //4
+  };
+ };
+};
+
+
 class CfgLoot {
 	civilianNamalsk[] = {
 		{ "TrashTinCan","TrashJackDaniels","ItemSodaEmpty","ItemSodaCoke","ItemSodaPepsi","FoodCanBakedBeans","FoodCanSardines","FoodCanFrankBeans","FoodCanPasta","8Rnd_9x18_Makarov","7Rnd_45ACP_1911","2Rnd_shotgun_74Slug","2Rnd_shotgun_74Pellets","ItemBandage","ItemPainkiller" },
-		{ 0.09,0.09,0.09,0.03,0.03,0.01,0.01,0.01,0.01,0.07,0.05,0.05,0.05,0.06,0.06 }};
+		{ 0.09,0.09,0.09,0.03,0.03,0.01,0.01,0.01,0.01,0.07,0.05,0.05,0.05,0.06,0.06 }
+	};
 	foodNamalsk[] = {
 		{ "TrashTinCan","TrashJackDaniels","ItemSodaEmpty","ItemSodaCoke","ItemSodaPepsi","FoodCanBakedBeans","FoodCanSardines","FoodCanFrankBeans","FoodCanPasta","ItemBandage" },
-		{ 0.13,0.13,0.13,0.04,0.04,0.04,0.04,0.04,0.04,0.06 }};
+		{ 0.13,0.13,0.13,0.09,0.13,0.09,0.09,0.09,0.09,0.04 }
+	};
 	genericNamalsk[] = {
 		{ "TrashTinCan","ItemSodaEmpty","ItemSodaCoke","ItemSodaPepsi","TrashJackDaniels","FoodCanBakedBeans","FoodCanSardines","FoodCanFrankBeans","FoodCanPasta","ItemWaterbottleUnfilled","ItemWaterbottle","ItemBandage","7Rnd_45ACP_1911","5x_22_LR_17_HMR","10x_303","6Rnd_45ACP","2Rnd_shotgun_74Slug","2Rnd_shotgun_74Pellets","8Rnd_9x18_Makarov","15Rnd_W1866_Slug","BoltSteel","HandRoadFlare","ItemPainkiller","HandChemGreen","HandChemBlue","HandChemRed","ItemHeatPack" },
-		{ 0.06,0.06,0.01,0.01,0.04,0.01,0.01,0.01,0.01,0.01,0.01,0.11,0.03,0.01,0.04,0.04,0.05,0.05,0.09,0.02,0.04,0.07,0.02,0.01,0.03,0.03,0.04 }};
+		{ 0.06,0.06,0.01,0.01,0.04,0.01,0.01,0.01,0.01,0.01,0.01,0.11,0.03,0.01,0.04,0.04,0.05,0.05,0.09,0.02,0.04,0.07,0.02,0.01,0.03,0.03,0.04 }
+	};
 	genericNamalskNoFood[] = {
 		{ "TrashTinCan","ItemSodaEmpty","TrashJackDaniels","ItemBandage","7Rnd_45ACP_1911","5x_22_LR_17_HMR","10x_303","6Rnd_45ACP","2Rnd_shotgun_74Slug","2Rnd_shotgun_74Pellets","8Rnd_9x18_Makarov","15Rnd_W1866_Slug","BoltSteel","HandRoadFlare","ItemPainkiller","HandChemGreen","HandChemBlue","HandChemRed","ItemHeatPack" },
-		{ 0.06,0.06,0.04,0.11,0.03,0.01,0.04,0.04,0.05,0.05,0.09,0.02,0.04,0.07,0.02,0.01,0.03,0.03,0.04 }};
+		{ 0.06,0.06,0.04,0.11,0.03,0.01,0.04,0.04,0.05,0.05,0.09,0.02,0.04,0.07,0.02,0.01,0.03,0.03,0.04 }
+	};
 	militaryNAC[] = {
 		{ "TrashTinCan","ItemSodaEmpty","ItemSodaCoke","ItemSodaPepsi","ItemBandage","ItemPainkiller","ItemMorphine","nsw_er7mm","30Rnd_556x45_Stanag","20Rnd_762x51_DMR","17Rnd_9x19_glock17","15Rnd_9x19_M9SD","15Rnd_9x19_M9","30Rnd_762x39_AK47","30Rnd_545x39_AK","5Rnd_762x51_M24","10Rnd_127x99_m107","8Rnd_B_Beneli_74Slug","1Rnd_HE_M203","FlareWhite_M203","FlareGreen_M203","1Rnd_Smoke_M203","200Rnd_556x45_M249","HandGrenade_west","SmokeShell","SmokeShellRed","SmokeShellGreen","8Rnd_B_Beneli_Pellets","30Rnd_556x45_StanagSD","30Rnd_9x19_MP5","30Rnd_9x19_MP5SD","100Rnd_762x51_M240","HandChemGreen","HandChemBlue","HandChemRed","ItemHeatPack" },
-		{ 0.18,0.09,0.01,0.01,0.04,0.04,0.01,0.01,0.04,0.04,0.05,0.01,0.02,0.04,0.04,0.01,0.01,0.04,0.01,0.01,0.01,0.01,0.01,0.01,0.04,0.02,0.02,0.04,0.01,0.02,0.01,0.01,0.02,0.02,0.02,0.04 }};
+		{ 0.18,0.09,0.01,0.01,0.04,0.04,0.01,0.01,0.04,0.04,0.05,0.01,0.02,0.04,0.04,0.01,0.01,0.04,0.01,0.01,0.01,0.01,0.01,0.01,0.04,0.02,0.02,0.04,0.01,0.02,0.01,0.01,0.02,0.02,0.02,0.04 }
+	};
+	militaryNamalsk[] = {
+		{ "TrashTinCan","ItemSodaEmpty","ItemSodaCoke","ItemSodaPepsi","ItemWaterbottleUnfilled","ItemBandage","ItemPainkiller","ItemMorphine","30Rnd_556x45_Stanag","20Rnd_762x51_DMR","17Rnd_9x19_glock17","15Rnd_9x19_M9SD","15Rnd_9x19_M9","30Rnd_762x39_AK47","30Rnd_545x39_AK","5Rnd_762x51_M24","10Rnd_127x99_m107","8Rnd_B_Beneli_74Slug","1Rnd_HE_M203","FlareWhite_M203","FlareGreen_M203","1Rnd_Smoke_M203","200Rnd_556x45_M249","HandGrenade_west","SmokeShell","SmokeShellRed","SmokeShellGreen","8Rnd_B_Beneli_Pellets","30Rnd_556x45_StanagSD","30Rnd_9x19_MP5","30Rnd_9x19_MP5SD","100Rnd_762x51_M240","HandChemGreen","HandChemBlue","HandChemRed","ItemHeatPack" },
+		{ 0.18,0.09,0.02,0.02,0.01,0.04,0.04,0.01,0.02,0.01,0.02,0.01,0.02,0.02,0.02,0.01,0.01,0.02,0.01,0.01,0.01,0.01,0.01,0.01,0.02,0.02,0.02,0.02,0.01,0.02,0.01,0.01,0.02,0.02,0.02,0.04 }
+	};
+	medicalNamalsk[] = {
+		{ "ItemBandage","ItemPainkiller","ItemMorphine","ItemEpinephrine","ItemHeatPack","ItemAntibiotic" },
+		{ 1,0.5,0.5,0.2,0.2,0.1 }
+	};
+	hospitalNamalsk[] = {
+		{ "ItemBandage","ItemPainkiller","ItemMorphine","ItemEpinephrine","ItemBloodbag","ItemAntibiotic" },
+		{ 0.43,0.17,0.13,0.09,0.17,0.25 }
+	};
 };
 
 class CfgBuildingLoot {
+	
+	// Original loot tables
 	class Default;
-
 	class Residential;
+	class Industrial;
+	class Farm ;
+	class SuperMarket;
+	class Hospital;
+	class Military;
+	class MilitarySpecial;
+	class HeliCrash;
+	class Church;
+
+};
+
+class CfgBuildingLootNamalsk: CfgBuildingLoot {
+	
+	//LOOT TABLES FOR NAMALSK
 	class ResidentialNamalsk: Residential {
 		itemType[] = {
 			{ "ItemSodaMdew","magazine" },
@@ -911,7 +1000,7 @@ class CfgBuildingLoot {
 			{ "DZ_ALICE_Pack_EP1","object" },
 			{ "Winchester1866","weapon" },
 			{ "WeaponHolder_ItemTent","object" },
-			{ "","military" },
+			{ "","militaryNamalsk" },
 			{ "","trash" },
 			{ "Crossbow","weapon" },
 			{ "Binocular","weapon" },
@@ -927,13 +1016,11 @@ class CfgBuildingLoot {
 	class OfficeNamalsk: ResidentialNamalsk {
 		maxRoaming = 6;
 	};
-	
-	class Industrial;
 	class IndustrialNamalsk: Industrial {
 		itemType[] = {
 			{ "","genericNamalskNoFood" },
 			{ "","trash" },
-			{ "","military" },
+			{ "","militaryNamalsk" },
 			{ "WeaponHolder_PartGeneric","object" },
 			{ "WeaponHolder_PartWheel","object" },
 			{ "WeaponHolder_PartFueltank","object" },
@@ -949,12 +1036,11 @@ class CfgBuildingLoot {
 		};
 		// generic loot chance reduced from 0.18 to 0.10
 		// trash loot chance to 0.34
-		itemChance[] = {0.10,0.34,0.04,0.04,0.05,0.02,0.01,0.04,0.01,0.04,0.11,0.07,0.02,0.06,0.04};
+		itemChance[] = {0.10,0.34,0.04,0.04,0.05,0.02,0.06,0.04,0.01,0.04,0.11,0.07,0.02,0.02,0.04};
 	};
-	
-	class Farm ;
 	class FarmNamalsk: Farm {
 		itemType[] = {
+			{ "ItemMatchbox","generic" },
 			{ "WeaponHolder_ItemJerrycan","object" },
 			{ "","genericNamalsk" },
 			{ "huntingrifle","weapon" },
@@ -971,10 +1057,67 @@ class CfgBuildingLoot {
 		// jerry can loot chance reduced from 0.06 to 0.02
 		// generic loot chance reduced from 0.28 to 0.02
 		// trash 0.22 -> 0.34
-		itemChance[] = {0.02,0.02,0.01,0.04,0.03,0.34,0.03,0.11,0.17,0.06,0.01,0.01};
+		itemChance[] = {0.06,0.02,0.02,0.01,0.04,0.03,0.34,0.03,0.11,0.17,0.06,0.01,0.04};
 	};
 
-	class HeliCrash;
+	class SuperMarketNamalsk: SuperMarket {
+		lootChance = 0.6;
+		minRoaming = 2;
+		maxRoaming = 6;
+		zombieChance = 0.3;
+		zombieClass[] = {"zZombie_Base","zZombie_Base","z_teacher","z_suit1","z_suit2"};
+		itemType[] = {
+		 { "ItemWatch","generic" },
+		 { "ItemCompass","generic" },
+		 { "ItemMap","weapon" },
+		 { "Makarov","weapon" },
+		 { "Colt1911","weapon" },
+		 { "ItemFlashlight","generic" },
+		 { "ItemKnife","generic" },
+		 { "ItemMatchbox","generic" },
+		 { "","genericNamalsk" },
+		 { "LeeEnfield","weapon" },
+		 { "revolver_EP1","weapon" },
+		 { "CZ_VestPouch_EP1","object" },
+		 { "DZ_CivilBackpack_EP1","object" },
+		 { "DZ_ALICE_Pack_EP1","object" },
+		 { "Winchester1866","weapon" },
+		 { "WeaponHolder_ItemTent","object" },
+		 { "","foodNamalsk" },
+		 { "","trash" },
+		 { "Crossbow","weapon" },
+		 { "Binocular","weapon" },
+		 { "PartWoodPile","magazine" },
+		 { "MR43","weapon" }};
+		itemChance[] = {0.15,0.01,0.05,0.02,0.02,0.05,0.02,0.05,0.05,0.01,0.01,0.01,0.02,0.03,0.01,0.01,0.3,0.15,0.01,0.05,0.02,0.01};
+	};
+	
+	class HospitalNamalsk: Hospital {
+		zombieChance = 0.4;
+		minRoaming = 2;
+		maxRoaming = 6;
+		zombieClass[] = {"z_doctor","z_doctor","z_doctor"};
+		lootChance = 1;
+		lootPos[] = {};
+		itemType[] = {
+			{ "","trash" },
+			{ "","hospitalNamalsk" },
+			{ "MedBox0","object" }
+		};
+		itemChance[] = {0.3,0.5,0.1};
+	};
+	
+	class HeliCrash {
+		zombieChance = 0;
+		maxRoaming = 2;
+		zombieClass[] = {"z_soldier_pilot"};
+		lootChance = 0.5;
+		lootPos[] = {};
+		itemType[] = {
+			{ "","trash" }
+		};
+		itemChance[] = {1};
+	};
 	class HeliCrashNamalsk: HeliCrash {
 		zombieChance = 0;
 		maxRoaming = 5;
@@ -992,8 +1135,8 @@ class CfgBuildingLoot {
 			{ "M249_DZ","weapon" },
 			{ "BAF_L85A2_UGL_ACOG","weapon" },
 			{ "DMR","weapon" },
-			{ "","military" },
-			{ "","medical" },
+			{ "","militaryNamalsk" },
+			{ "","medicalNamalsk" },
 			{ "MedBox0","object" },
 			{ "NVGoggles","weapon" },
 			{ "AmmoBoxSmall_556","object" },
@@ -1005,11 +1148,9 @@ class CfgBuildingLoot {
 			{ "BrokenNVGoggles","weapon" },
 			{ "BrokenItemRadio","generic" }
 		};
-		itemChance[] = {0.02,0.05,0.05,0.02,0.01,0.02,0.03,0.05,0.01,0.1,1,0.5,0.1,0.01,0.1,0.1,0.08,0.05,0.08,0.04,0.04,0.02};
+		itemChance[] = {0.05,0.05,0.05,0.04,0.01,0.01,0.03,0.05,0.05,0.01,1,0.5,0.1,0.01,0.1,0.1,0.08,0.05,0.08,0.04,0.04,0.02};
 	};
 
-	class Hospital;
-	class Military;
 	class MilitaryNamalsk: Military {
 		itemType[] = {
 			{ "M9","weapon" },
@@ -1022,9 +1163,7 @@ class CfgBuildingLoot {
 			{ "AKS_74_kobra","weapon" },
 			{ "AKS_74_U","weapon" },
 			{ "AK_47_M","weapon" },
-			{ "M24","weapon" },
 			{ "M1014","weapon" },
-			{ "DMR","weapon" },
 			{ "M4A1","weapon" },
 			{ "M14_EP1","weapon" },
 			{ "UZI_EP1","weapon" },
@@ -1043,16 +1182,15 @@ class CfgBuildingLoot {
 			{ "DZ_Backpack_EP1","object" },
 			{ "","medical" },
 			{ "","genericNamalskNoFood" },
-			{ "","military" },
+			{ "","militaryNamalsk" },
 			{ "ItemEtool","weapon" },
 			{ "ItemSandbag","magazine" },
 			{ "BrokenItemGPS","weapon" },
 			{ "BrokenNVGoggles","weapon" }
 		};
-		itemChance[] = {0.05,0.05,0.01,0.02,0.2,0.15,0.01,0.08,0.05,0.05,0.01,0.1,0.01,0.02,0.01,0.05,0.08,0.1,0.04,0.02,0.01,0.06,0.1,0.1,0.01,0.05,0.06,0.04,0.02,0.1,0.08,2.5,0.05,0.02,0.04,0.04};
+		itemChance[] = {0.05,0.05,0.01,0.02,0.2,0.15,0.01,0.08,0.05,0.05,0.1,0.02,0.01,0.05,0.08,0.1,0.04,0.02,0.01,0.06,0.1,0.1,0.01,0.05,0.06,0.04,0.02,0.1,0.08,2.5,0.05,0.02,0.04,0.04};
 		zombieClass[] = {"z_ru_soldier","z_ru_soldier_light","z_us_soldier","z_us_soldier_light"};
 	};
-	
 	class MilitaryNamalskWinter: Military {
 		zombieChance = 0.3;
 		maxRoaming = 6;
@@ -1070,9 +1208,7 @@ class CfgBuildingLoot {
 			{ "AKS_74_kobra","weapon" },
 			{ "AKS_74_U","weapon" },
 			{ "AK_47_M","weapon" },
-			{ "M24","weapon" },
 			{ "M1014","weapon" },
-			{ "DMR","weapon" },
 			{ "M4A1","weapon" },
 			{ "M14_EP1","weapon" },
 			{ "UZI_EP1","weapon" },
@@ -1091,17 +1227,15 @@ class CfgBuildingLoot {
 			{ "DZ_Backpack_EP1","object" },
 			{ "","medical" },
 			{ "","genericNamalskNoFood" },
-			{ "","military" },
+			{ "","militaryNamalsk" },
 			{ "ItemEtool","weapon" },
 			{ "ItemSandbag","magazine" },
 			{ "Skin_CamoWinter_DZN","magazine" },
 			{ "BrokenItemGPS","weapon" },
 			{ "BrokenNVGoggles","weapon" }
 		};
-		itemChance[] = {0.05,0.05,0.01,0.02,0.2,0.15,0.01,0.08,0.05,0.05,0.01,0.1,0.01,0.02,0.01,0.05,0.08,0.1,0.04,0.02,0.01,0.06,0.1,0.1,0.01,0.05,0.06,0.04,0.02,0.1,0.08,2.5,0.05,0.02,0.08,0.03,0.03};
+		itemChance[] = {0.05,0.05,0.01,0.02,0.2,0.15,0.01,0.08,0.05,0.05,0.1,0.02,0.01,0.05,0.08,0.1,0.04,0.02,0.01,0.06,0.1,0.1,0.01,0.05,0.06,0.04,0.02,0.1,0.08,2.5,0.05,0.02,0.08,0.03,0.03};
 	};
-	
-	class MilitarySpecial;
 	class MilitarySpecialNamalsk : MilitarySpecial {
 		zombieClass[] = {"z_ru_soldier","z_ru_soldier_light","z_us_soldier","z_us_soldier_light"};
 		itemType[] = {
@@ -1116,11 +1250,7 @@ class CfgBuildingLoot {
 			{ "AKS_74_kobra","weapon" },
 			{ "AKS_74_U","weapon" },
 			{ "AK_47_M","weapon" },
-			{ "M24","weapon" },
-			{ "SVD_CAMO","weapon" },
 			{ "M1014","weapon" },
-			{ "M107_DZ","weapon" },
-			{ "DMR","weapon" },
 			{ "M4A1","weapon" },
 			{ "M14_EP1","weapon" },
 			{ "UZI_EP1","weapon" },
@@ -1144,21 +1274,19 @@ class CfgBuildingLoot {
 			{ "DZ_Assault_Pack_EP1","object" },
 			{ "DZ_Patrol_Pack_EP1","object" },
 			{ "DZ_Backpack_EP1","object" },
-			{ "","medical" },
+			{ "","medicalNamalsk" },
 			{ "","genericNamalskNoFood" },
-			{ "","military" },
+			{ "","militaryNamalsk" },
 			{ "PipeBomb","magazine" },
 			{ "BrokenItemGPS","weapon" },
 			{ "BrokenNVGoggles","weapon" }
 		};
-		itemChance[] = {0.1,0.05,0.01,0.02,0.01,0.2,0.1,0.02,0.1,0.1,0.1,0.01,0.01,0.2,0.01,0.02,0.1,0.03,0.2,0.1,0.2,0.01,0.04,0.05,0.02,0.01,0.08,0.04,0.02,0.01,0.1,0.05,0.15,0.01,0.03,0.01,0.02,0.03,0.02,0.3,0.08,5.0,0.01,0.03,0.03};
+		itemChance[] = {0.1,0.05,0.01,0.02,0.01,0.2,0.1,0.02,0.1,0.1,0.1,0.2,0.1,0.03,0.2,0.1,0.2,0.01,0.04,0.05,0.02,0.01,0.08,0.04,0.02,0.01,0.1,0.05,0.15,0.01,0.03,0.01,0.02,0.03,0.02,0.3,0.08,5.0,0.01,0.03,0.03};
 	};
-	
 	class MilitarySpecialNamalskWinter: MilitarySpecialNamalsk {
 		zombieChance = 0.4;
 		minRoaming = 2;
 		maxRoaming = 6;
-		//zombieClass[] = {"z_ru_soldier","z_ru_soldier_light","z_us_soldier","z_us_soldier_light"};
 		lootChance = 0.4;
 		lootPos[] = {};
 		itemType[] = {
@@ -1201,16 +1329,16 @@ class CfgBuildingLoot {
 			{ "DZ_Assault_Pack_EP1","object" },
 			{ "DZ_Patrol_Pack_EP1","object" },
 			{ "DZ_Backpack_EP1","object" },
-			{ "","medical" },
+			{ "","medicalNamalsk" },
 			{ "","genericNamalskNoFood" },
-			{ "","military" },
+			{ "","militaryNamalsk" },
 			{ "PipeBomb","magazine" },
 			{ "Skin_CamoWinter_DZN","magazine" },
 			{ "BrokenItemGPS","weapon" },
 			{ "BrokenNVGoggles","weapon" },
 			{ "BrokenItemRadio","generic" }
 		};
-		itemChance[] = {0.1,0.05,0.01,0.02,0.01,0.2,0.1,0.02,0.1,0.1,0.1,0.01,0.01,0.2,0.01,0.02,0.1,0.03,0.2,0.1,0.2,0.01,0.04,0.05,0.02,0.01,0.08,0.04,0.02,0.01,0.1,0.05,0.15,0.01,0.03,0.01,0.02,0.03,0.02,0.3,0.08,5.0,0.01,0.08,0.03,0.03,0.01};
+		itemChance[] = {0.1,0.05,0.01,0.02,0.01,0.2,0.1,0.02,0.1,0.1,0.1,0.01,0.01,0.2,0.01,0.01,0.1,0.03,0.2,0.1,0.2,0.01,0.04,0.05,0.02,0.01,0.08,0.04,0.02,0.01,0.1,0.05,0.15,0.01,0.03,0.01,0.02,0.03,0.02,0.3,0.08,5.0,0.01,0.08,0.03,0.03,0.01};
 	};
 	class MilitarySpecialNAC: MilitarySpecial {
 		zombieChance = 0.4;
@@ -1219,6 +1347,59 @@ class CfgBuildingLoot {
 		zombieClass[] = {"z_nac_soldier","z_nac_soldier_heavy"};
 		lootChance = 0.4;
 		lootPos[] = {};
+		itemType[] = {
+			{ "M16A2","weapon" },
+			{ "M16A2GL","weapon" },
+			{ "M249_DZ","weapon" },
+			{ "M9SD","weapon" },
+			{ "M136","weapon" },
+			{ "AK_47_M","weapon" },
+			{ "AK_74","weapon" },
+			{ "M4A1_Aim","weapon" },
+			{ "AKS_74_kobra","weapon" },
+			{ "AKS_74_U","weapon" },
+			{ "AK_47_M","weapon" },
+			{ "M24","weapon" },
+			{ "SVD_CAMO","weapon" },
+			{ "M1014","weapon" },
+			{ "M107_DZ","weapon" },
+			{ "DMR","weapon" },
+			{ "M4A1","weapon" },
+			{ "M14_EP1","weapon" },
+			{ "UZI_EP1","weapon" },
+			{ "Remington870_lamp","weapon" },
+			{ "glock17_EP1","weapon" },
+			{ "M240_DZ","weapon" },
+			{ "M4A1_AIM_SD_camo","weapon" },
+			{ "M16A4_ACG","weapon" },
+			{ "M4A1_HWS_GL_camo","weapon" },
+			{ "Mk_48_DZ","weapon" },
+			{ "M4A3_CCO_EP1","weapon" },
+			{ "AmmoBoxSmall_556","object" },
+			{ "AmmoBoxSmall_762","object" },
+			{ "NVGoggles","weapon" },
+			{ "Binocular","weapon" },
+			{ "ItemFlashlightRed","military" },
+			{ "ItemKnife","military" },
+			{ "ItemGPS","weapon" },
+			{ "ItemMap","military" },
+			{ "Binocular_Vector","military" },
+			{ "DZ_Assault_Pack_EP1","object" },
+			{ "DZ_Patrol_Pack_EP1","object" },
+			{ "DZ_Backpack_EP1","object" },
+			{ "","medicalNamalsk" },
+			{ "","genericNamalskNoFood" },
+			{ "","militaryNAC" },
+			{ "PipeBomb","magazine" },
+			{ "Skin_CamoWinter_DZN","magazine" },
+			{ "BrokenItemGPS","weapon" },
+			{ "BrokenNVGoggles","weapon" },
+			{ "BrokenItemRadio","generic" }
+		};
+		itemChance[] = {0.1,0.05,0.01,0.02,0.01,0.2,0.1,0.02,0.1,0.1,0.1,0.01,0.01,0.2,0.01,0.01,0.1,0.03,0.2,0.1,0.2,0.01,0.04,0.05,0.02,0.01,0.08,0.04,0.02,0.01,0.1,0.05,0.15,0.01,0.03,0.01,0.02,0.03,0.02,0.3,0.08,5.0,0.01,0.08,0.03,0.03,0.01};
+	};
+	
+	class MilitarySpecialNACER7: MilitarySpecialNAC {
 		itemType[] = {
 			{ "M16A2","weapon" },
 			{ "M16A2GL","weapon" },
@@ -1261,7 +1442,7 @@ class CfgBuildingLoot {
 			{ "DZ_Assault_Pack_EP1","object" },
 			{ "DZ_Patrol_Pack_EP1","object" },
 			{ "DZ_Backpack_EP1","object" },
-			{ "","medical" },
+			{ "","medicalNamalsk" },
 			{ "","genericNamalskNoFood" },
 			{ "","militaryNAC" },
 			{ "PipeBomb","magazine" },
@@ -1270,12 +1451,335 @@ class CfgBuildingLoot {
 			{ "BrokenNVGoggles","weapon" },
 			{ "BrokenItemRadio","generic" }
 		};
-		itemChance[] = {0.1,0.05,0.01,0.01,0.01,0.02,0.01,0.2,0.1,0.02,0.1,0.1,0.1,0.01,0.01,0.2,0.01,0.02,0.1,0.03,0.2,0.1,0.2,0.01,0.04,0.05,0.02,0.01,0.08,0.04,0.02,0.01,0.1,0.05,0.15,0.01,0.03,0.01,0.02,0.03,0.02,0.3,0.08,5.0,0.01,0.08,0.03,0.03,0.01};
+		itemChance[] = {0.1,0.05,0.01,0.01,0.01,0.02,0.01,0.2,0.1,0.02,0.1,0.1,0.1,0.01,0.01,0.2,0.01,0.01,0.1,0.03,0.2,0.1,0.2,0.01,0.04,0.05,0.02,0.01,0.08,0.04,0.02,0.01,0.1,0.05,0.15,0.01,0.03,0.01,0.02,0.03,0.02,0.3,0.08,5.0,0.01,0.08,0.03,0.03,0.01};
 	};
-	class Church;
-
 	// END
 
+
+	// CHERNARUS BUILDINGS
+	// Indy
+ class Land_Tovarna2: IndustrialNamalsk {
+  lootPos[] = {
+			{ -11.6309,7.2052,-5.55933 },
+			{ -12.0674,2.56909,-5.55933 },
+			{ -4.89355,6.6394,-5.55933 },
+			{ -3.74121,2.90393,-3.89665 },
+			{ -12.8672,1.44519,-2.23135 },
+			{ -12.415,8.1311,-2.23135 },
+			{ -12.7236,4.11255,-2.23135 },
+			{ -3.99805,8.9801,-2.23156 },
+			{ -7.33105,8.44214,-2.23156 },
+			{ -4.55371,5.22644,-2.23156 },
+			{ -11.4746,2.92114,1.66661 },
+			{ -11.0703,8.13818,1.66661 },
+			{ -4.67578,7.32678,1.62174 },
+			{ -2.68262,3.44763,3.4243 },
+			{ -13.1953,-8.95862,3.4243 },
+			{ -8.80859,-0.443481,0.401226 },
+			{ -12.1328,-0.149414,0.424298 },
+			{ -2.03418,6.61414,-5.55933 },
+			{ 0.239258,1.72278,-5.59793 },
+			{ 6.22461,-3.948,-4.61825 },
+			{ -6.39355,-8.24353,-5.59541 },
+			{ -10.8496,-6.91211,-5.56572 },
+			{ -6.77637,-1.73083,-5.56019 }};
+ };
+ class Land_Misc_Cargo1Ao: IndustrialNamalsk {
+  lootPos[] = {
+			{ 0.48877,-1.61377,-1.09224 },
+			{ 0.012207,2.19263,-1.09224 },
+			{ 0.00976563,0.19043,-1.09224 }};
+ };
+ class Land_Misc_Cargo1Bo: IndustrialNamalsk {
+  lootPos[] = {
+			{ -0.322021,1.68555,-1.09222 },
+			{ 0.548584,-1.96289,-1.09222 },
+			{ 0.223389,-0.580078,-1.09222 }};
+ };
+ class Land_A_BuildingWIP: IndustrialNamalsk {
+  lootChance = 0.5;
+  lootPos[] = {
+			{ -4.62573,4.52344,-6.45268 },
+			{ -12.6377,0.494141,-6.49242 },
+			{ -14.6023,-8.62842,-6.49961 },
+			{ -16.0005,-9.80957,-6.50423 },
+			{ -15.5627,-5.17725,-6.50523 },
+			{ 0.94458,-2.30371,-6.43043 },
+			{ 7.28125,3.20898,-6.44042 },
+			{ 9.75708,10.1138,-6.40827 },
+			{ 14.771,7.29688,-6.47756 },
+			{ 15.4504,-0.314941,-6.52979 },
+			{ 20.4895,2.31836,-4.52571 },
+			{ 17.3123,-3.1001,-2.53291 },
+			{ 10.707,-6.51611,-2.53255 },
+			{ 2.22534,-9.21582,-2.534 },
+			{ -8.91943,-7.18896,-2.53313 },
+			{ -16.3179,-8.35645,-2.53357 },
+			{ -21.3064,-6.7915,-2.53182 },
+			{ -21.6018,-1.79541,-2.53182 },
+			{ -17.5808,6.14746,-2.53182 },
+			{ -23.198,8.44727,-2.53182 },
+			{ -17.1973,9.58594,-2.53182 },
+			{ -4.99023,9.80957,-2.53182 },
+			{ 14.0872,7.44092,-2.52676 },
+			{ 10.5796,-6.84912,1.48116 },
+			{ -3.19116,-2.49463,1.49403 },
+			{ -13.8186,3.98975,1.49829 },
+			{ -15.9502,-6.17383,1.48802 },
+			{ -20.6997,-16.9761,1.50282 },
+			{ -15.415,-13.3901,5.46683 }};
+ };
+ class Land_Misc_PowerStation: IndustrialNamalsk {
+  lootPos[] = {
+			{ 4.09888,4.89746,-1.26743 },
+			{ 4.22827,-1.19873,-1.2681 }};
+ };
+ class Land_Ind_Workshop01_01: IndustrialNamalsk {
+  lootPos[] = {
+			{ 0.595215,-2.43115,-1.29412 },
+			{ 1.24365,0.463867,-1.295 },
+			{ -0.663574,-0.50293,-1.29837 }};
+ };
+ class Land_Ind_Workshop01_02: IndustrialNamalsk {
+  lootPos[] = {
+			{ 1.1543,-0.552246,-1.42943 },
+			{ -1.18665,-0.178223,-1.42868 },
+			{ -0.661621,1.104,-1.42682 }};
+ };
+	class Land_Ind_Workshop01_04: IndustrialNamalsk {
+		lootPos[] = {
+			{ -1.37415,4.18896,-1.53123 },
+			{ 0.695435,4.24561,-1.52934 },
+			{ -1.06677,2.69531,-1.53062 },
+			{ 0.79248,-4.60742,-1.49341 },
+			{ -1.84424,-6.1709,-1.44427 },
+			{ -1.05566,-4.08398,-1.51927 },
+			{ 1.43774,-6.59424,-1.41742 }
+		};
+		hangPos[] = {
+			{ -0.541748,4.01221,-2.03068 }
+		};
+	};
+	class Land_Shed_Ind02: IndustrialNamalsk {
+		lootPos[] = {
+			{ -2.28174,-5.67236,-4.62599 },
+			{ 4.54529,9.6665,-4.62599 },
+			{ 4.41223,2.64941,-1.27954 },
+			{ -0.437866,11.6943,-1.27641 },
+			{ -3.44482,12.2119,-1.27704 }
+		};
+	};
+	class Land_Shed_W01: IndustrialNamalsk {
+		lootPos[] = {
+			{ -1.52637,-0.246094,-1.41129 }
+		};
+	};
+	class Land_Nav_Boathouse: IndustrialNamalsk {
+		lootPos[] = {
+			{ 5.27588,5.51953,3.9203 },
+			{ 5.49609,0.106445,4.19408 },
+			{ 1.68945,7.5166,3.80288 },
+			{ -5.03613,6.19141,3.91093 },
+			{ -5.63037,-1.27246,4.41481 },
+			{ -6.98779,5.52441,3.9814 },
+			{ -2.92236,9.2002,3.73014 },
+			{ 6.99463,7.80859,3.80663 },
+			{ 7.00342,-2.07422,4.31929 }
+		};
+	};
+	// Residential, Farm, Office, Hospital
+	class Land_A_Hospital: HospitalNamalsk {
+		lootChance = 0.9;
+		lootPos[] = {
+			{ 0.807129,-1.16333,-7.33966 },
+			{ -7.23389,-2.63647,-7.33966 },
+			{ -16.3687,-2.40381,-7.33966 },
+			{ -12.2847,-3.19604,-7.33966 },
+			{ 4.40674,-3.50513,-7.33966 },
+			{ -3.2666,-0.925293,-7.33966 },
+			{ 6.85693,-2.75146,-7.33966 },
+			{ 11.0151,-3.95435,-7.33966 },
+			{ 16.8198,-4.71118,-7.33966 },
+			{ -1.12793,3.78418,-7.44939 },
+			{ 12.7476,0.142822,3.29184 },
+			{ 10.2661,-1.21558,3.29184 }
+		};
+		hangPos[] = {
+			{0.386719,-12.3335,-7.61242}
+		};
+	};
+	class Land_A_Office01: OfficeNamalsk
+	{
+		lootPos[] = {
+			{ -2.50391,-2.46948,-4.528 },
+			{ 4.23535,-0.336914,-4.528 },
+			{ 4.11133,6.1123,-4.528 },
+			{ 0.242188,6.06299,-4.528 },
+			{ 4.31641,3.74023,-4.528 },
+			{ 5.08887,0.219727,-4.528 },
+			{ 11.6504,-1.5647,-4.528 },
+			{ 14.5811,-4.1123,-4.528 },
+			{ 13.8545,-0.749023,-4.528 },
+			{ -7.7627,5.59082,-4.528 },
+			{ 1.81152,0.993408,-2.028 },
+			{ 4.93164,4.31982,-2.028 },
+			{ 1.18945,6.07031,-2.028 },
+			{ 2.23145,3.76563,-2.028 },
+			{ -4.76367,-2.51221,-2.028 },
+			{ -14.5596,-3.40723,-2.028 },
+			{ -15.2705,5.92773,-2.028 },
+			{ -10.9063,6.04175,0.472008 },
+			{ -6.30762,3.30078,0.472006 },
+			{ 7.6416,6.38696,0.472001 },
+			{ 13.6729,6.5957,0.471999 },
+			{ 13.1924,-2.58691,0.471998 },
+			{ 3.0918,2.4375,6.20491 },
+			{ -1.45703,-2.28369,6.20491 },
+			{ -2.12988,4.51587,0.472005 },
+			{ 4.74414,-4.60156,-2.01486 },
+			{ 8.3457,-1.10718,-2.028 },
+			{ 9.94727,-3.74146,-2.028 },
+			{ 7.13867,-2.50732,-2.028 },
+			{ 12.8701,4.70923,-2.028 },
+			{ 15.3721,3.42383,-2.028 }
+		};
+	};
+	class Land_A_Office02: OfficeNamalsk {
+		lootPos[] = {
+			{ 4.72266,-5.74121,-8.15108 },
+			{ 0.961426,-5.16943,-8.15076 }
+		};
+		hangPos[] = {
+			{2.4082,-11.2339,-8.59781}
+		};
+	};
+	class Land_A_GeneralStore_01: SuperMarketNamalsk {
+		lootPos[] = {
+			{ -9.38965,-3.30371,-1.20155 },
+			{ -3.77539,-3.86865,-1.20155 },
+			{ 1.31836,1.46631,-1.20155 },
+			{ 9.01367,3.8457,-1.20155 },
+			{ 13.3008,-1.77832,-1.20155 },
+ 			{ 9.81055,1.43213,-1.20155 },
+			{ 1.65039,5.14355,-1.20155 },
+			{ 0.753906,-3.69531,-1.20155 },
+			{ 13.3125,-7.65137,-1.20155 },
+			{ 11.168,-3.73682,-1.20155 },
+			{ 8.89453,-8.37402,-1.20155 },
+			{ -2.04492,-7.58105,-1.20155 },
+			{ -7.84766,-5.73633,-1.20155 },
+			{ -8.22461,-7.32422,-1.20155 },
+			{ 3.79004,-5.69336,-1.20155 },
+			{ -9.38379,4.46191,-1.20155 },
+			{ -3.5752,4.46533,-1.20155 },
+			{ -3.33789,0.612793,-1.20155 },
+			{ 10.5918,-9.9458,-1.21082 },
+			{ 0.105469,-9.6084,-1.21082 },
+			{ -4.86035,-10.4209,-1.21082 },
+			{ -6.80859,-1.23975,-1.20155 },
+			{ 1.12207,-1.58887,-1.20155 }
+		};
+		hangPos[] = {
+			{-15.9336,9.37012,-1.78298}
+		};
+	};
+ class Land_hut06: ResidentialNamalsk {
+	lootPos[] = {
+		{ 0.328125,2.26953,-1.57786 },
+		{ -0.552368,-0.0620117,-1.53837 }
+	};
+ };
+ class Land_psi_bouda: ResidentialNamalsk {
+  maxRoaming = 4;
+  lootPos[] = {
+			{ 1.25977,-0.227539,-0.42487 }};
+ };
+ class Land_KBud: ResidentialNamalsk {
+  zombieChance = 0;
+  maxRoaming = 0;
+  lootPos[] = {
+			{ -0.0170898,0.0114746,-0.66367 }};
+	};
+	class Land_kulna: ResidentialNamalsk {
+		lootPos[] = {
+			{ 0.504395,0.218262,-1.11643 },
+			{ -0.496582,1.93262,-1.12826 }
+		};
+	};
+	class Land_Hlidac_budka: ResidentialNamalsk {
+		lootPos[] = {
+			{ -2.3186,1.5127,-0.78363 },
+			{ 2.02075,0.444336,-0.78363 },
+			{ -0.460938,1.75879,-0.78363 }
+		};
+	};
+	class Land_HouseV_1I1: ResidentialNamalsk {
+		lootPos[] = {
+			{ 0.181641,-1.97314,-2.82275 }
+		};
+	};
+	class Land_HouseV_1I4: ResidentialNamalsk {
+		lootPos[] = {
+			{ -0.400146,-3.87695,-2.76879 },
+			{ -3.67749,-2.52002,-2.76551 },
+			{ -0.472168,3.19702,-2.72021 }
+		};
+	};
+	class Land_HouseV2_04_interier: ResidentialNamalsk {
+		lootPos[] = {
+			{ 7.49463,5.8374,-5.73902 },
+			{ 7.50989,-0.930176,-5.74176 },
+			{ 1.95532,4.16406,-5.73938 },
+			{ 2.10876,6.60645,-5.7386 },
+			{ -2.30017,4.22461,-5.73936 },
+			{ -5.13306,6.74365,-5.73856 },
+			{ -4.74658,2.68457,-5.73985 }
+		};
+	};
+	class Land_Barn_W_01: FarmNamalsk {
+		lootPos[] = {
+			{ 4.93188,-17.0444,-2.63063 },
+			{ -3.82813,-18.6699,-2.63036 },
+			{ -4.46387,16.6665,-2.63651 },
+			{ 5.78711,18.9473,-2.6369 },
+			{ 3.9541,4.88428,-2.63446 },
+			{ -2.99072,-4.16748,-2.63287 }
+		};
+	};
+	class Land_stodola_old_open: FarmNamalsk{
+		lootPos[] = {
+			{ -3.06836,8.63184,-5.08054 },
+			{ 2.52588,10.5261,-5.08051 },
+			{ 4.76758,5.00854,-0.9935 },
+			{ -2.78467,10.2368,-0.9935 },
+			{ 4.62598,10.4983,-0.993469 },
+			{ 2.09082,10.8425,2.96448 },
+			{ -0.440918,10.3091,2.96445 },
+			{ -2.58838,-5.91821,-5.08054 },
+			{ 4.11084,-10.9302,-5.08054 },
+			{ -2.62842,-6.55518,-1.01584 },
+			{ 2.50537,-10.741,2.96445 },
+			{ 0.0410156,-11.0596,2.96445 }};
+		hangPos[] = {
+			{ -1.50537,5.34473,-5.08813 },
+			{ 0.494141,9.42725,-5.09016 },
+			{ 2.59473,-6.21191,-5.08055 },
+			{ -1.74854,-2.39844,-1.14301 }
+		};
+	};
+	class Land_stodola_open: FarmNamalsk {
+		lootPos[] = {
+			{ -2.60303,5.31665,-4.12804 },
+			{ -2.58154,-0.530029,-4.17349 },
+			{ -0.0478516,-4.88989,-4.136 },
+			{ 0.983398,6.20483,-4.11143 }
+		};
+		hangPos[] = {
+			 { -0.932617,-3.35962,-4.16446 },
+			 { -2.01563,-0.115112,-4.19492 }
+		};
+	};
+	// Military
 	class Land_Mil_Barracks_i: MilitarySpecialNamalsk {
 		lootPos[] = {
 			{ 5.39038,-1.75684,-1.09824 },
@@ -1292,6 +1796,41 @@ class CfgBuildingLoot {
 			{ 5.46362,2.57813,-1.09824 }
 		};
 	};
+	class Land_Mil_House: MilitaryNamalsk {
+		vehPos[] = {
+			{ 13.439,3.25244,-5.71244,84 }
+		};
+		lootPos[] = {
+			{ 12.457,1.4248,-5.81439 },
+			{ 11.0391,4.85278,-5.81439 },
+			{ 13.667,4.42139,-5.81439 }
+		};
+	};
+	class Land_Misc_deerstand: MilitaryNamalsk {
+		zombieChance = 0;
+		lootChance = 0.5;
+		maxRoaming = 3;
+		lootPos[] = {
+			{ -0.923828,-0.808594,1.08539 },
+			{ 0.419922,-0.237305,1.08539 }};
+	};
+	class Land_a_stationhouse: MilitaryNamalsk {
+		lootChance = 0.3;
+		lootPos[] = {
+			{ -2.69922,-7.57422,-9.47058 },
+			{ -0.892578,-5.7168,-9.47058 },
+			{ -3.2417,-6.61914,-4.6489 },
+			{ -1.35645,-8.3623,-4.6489 },
+			{ -1.70801,-7.85449,-0.0437927 },
+			{ -3.39502,-7.88281,-0.0437927 },
+			{ -1.396,-7.79883,4.41141 },
+			{ -1.37939,-5.79102,4.41141 },
+			{ 1.5127,1.96484,-9.47058 },
+			{ 18.9058,-4.06738,-9.47058 }
+		};
+	};
+
+	// CUSTOM NAMALSK BUILDINGS
 	class Land_budova4_winter: MilitarySpecialNamalskWinter {
 		minRoaming = 5;
 		maxRoaming = 7;
@@ -1542,6 +2081,9 @@ class CfgBuildingLoot {
 		lootPos[] = {
 			{ -0.214844,1.2146,1.36331 }
 		};
+		hangPos[] = {
+			{-0.188965,-3.07129,-4.75002}
+		};
 	};
 	
 	class Land_mil_barracks_l: MilitaryNamalsk {
@@ -1783,6 +2325,9 @@ class CfgBuildingLoot {
 			{4.95752,-5.74219,-8.8979},
 			{6.75049,9.6665,-11.9873}
 		};
+		hangPos[] = {
+			{1.85156,3.29785,-1.60105}
+		};
 	};
 	
 	class Land_seb_mine_main_opt: IndustrialNamalsk {
@@ -1877,6 +2422,9 @@ class CfgBuildingLoot {
 		lootChance = 0.40;
 		lootPos[] = {
 			{-2.79834,1.54688,-1.66939}
+		};
+		hangPos[] = {
+			{-6.59766,0.202148,-1.99591}
 		};
 	};
 	
@@ -2224,6 +2772,9 @@ class CfgBuildingLoot {
 			{-2.11914,2.41797,7.54509},
 			{-0.0822754,-2.45215,7.54509}
 		};
+		hangPos[] = {
+			{-5.97559,0.0922852,-12.6317}
+		};
 	};
 	class Land_x_vez_tex: MilitaryNamalsk {
 		zombieChance = 0.75;
@@ -2292,6 +2843,7 @@ class CfgBuildingLoot {
 	};
 	class Land_most_blok: IndustrialNamalsk {
 		lootChance = 0.1;
+		zombieChance = 0;
 		lootPos[] = {
 			{-19.3564,3.39258,15.7188},
 			{-26.459,-3.23242,15.6942},
@@ -2333,7 +2885,7 @@ class CfgBuildingLoot {
 			{17.3628,-9.65674,4.03506},
 			{17.4922,10.8369,4.03583},
 			{2.54541,0.719727,-2.81997},
-			{18.3887,1.21289,-2.7095},  
+			{18.3887,1.21289,-2.7095},
 			{8.98047,-6.62793,-2.5975},
 			{-2.59375,-5.56592,-2.5975},
 			{-2.98193,9.05566,-2.8505},
@@ -2372,21 +2924,23 @@ class CfgBuildingLoot {
 		maxRoaming = 7;
 		//zombieClass[] = {"z_nac_soldier","z_nac_soldier_heavy"};
 		lootPos[] = {
-			{3.84082,3.39502,-8.50825},
-			{3.729,-3.9126,-3.45279},
-			{0.943359,-3.87988,-3.31476},
-			{-2.68115,-3.57764,-3.31476},
-			{-4.99219,-0.102051,-3.31476},
-			{-3.49414,3.22412,-3.31476},
-			{0.818359,3.8667,-3.31476},
-			{4.0498,3.74756,2.42811},
-			{4.66406,-1.20264,5.54123},
-			{0.180664,-1.61865,6.40833},
-			{-3.41699,-0.699219,6.40833},
-			{-2.37158,1.76318,6.40833},
-			{0.382813,0.995605,6.40833},
-			{-1.66016,0.290527,-11.0637}
-			
+			{4.17334,2.979,-8.50825},
+			{3.9751,-4.24121,-3.45279},
+			{0.560059,-3.90039,-3.31476},
+			{-4.57178,-2.85742,-3.31476},
+			{-4.95117,2.4668,-3.31476},
+			{-3.31104,3.60254,-3.31476},
+			{-0.0102539,3.81152,-3.31476},
+			{-1.54639,0.0947266,-11.0705},
+			{3.91357,3.83203,2.42772},
+			{4.68604,-1.78711,5.54123},
+			{-2.75635,-0.899902,6.40834},
+			{-3.45557,0.88623,6.40834},
+			{-1.84229,2.28027,6.40834},
+			{-0.00341797,1.51172,6.40834}
+		};
+		hangPos[] = {
+			{-1.76074,12.0757,-12.1809}
 		};
 	};
 	class Land_seb_vod_vez: IndustrialNamalsk {
@@ -2565,11 +3119,17 @@ class CfgBuildingLoot {
 			{-0.0913086,-0.916992,-1.57358},
 			{3.14941,-3.70313,-1.51609}
 		};
+		hangPos[] = {
+			{-3.23047,5.12402,-1.00457}
+		};
 	};
 	class Land_dr_1: IndustrialNamalsk {
 		lootPos[] = {
 			{-1.80225,0.794922,-1.43609},
 			{0.362793,-2.5,-1.32233}
+		};
+		hangPos[] = {
+			{3.62207,-0.105469,-1.10151}
 		};
 	};
 	class Land_zd_1: FarmNamalsk {
@@ -2709,19 +3269,15 @@ class CfgBuildingLoot {
 		maxRoaming = 6;
 		minRoaming = 4;
 		lootPos[] = {
-			{-9.1084,-4.02734,1.72723},
-			{-6.00342,-5.75391,1.72723},
-			{0.859375,-9.11621,0.648797},
-			{-8.47656,-0.711914,1.72723},
-			{-9.18555,5.74219,1.72723},
-			{-5.09619,4.7207,1.72723},
-			{-3.84033,0.447266,1.72723},
-			{-6.23926,8.00293,1.72723},
-			{-2.1792,11.3682,-0.559257},
-			{0.664063,6.36426,3.44651},
-			{2.61084,-3.39258,4.92294},
-			{2.97852,2.52246,4.56126},
-			{-1.20752,1.2832,5.61}
+			{-8.49707,9.40723,1.27995},
+			{-2.7002,8.64551,1.27995},
+			{0.853027,2.78809,3.25248},
+			{-0.00537109,-4.53223,3.08974},
+			{-7.68945,-5.30371,1.27995},
+			{-7.90088,-0.360352,1.27995},
+			{-7.19189,4.38379,1.27995},
+			{-1.15234,1.52734,5.24138},
+			{-2.59229,1.21387,1.27995}
 		};
 	};
 	
@@ -2735,6 +3291,9 @@ class CfgBuildingLoot {
 			{4484.78,11216.6,0.101094},
 			{4484.6,11211.4,0.280702},
 			{4489.45,11210.8,0.272269}
+		};
+		hangPos[] = {
+			{-4.29248,7.1123,-1.79699}
 		};
 	};
 	
@@ -2792,10 +3351,8 @@ class CfgBuildingLoot {
 		maxRoaming = 12;
 		minRoaming = 6;
 		lootPos[] = {
-			{ -0.449707,-6.29248,-1.75586 },
-			{ -0.349609,-4.49512,-1.74481 },
-			{ -0.269531,-2.96631,-1.76636 },
-			{ 0.418457,-3.12744,-1.60449 }
+			{ 0.238281,-2.89746,-1.65002 },
+			{ -0.245117,-6.06982,-1.74091 }
 		};
 	};
 	
@@ -2876,6 +3433,9 @@ class CfgBuildingLoot {
 		lootPos[] = {
 			{0.291992,0.46582,-0.644005},
 			{-0.0292969,-1.37817,-0.644009}
+		};
+		hangPos[] = {
+			{-1.28223,-5.20288,-1.55187}
 		};
 	};
 	
@@ -2989,6 +3549,9 @@ class CfgBuildingLoot {
 			{-3.98462,0.065918,-2.11169}
 		};
 		//zombieClass[] = {"z_nac_soldier","z_nac_soldier_heavy"};
+		hangPos[] = {
+			{-7.01465,1.44971,-2.40863}
+		};
 	};
 	
 	class Land_budova2_winter: MilitaryNamalskWinter {
@@ -3023,45 +3586,56 @@ class CfgBuildingLoot {
 	
 	class Land_ind_quarry: IndustrialNamalsk {
 		lootPos[] = {
-			{7023.01,5798.6,0.108322},
-			{7015.61,5799.6,0.100521},
-			{7007.62,5799.26,0.100498},
-			{7010.8,5813.17,0.170124},
-			{7014.83,5813.15,0.183861},
-			{7032.61,5807.29,0.242538},
-			{7037.44,5802.41,0.281284},
-			{7028.89,5800.98,13.0366}
+			{-3.25928,-15.5356,-7.47989},
+			{0.864258,-11.0698,-7.47989},
+			{6.83203,6.62793,-7.47989},
+			{-6.95117,14.5869,-7.47989},
+			{-6.92334,-2.28516,-7.47989},
+			{0.249023,16.9741,5.29451},
+			{-4.43262,15.6445,5.29451},
+			{-4.39697,-7.04395,5.29451}
 		};
 	};
 
 	class Land_ind_sawmill: IndustrialNamalsk {
 		lootPos[] = {
-			{7056.46,5781.25,0.00143814},
-			{7049.81,5792.8,0.00143051},
-			{7057.95,5809.97,0.00144196},
-			{7065.66,5802.98,0.00143814}
+			{10.4482,5.27588,-5.82991},
+			{2.81299,17.3979,-5.83502},
+			{-10.7178,-5.41943,-5.83678},
+			{3.16064,-13.0542,-5.78954}
 		};
 	};
 
 	class Land_ind_expedice_1: IndustrialNamalsk {
 		lootPos[] = {
-			{7805.46,7723.46,7.05676},
-			{7800.96,7726.27,7.06819},
-			{7800.24,7720.82,7.02254},
-			{7818.09,7725.84,7.10141},
-			{7816.87,7721.8,7.13413},
-			{7825.74,7718.32,9.22269},
-			{7837.57,7711.97,9.6668},
-			{7836.25,7729.8,7.29477},
-			{7836.71,7736.67,7.29414},
-			{7831.8,7736.95,7.10866},
-			{7813.4,7726.77,9.26067},
-			{7811.31,7722.13,9.23485},
-			{7805.32,7722.54,9.23901},
-			{7799.81,7721.08,9.17638},
-			{7802.28,7723.22,22.4461},
-			{7807.98,7722.92,22.445},
-			{7813.75,7722.9,22.4783}
+			{-0.182129,-1.09033,-3.48673},
+			{-5.5293,-7.13086,-3.48673},
+			{-11.7637,-17.2148,-3.48673},
+			{0.98877,-17.0166,-3.48673},
+			{5.57813,-18.5664,-5.75725},
+			{13.2651,-18.1152,-5.75725},
+			{13.5864,-12.4766,-5.75725},
+			{1.86768,7.33691,-3.48673},
+			{-1.17822,13.3442,-3.48673},
+			{-2.65869,19.0415,-3.48673},
+			{-0.290527,16.1636,9.71016},
+			{-0.687988,10.5894,9.71017},
+			{-0.147949,4.69434,9.71017}
+		};
+	};
+	
+	class Land_zspawn: MilitaryNamalsk {
+		maxRoaming = 5;
+		minRoaming = 2;
+		lootPos[] = {};
+	};
+	
+	class Land_espawn: MilitarySpecialNACER7 {
+		zombieChance = 0;
+		maxRoaming = 0;
+		lootChance = 0.25;
+		lootPos[] = {
+			{0, 0, 0}
 		};
 	};
 };

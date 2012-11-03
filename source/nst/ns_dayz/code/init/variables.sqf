@@ -7,9 +7,12 @@ Survivor2_DZ = 	"Survivor2_DZ";
 SurvivorW2_DZ = "SurvivorW2_DZ";
 Sniper1_DZ = 	"Sniper1_DZ";
 Camo1_DZ = 		"Camo1_DZ";
-Soldier1_DZ = 	"Soldier1_DZ";
-Rocket_DZ = 	"Rocket_DZ";
-CamoWinter_DZN =	"CamoWinter_DZN";
+Soldier1_DZ	=		"Soldier1_DZ";
+Rocket_DZ	=		"Rocket_DZ";
+CamoWinter_DZN	=	"CamoWinter_DZN";
+
+dayz_combatLog = "";
+dayz_logDamage = [];
 
 //Hunting Variables
 dayZ_partClasses = [
@@ -81,7 +84,7 @@ r_action_unload = 		false;
 r_player_handler = 		false;
 r_player_handler1 = 	false;
 r_player_dead = 		false;
-r_player_unconscious = 	false;
+r_player_unconscious =	false;
 r_player_infected =		false;
 r_player_injured = 		false;
 r_player_inpain = 		false;
@@ -165,7 +168,7 @@ dayzHideBody = objNull;
 //DayZ settings
 dayz_dawn = 6;
 dayz_dusk = 18;
-dayz_maxAnimals = 2;
+dayz_maxAnimals = 3;
 DAYZ_agentnumber = 0;
 dayz_animalDistance = 800;
 dayz_zSpawnDistance = 1000;
@@ -213,7 +216,7 @@ if(!isDedicated) then {
 	dayz_bodyMonitor = [];
 	dayz_flyMonitor = [];		//used for monitor flies
 	
-	dayz_baseTypes = 		getArray (configFile >> "CfgBuildingLoot" >> "Default" >> "zombieClass");
+	dayz_baseTypes = 		getArray (configFile >> "CfgBuildingLootNamalsk" >> "Default" >> "zombieClass");
 	
 	//temperature variables
 	dayz_temperatur 		= 	36;		//TeeChange
@@ -226,6 +229,7 @@ if(!isDedicated) then {
 	dayZ_everyonesTents =	[];
 	dayz_hunger	=			0;
 	dayz_thirst = 			0;
+	dayz_combat =			0;
 	dayz_preloadFinished = 	false;
 	dayz_statusArray =		[1,1];
 	dayz_disAudial =		0;
@@ -256,7 +260,10 @@ if(!isDedicated) then {
 	dayzClickTime =			0;
 	dayz_spawnDelay =		300;
 	dayz_spawnWait =		-300;
+	dayz_lootDelay =		3;
+	dayz_lootWait =			-300;
 	dayz_spawnZombies =		0;
+	dayz_inVehicle =		false;
 	dayz_Magazines = 		[];
 	dayzGearSave = 			false;
 	dayz_unsaved =			false;
@@ -264,7 +271,7 @@ if(!isDedicated) then {
 	dayzDebug = false;
 	dayzState = -1;
 	//uiNamespace setVariable ['DAYZ_GUI_display',displayNull];
-	if (uiNamespace getVariable ['DZ_displayUI', 0] == 2) then {
-		dayzDebug = true;
-	};
+	//if (uiNamespace getVariable ['DZ_displayUI', 0] == 2) then {
+	//	dayzDebug = true;
+	//};
 };

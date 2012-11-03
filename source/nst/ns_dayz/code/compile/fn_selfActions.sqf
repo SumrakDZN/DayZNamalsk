@@ -16,6 +16,7 @@ _hasFuelE = 	"ItemJerrycanEmpty" in magazines player;
 _hasRawMeat = 	"FoodSteakRaw" in magazines player;
 _hasKnife = 	"ItemKnife" in items player;
 _hasToolbox = 	"ItemToolbox" in items player;
+//_hasTent = 		"ItemTent" in items player;
 _onLadder =		(getNumber (configFile >> "CfgMovesMaleSdr" >> "States" >> (animationState player) >> "onLadder")) == 1;
 _nearLight = 	nearestObject [player,"LitObject"];
 _canPickLight = false;
@@ -41,7 +42,7 @@ if (_canPickLight and !dayz_hasLight) then {
 	s_player_removeflare = -1;
 };
 
-if (!isNull cursorTarget and !_inVehicle and (player distance cursorTarget < 3)) then {	//Has some kind of target
+if (!isNull cursorTarget and !_inVehicle and (player distance cursorTarget < 4)) then {	//Has some kind of target
 	_isHarvested = cursorTarget getVariable["meatHarvested",false];
 	_isVehicle = cursorTarget isKindOf "AllVehicles";
 	_isMan = cursorTarget isKindOf "Man";
@@ -90,7 +91,7 @@ if (!isNull cursorTarget and !_inVehicle and (player distance cursorTarget < 3))
 	
 	if (!alive cursorTarget and _isAnimal and _hasKnife and !_isHarvested and _canDo) then {
 		if (s_player_butcher < 0) then {
-			s_player_butcher = player addAction [localize "str_actions_self_04", "\z\addons\dayz_code\actions\gather_meat.sqf",cursorTarget, 3, true, true, "", ""];
+			s_player_butcher = player addAction [localize "str_actions_self_04", "\nst\ns_dayz\code\actions\gather_meat.sqf",cursorTarget, 3, true, true, "", ""];
 		};
 	} else {
 		player removeAction s_player_butcher;
@@ -115,6 +116,14 @@ if (!isNull cursorTarget and !_inVehicle and (player distance cursorTarget < 3))
 		s_player_fireout = -1;
 	};
 	
+	//place tent
+	//if(_hasTent and _canDo) then {
+	//		s_player_placetent = player addAction [localize "Place Tent", "\z\addons\dayz_code\actions\tent_pitch.sqf",cursorTarget, 0, false, true, "", ""];
+	//} else {
+	//	player removeAction s_player_placetent;
+	//	s_player_placetent = -1;
+	//};
+	
 	//Packing my tent
 	if(cursorTarget isKindOf "TentStorage" and _canDo and _ownerID == dayz_characterID) then {
 		if ((s_player_packtent < 0) and (player distance cursorTarget < 3)) then {
@@ -126,74 +135,60 @@ if (!isNull cursorTarget and !_inVehicle and (player distance cursorTarget < 3))
 	};
 	
 	//Repairing Vehicles
-	if ((dayz_myCursorTarget != cursorTarget) and !_isMan) then {
+	if ((dayz_myCursorTarget != cursorTarget) and !_isMan and _hasToolbox) then {
 		_vehicle = cursorTarget;
 		{dayz_myCursorTarget removeAction _x} forEach s_player_repairActions;s_player_repairActions = [];
 		dayz_myCursorTarget = _vehicle;
-		_hitpoints = _vehicle call vehicle_getHitpoints;
+
 		_allFixed = true;
+		_hitpoints = _vehicle call vehicle_getHitpoints;
+		
 		{
 			_damage = [_vehicle,_x] call object_getHit;
-			//if (_damage > 0) then {
-				_color = "";
-				_part = "PartGeneric";
-				_cmpt = _x;
-				_damagePercent = round((1 - _damage) * 100);
-				if(["Body",_x,false] call fnc_inString) then {
-					_part = "PartGeneric";
-					_cmpt = "Body";
-					if (_damagePercent < 95) then {_allFixed = false};
-				};
-				if(["Engine",_x,false] call fnc_inString) then {
-					_part = "PartEngine";
-					_cmpt = "Engine";
-					if (_damagePercent < 95) then {_allFixed = false};
-				};
-				if(["HRotor",_x,false] call fnc_inString) then {
-					_part = "PartVRotor";
-					_cmpt = "Main Rotor Assembly";
-					if (_damagePercent < 95) then {_allFixed = false};
-				};
-				if(["Fuel",_x,false] call fnc_inString) then {
-					_part = "PartFueltank";
-					_cmpt = "Fuel Tank";
-					if (_damagePercent < 95) then {_allFixed = false};
-				};
-				if(["Wheel",_x,false] call fnc_inString) then {
-					_part = "PartWheel";
-					_cmpt = "Wheel";
-					_array = toArray _x;
-					_newArray = [];
-					for "_i" from 3 to ((count _array) - 1) do {_newArray set [count _newArray,(_array select _i)]};
-					_array = _newArray;
-					_newArray = [];
-					for "_i" from 0 to ((count _array) - 6) do {_newArray set [count _newArray,(_array select _i)]};
-					_toStr = toString _newArray;
-					_toStr = switch (_toStr) do {
-						default {_toStr};
-						case "LF": {"Left Front"};
-						case "RF": {"Right Front"};
-						case "LB": {"Left Back"};
-						case "RB": {"Right Back"};
-						case "LM": {"Left Middle"};
-						case "RM": {"Right Middle"};
-					};
-					_cmpt = _cmpt + " " + _toStr;
-					if (_damagePercent < 95) then {_allFixed = false};
-				};
-				if(["Glass",_x,false] call fnc_inString) then {
-					_part = "PartGlass";
-					_cmpt = "Glass";
-					if (_damagePercent < 95) then {_allFixed = false};
-				};
-				if (_part in magazines player) then {
-					if (_damage >= 0.5) then {_color = "color='#ffff00'"};
-					if (_damage >= 0.9) then {_color = "color='#ff0000'";};
-					_string = format[localize "str_actions_medical_09",_cmpt,_color];
-					_handle = dayz_myCursorTarget addAction [_string, "\z\addons\dayz_code\actions\repair.sqf",[_vehicle,_part,_x], 0, false, true, "",""];
-					s_player_repairActions set [count s_player_repairActions,_handle];
-				};
-			//};
+			_part = "PartGeneric";
+			
+			//change "HitPart" to " - Part" rather than complicated string replace
+			_cmpt = toArray (_x);
+			_cmpt set [0,20];
+			_cmpt set [1,toArray ("-") select 0];
+			_cmpt set [2,20];
+			_cmpt = toString _cmpt;
+				
+			if(["Engine",_x,false] call fnc_inString) then {
+				_part = "PartEngine";
+			};
+					
+			if(["HRotor",_x,false] call fnc_inString) then {
+				_part = "PartVRotor"; //yes you need PartVRotor to fix HRotor LOL
+			};
+
+			if(["Fuel",_x,false] call fnc_inString) then {
+				_part = "PartFueltank";
+			};
+			
+			if(["Wheel",_x,false] call fnc_inString) then {
+				_part = "PartWheel";
+
+			};
+					
+			if(["Glass",_x,false] call fnc_inString) then {
+				_part = "PartGlass";
+			};
+
+			// get every damaged part no matter how tiny damage is!
+			if (_damage > 0) then {
+				
+				_allFixed = false;
+				_color = "color='#ffff00'"; //yellow
+				if (_damage >= 0.5) then {_color = "color='#ff8800'";}; //orange
+				if (_damage >= 0.9) then {_color = "color='#ff0000'";}; //red
+
+				_string = format["<t %2>Repair%1</t>",_cmpt,_color]; //Repair - Part
+				_handle = dayz_myCursorTarget addAction [_string, "\z\addons\dayz_code\actions\repair.sqf",[_vehicle,_part,_x], 0, false, true, "",""];
+				s_player_repairActions set [count s_player_repairActions,_handle];
+
+			};
+					
 		} forEach _hitpoints;
 		if (_allFixed) then {
 			_vehicle setDamage 0;
