@@ -36,7 +36,7 @@ item31[] = {"ERROR__Bad_Version",2,250,175.000000,650.000000,275.000000,700.0000
 item32[] = {"Display_Ready",4,218,-175.000000,900.000000,-75.000000,950.000000,0.000000,"Display" \n "Ready"};
 item33[] = {"Preload_Display",2,250,-75.000000,950.000000,25.000000,1000.000000,0.000000,"Preload" \n "Display"};
 item34[] = {"Preload_Done",4,218,-175.000000,1000.000000,-75.000000,1050.000000,0.000000,"Preload" \n "Done"};
-item35[] = {"Initialize",2,250,-75.000000,1050.000000,25.000000,1100.000000,0.000000,"Initialize"};
+item35[] = {"Initialize",2,4346,-75.000000,1050.000000,25.000000,1100.000000,0.000000,"Initialize"};
 item36[] = {"Finish",1,250,-75.000000,1150.000000,25.000000,1200.000000,0.000000,"Finish"};
 item37[] = {"True",8,218,25.000000,1100.000000,125.000000,1150.000000,0.000000,"True"};
 item38[] = {"Too_Long",4,218,300.000000,150.000000,400.000000,200.000000,0.000000,"Too" \n "Long"};
@@ -57,6 +57,9 @@ item52[] = {"Preloaded",4,218,-175.000000,800.000000,-75.000000,850.000000,0.000
 item53[] = {"Bad_Version_1",4,218,50.000000,725.000000,150.000000,775.000000,0.000000,"Bad" \n "Version"};
 item54[] = {"ERROR__Bad_Version_1",2,250,175.000000,725.000000,275.000000,775.000000,0.000000,"ERROR:" \n "Bad Version" \n "Namalsk"};
 item55[] = {"Too_Long",4,218,300.000000,725.000000,400.000000,775.000000,0.000000,"Too" \n "Long"};
+item56[] = {"Helicrashes_dete",4,218,50.000000,800.000000,150.000000,850.000000,0.000000,"Helicrashes" \n "detected"};
+item57[] = {"ERROR__Bad_serve",2,250,175.000000,800.000000,275.000000,850.000000,0.000000,"ERROR:" \n "Bad server"};
+item58[] = {"Too_Long",4,218,300.000000,800.000000,400.000000,850.000000,0.000000,"Too" \n "Long"};
 link0[] = {0,1};
 link1[] = {0,5};
 link2[] = {1,2};
@@ -93,36 +96,40 @@ link32[] = {26,27};
 link33[] = {27,28};
 link34[] = {27,30};
 link35[] = {27,53};
-link36[] = {28,51};
-link37[] = {29,32};
-link38[] = {30,31};
-link39[] = {31,41};
-link40[] = {32,33};
-link41[] = {33,34};
-link42[] = {34,35};
-link43[] = {35,37};
-link44[] = {37,36};
-link45[] = {38,14};
-link46[] = {39,19};
-link47[] = {40,25};
-link48[] = {41,31};
-link49[] = {42,6};
-link50[] = {42,48};
-link51[] = {43,42};
-link52[] = {44,45};
-link53[] = {45,46};
-link54[] = {46,47};
-link55[] = {47,20};
-link56[] = {48,49};
-link57[] = {49,50};
-link58[] = {50,49};
-link59[] = {51,52};
-link60[] = {52,29};
-link61[] = {53,54};
-link62[] = {54,55};
-link63[] = {55,54};
-globals[] = {25.000000,1,0,0,0,640,480,1,89,6316128,1,-518.563599,532.967529,1214.407349,199.250046,954,921,1};
-window[] = {2,-1,-1,-32000,-32000,1043,1061,1979,52,3,972};
+link36[] = {27,56};
+link37[] = {28,51};
+link38[] = {29,32};
+link39[] = {30,31};
+link40[] = {31,41};
+link41[] = {32,33};
+link42[] = {33,34};
+link43[] = {34,35};
+link44[] = {35,37};
+link45[] = {37,36};
+link46[] = {38,14};
+link47[] = {39,19};
+link48[] = {40,25};
+link49[] = {41,31};
+link50[] = {42,6};
+link51[] = {42,48};
+link52[] = {43,42};
+link53[] = {44,45};
+link54[] = {45,46};
+link55[] = {46,47};
+link56[] = {47,20};
+link57[] = {48,49};
+link58[] = {49,50};
+link59[] = {50,49};
+link60[] = {51,52};
+link61[] = {52,29};
+link62[] = {53,54};
+link63[] = {54,55};
+link64[] = {55,54};
+link65[] = {56,57};
+link66[] = {57,58};
+link67[] = {58,57};
+globals[] = {25.000000,1,0,0,0,640,480,1,92,6316128,1,-622.401184,636.803223,1263.164063,47.517147,954,921,1};
+window[] = {2,-1,-1,-1,-1,1016,25,943,25,3,972};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -469,9 +476,9 @@ class FSM
        "_isHiveOk = false;" \n
        "_newPlayer = false;" \n
        "" \n
-       "if (count _msg > 7) then {" \n
-       "	_isHiveOk = _msg select 7;" \n
-       "	_newPlayer = _msg select 8;" \n
+       "if (count _msg > 8) then {" \n
+       "	_isHiveOk = _msg select 8;" \n
+       "	_newPlayer = _msg select 9;" \n
        "	diag_log (""PLAYER RESULT: "" + str(_isHiveOk));" \n
        "};" \n
        "" \n
@@ -568,6 +575,7 @@ class FSM
        "dayz_playerName = name player;" \n
        "_model call player_switchModel;" \n
        "" \n
+       "player allowDamage false;" \n
        "_lastAte = _survival select 1;" \n
        "_lastDrank = _survival select 2;" \n
        "" \n
@@ -823,6 +831,11 @@ class FSM
        "//Location" \n
        "_myLoc = getPosATL player;" \n
        "" \n
+       "_helicrashes_detected = false;" \n
+       "{" \n
+       "	_helicrashes_detected = true;" \n
+       "} forEach allMissionObjects ""UH1Wreck_DZ"";" \n
+       "" \n
        "0 cutText [""Setup Completed, please wait..."", ""BLACK FADED"",60];" \n
        "" \n
        "//GUI" \n
@@ -867,6 +880,16 @@ class FSM
           to="ERROR__Bad_Version_1";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
           condition=/*%FSM<CONDITION""">*/"_versionN != dayzNam_versionNo"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+        /*%FSM<LINK "Helicrashes_dete">*/
+        class Helicrashes_dete
+        {
+          priority = 0.000000;
+          to="ERROR__Bad_serve";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"_helicrashes_detected"/*%FSM</CONDITION""">*/;
           action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
         };
         /*%FSM</LINK>*/
@@ -949,6 +972,7 @@ class FSM
        "player disableConversation true;" \n
        "" \n
        "eh_player_killed = player addeventhandler [""FiredNear"",{_this call player_weaponFiredNear;} ];" \n
+       "//_eh_combat_projectilenear = player addEventHandler [""IncomingFire"",{_this call player_projectileNear;}];" \n
        "" \n
        "//Select Weapon" \n
        "// Desc: select default weapon & handle multiple muzzles" \n
@@ -1079,6 +1103,8 @@ class FSM
        "dayzGearSave = true;" \n
        "" \n
        "dayz_slowCheck = 	[] spawn player_spawn_2;" \n
+       "" \n
+       "[player] spawn dzn_fnc_breathfog;" \n
        "" \n
        "_world = toUpper(worldName); //toUpper(getText (configFile >> ""CfgWorlds"" >> (worldName) >> ""description""));" \n
        "_nearestCity = (nearestLocations [getPos player, [""NameCityCapital"",""NameCity"",""NameVillage"",""NameLocal""],1000] select 0);" \n
@@ -1280,6 +1306,30 @@ class FSM
         {
           priority = 0.000000;
           to="ERROR__Bad_Version_1";
+          precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+          condition=/*%FSM<CONDITION""">*/"(time - _myTime) > 10"/*%FSM</CONDITION""">*/;
+          action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+        };
+        /*%FSM</LINK>*/
+      };
+    };
+    /*%FSM</STATE>*/
+    /*%FSM<STATE "ERROR__Bad_serve">*/
+    class ERROR__Bad_serve
+    {
+      name = "ERROR__Bad_serve";
+      init = /*%FSM<STATEINIT""">*/"endLoadingScreen;" \n
+       "selectNoPlayer;" \n
+       "_myTime = time;" \n
+       "cutText [format[localize ""str_dzn_unknown_sv""], ""BLACK""];"/*%FSM</STATEINIT""">*/;
+      precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+      class Links
+      {
+        /*%FSM<LINK "Too_Long">*/
+        class Too_Long
+        {
+          priority = 0.000000;
+          to="ERROR__Bad_serve";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
           condition=/*%FSM<CONDITION""">*/"(time - _myTime) > 10"/*%FSM</CONDITION""">*/;
           action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;

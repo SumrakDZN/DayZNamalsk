@@ -2,6 +2,7 @@ disableSerialization;
 
 //Model Variables
 Bandit1_DZ = 	"Bandit1_DZ";
+BanditW1_DZ = 	"BanditW1_DZ";
 Survivor1_DZ = 	"Survivor2_DZ";
 Survivor2_DZ = 	"Survivor2_DZ";
 SurvivorW2_DZ = "SurvivorW2_DZ";
@@ -10,9 +11,10 @@ Camo1_DZ = 		"Camo1_DZ";
 Soldier1_DZ	=		"Soldier1_DZ";
 Rocket_DZ	=		"Rocket_DZ";
 CamoWinter_DZN	=	"CamoWinter_DZN";
+CamoWinterW_DZN	=	"CamoWinterW_DZN";
+Sniper1W_DZN	=	"Sniper1W_DZN";
 
 dayz_combatLog = "";
-dayz_logDamage = [];
 
 //Hunting Variables
 dayZ_partClasses = [
@@ -168,7 +170,7 @@ dayzHideBody = objNull;
 //DayZ settings
 dayz_dawn = 6;
 dayz_dusk = 18;
-dayz_maxAnimals = 3;
+dayz_maxAnimals = 2;
 DAYZ_agentnumber = 0;
 dayz_animalDistance = 800;
 dayz_zSpawnDistance = 1000;
@@ -182,6 +184,7 @@ if(isDedicated) then {
 if(isServer) then {
 	dayz_players = [];
 	dead_bodyCleanup = [];
+	needUpdate_objects = [];
 };
 
 if(!isDedicated) then {
@@ -212,12 +215,8 @@ if(!isDedicated) then {
 	dayz_bodyMonitor = [];
 	dayz_flyMonitor = [];		//used for monitor flies
 	
-	dayz_buildingMonitor = [];	//Buildings to check
-	dayz_bodyMonitor = [];
-	dayz_flyMonitor = [];		//used for monitor flies
-	
-	dayz_baseTypes = 		getArray (configFile >> "CfgBuildingLootNamalsk" >> "Default" >> "zombieClass");
-	
+	dayz_baseTypes = 		getArray (configFile >> dayzNam_buildingLoot >> "Default" >> "zombieClass");
+
 	//temperature variables
 	dayz_temperatur 		= 	36;		//TeeChange
 	dayz_temperaturnormal 	= 	36;		//TeeChange

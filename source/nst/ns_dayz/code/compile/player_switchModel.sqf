@@ -174,14 +174,8 @@ private ["_newBackpackType","_backpackWpn","_backpackMag"];
 	removeAllWeapons _oldUnit;
 	{_oldUnit removeMagazine _x;} forEach  magazines _oldUnit;
 		
-	if (!isNull dayz_originalPlayer) then {
-		dayz_originalPlayer = _oldUnit;
-		_oldUnit addEventHandler ["HandleDamage",{false}];
-		_oldUnit disableAI "ANIM";
-		_oldUnit disableAI "MOVE";
-	} else {
-		deleteVehicle _oldUnit;
-	};
+	deleteVehicle _oldUnit;
+
 
 //Move player inside
 

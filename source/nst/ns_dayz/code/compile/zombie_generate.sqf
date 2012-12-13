@@ -3,16 +3,16 @@ _position = 	_this select 0;
 _doLoiter = 	_this select 1;
 _unitTypes = 	_this select 2;
 
-_isNoone = 	{isPlayer _x} count (_position nearEntities ["CAManBase",30]) == 0;
+_isNoone = 	{isPlayer _x} count (_position nearEntities ["AllVehicles",30]) == 0;
 _loot = 	"";
 _array = 	[];
 _agent = 	objNull;
 
 //Exit if a player is nearby
-if (!isNoone) exitWith {};
+if (!_isNoone) exitWith {};
 
 if (count _unitTypes == 0) then {
-	_unitTypes = 	[]+ getArray (configFile >> "CfgBuildingLootNamalsk" >> "Default" >> "zombieClass");
+	_unitTypes = 	[]+ getArray (configFile >> dayzNam_buildingLoot >> "Default" >> "zombieClass");
 };
 _type = _unitTypes call BIS_fnc_selectRandom;
 

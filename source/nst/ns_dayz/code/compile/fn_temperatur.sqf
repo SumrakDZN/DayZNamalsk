@@ -21,7 +21,7 @@ Missing:
 */
 
 
-	private ["_looptime","_sun_factor","_warm_clothes","_ghillie_clothes","_building_factor","_vehicle_factor","_fire_factor","_water_factor","_snow_factor","_rain_factor","_night_factor","_wind_factor","_height_mod","_difference","_hasfireffect","_isinbuilding","_isinvehicle","_raining","_sunrise","_building"];
+	private ["_looptime","_sun_factor","_warm_clothes","_ghillie_clothes","_building_factor","_vehicle_factor","_fire_factor","_water_factor","_snow_factor","_snowfall_factor","_rain_factor","_night_factor","_wind_factor","_camo_clothes","_height_mod","_difference","_hasfireffect","_isinbuilding","_isinvehicle","_snowfall","_raining","_sunrise"];
 
 	_looptime 			= _this;
 	
@@ -37,15 +37,19 @@ Missing:
 	
 	_water_factor		=	-40;
 	_snow_factor		=	-16; // DayZ: Namalsk
+	_snowfall_factor	=	-14; // DayZ: Namalsk
 	_rain_factor		=	-8;
 	_night_factor		=	-8; // DayZ: Namalsk, was -1.5
-	_wind_factor		=	-1;   // DayZ: Namalsk, was -1
+	_wind_factor		=	-1;
+	_camo_clothes		=	-2;
 	
 	_difference 	= 0;
 	_hasfireffect	= false;
 	_isinbuilding	= false;
 	_isinvehicle	= false;
 	
+	if(isNil ("snow")) then {snow = 0};
+	_snowfall		= if(snow > 0) then {true} else {false};
 	_raining 		= if(rain > 0) then {true} else {false};
 	_sunrise		= call world_sunRise;
 
@@ -73,18 +77,10 @@ Missing:
 	};
 	
 	//building
-	_building = nearestObject [player, "HouseBase"];
-	if(!isNull _building) then {
-		if([player,_building] call fnc_isInsideBuilding) then {
-			//Make sure thate Fire and Building Effect can only appear single		Not used at the moment
-			//if(!_hasfireffect && _fire_factor > _building_factor) then {
-				_difference = _difference + _building_factor;
-			//};
-			_isinbuilding	= true;
-			dayz_inside 	= true;
-		} else {
-			dayz_inside 	= false;
-		};
+	if([player] call fnc_isInsideBuilding) then {
+		_difference = _difference + _building_factor;
+		_isinbuilding	= true;
+		dayz_inside 	= true;
 	} else {
 		dayz_inside 	= false;
 	};
@@ -117,18 +113,22 @@ Missing:
 	};
 	
 	//DayZ: Namalsk warm clothing
-	if ((typeOf player) == "CamoWinter_DZN") then {
+	if (((typeOf player) == "CamoWinter_DZN") || ((typeOf player) == "CamoWinterW_DZN")) then {
 		_difference 	= _difference + _warm_clothes;
 	};
 	
 	//DayZ: Namalsk ghillie suit
-	if ((typeOf player) == "Sniper1_DZ") then {
+	if (((typeOf player) == "Sniper1_DZ") || ((typeOf player) == "Sniper1W_DZN")) then {
 		_difference 	= _difference + _ghillie_clothes;
 	};
 
-
 	//NEGATIVE  EFFECTS
-	
+
+	//DayZ: Namalsk camo clothing
+	if ((typeOf player) == "Camo1_DZ") then {
+		_difference 	= _difference + _camo_clothes;
+	};
+
 	//water
 	if(surfaceIsWater getPosATL player || dayz_isSwimming) then {
 		_difference = _difference + _water_factor;
@@ -136,8 +136,14 @@ Missing:
 	
 	//rain
 	if(_raining && !_isinvehicle && !_isinbuilding) then {
-		_difference = _difference + _rain_factor;
+		_difference = _difference + (rain * _rain_factor);
 	};
+	
+	//DayZ: Namalsk snowfall
+	if(_snowfall && !_isinvehicle && !_isinbuilding) then {
+		_difference = _difference + (snow * _snowfall_factor);
+	};
+	
 	
 	//night
 	private ["_daytime"];
@@ -166,8 +172,6 @@ Missing:
 	if(!_isinvehicle && !_isinbuilding && ((surfaceType getPos player) == "#nam_snow")) then {
 		_difference = _difference + _snow_factor;
 	};
-	
-	//diag_log format ["DAYZ: NAMALSK TEMP PRECALC DIFF %1", _difference];
 	
 	//Calculate Change Value			Basic Factor			Looptime Correction			Adjust Value to current used temperatur scala
 	_difference = _difference * SleepTemperatur / (60 / _looptime)		* ((dayz_temperaturmax - dayz_temperaturmin) / 100);

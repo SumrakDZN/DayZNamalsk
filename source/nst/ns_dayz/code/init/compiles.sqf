@@ -45,8 +45,7 @@ if (!isDedicated) then {
 	player_throwObject = 		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_throwObject.sqf";
 	player_alertZombies = 		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_alertZombies.sqf";
 	player_fireMonitor = 		compile preprocessFileLineNumbers "\z\addons\dayz_code\system\fire_monitor.sqf";
-	player_combatLogged =		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_combatLogged.sqf";
-	
+
 	//Objects
 	object_roadFlare = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_roadFlare.sqf";
 	object_setpitchbank	=		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_setpitchbank.sqf";
@@ -90,12 +89,28 @@ if (!isDedicated) then {
 	onPreloadStarted 			"dayz_preloadFinished = false;";
 	onPreloadFinished 			"dayz_preloadFinished = true;";
 	
+	// TODO: need move it in player_monitor.fsm
+	// allow player disconnect from server, if loading hang, kicked by BE etc.
+	[] spawn {
+		private["_timeOut"];
+		_timeOut = 0;
+		while { _timeOut < 60 } do {
+			_timeOut = _timeOut + 1;
+			sleep 1;
+		};
+		if ( !dayz_preloadFinished ) then {
+			endLoadingScreen;
+			disableUserInput false;
+			cutText ["Something went wrong! disconnect and try again!", "BLACK OUT",1];
+			player enableSimulation false;
+		};
+	}; 
 	dayz_losChance = {
 		private["_agent","_maxDis","_dis","_val","_maxExp","_myExp"];
 		_agent = 	_this select 0;
 		_dis =		_this select 1;
 		_maxDis = 	_this select 2;
-		diag_log ("VAL:  " + str(_this));
+		//diag_log ("VAL:  " + str(_this));
 		_val = 		(_maxDis - _dis) max 0;
 		_maxExp = 	((exp 2) * _maxDis);
 		_myExp = 	((exp 2) * (_val)) / _maxExp;
@@ -104,7 +119,7 @@ if (!isDedicated) then {
 	};
 	
 	ui_initDisplay = {
-		private["_control","_ctrlBleed","_display","_ctrlFracture"];
+		private["_control","_ctrlBleed","_display","_ctrlFracture","_ctrlDogFood","_ctrlDogWater","_ctrlDogWaterBorder", "_ctrlDogFoodBorder"];
 		disableSerialization;
 		_display = uiNamespace getVariable 'DAYZ_GUI_display';
 		_control = 	_display displayCtrl 1204;
@@ -117,6 +132,15 @@ if (!isDedicated) then {
 			_ctrlFracture = 	_display displayCtrl 1203;
 			_ctrlFracture ctrlShow false;
 		};
+		_ctrlDogFoodBorder = _display displayCtrl 1501;
+		_ctrlDogFoodBorder ctrlShow false;
+		_ctrlDogFood = _display displayCtrl 1701;
+		_ctrlDogFood ctrlShow false;
+		
+		_ctrlDogWaterBorder = _display displayCtrl 1502;
+		_ctrlDogWaterBorder ctrlShow false;
+		_ctrlDogWater = _display displayCtrl 1702;
+		_ctrlDogWater ctrlShow false
 	};
 	
 	dayz_losCheck = {
@@ -334,8 +358,9 @@ if (isServer) then {
 	
 //Both
 	//Start Dynamic Weather
-	execVM "\z\addons\dayz_code\external\DynamicWeatherEffects.sqf";
-
+	execVM "\nst\ns_dayz\code\external\DynamicWeatherEffects.sqf";		// DayZ: Namalsk
+	//execVM "\z\addons\dayz_code\external\DynamicWeatherEffects.sqf";	// classic DayZ
+	
 	fnc_buildWeightedArray = 	compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_buildWeightedArray.sqf";		//Checks which actions for nearby casualty
 	fnc_usec_damageVehicle =	compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_damageHandlerVehicle.sqf";		//Event handler run on damage
 	zombie_initialize = 		compile preprocessFileLineNumbers "\z\addons\dayz_code\init\zombie_init.sqf";
@@ -348,8 +373,10 @@ if (isServer) then {
 	object_delLocal =			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_delLocal.sqf";
 	object_cargoCheck =			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_cargoCheck.sqf";		//Run by the player or server to monitor changes in cargo contents
 	fnc_usec_damageHandler =	compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_damageHandler.sqf";		//Event handler run on damage
-	set_obj_dmg = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\set_obj_dmg.sqf";
-	fnc_vehicleEventHandler = 	compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\vehicle_init.sqf";			//Initialize vehicle
+	// Vehicle damage fix
+	vehicle_handleDamage    = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\vehicle_handleDamage.sqf";
+	vehicle_handleKilled    = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\vehicle_handleKilled.sqf";
+	fnc_vehicleEventHandler = 	compile preprocessFileLineNumbers "\z\addons\dayz_code\init\vehicle_init.sqf";			//Initialize vehicle
 	fnc_inString = 				compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_inString.sqf";	
 	fnc_isInsideBuilding = 		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_isInsideBuilding.sqf";	//_isInside = [_unit,_building] call fnc_isInsideBuilding;
 	dayz_zombieSpeak = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_speak.sqf";			//Used to generate random speech for a unit
@@ -369,7 +396,7 @@ if (isServer) then {
 	world_isDay = 				{if ((daytime < (24 - dayz_sunRise)) and (daytime > dayz_sunRise)) then {true} else {false}};
 	player_humanityChange =		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_humanityChange.sqf";
 	spawn_loot =				compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\spawn_loot.sqf";
-	//player_projectileNear = 		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_projectileNear.sqf";
+	player_projectileNear = 		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_projectileNear.sqf";
 	
 	player_sumMedical = {
 		private["_character","_wounds","_legs","_arms","_medical"];

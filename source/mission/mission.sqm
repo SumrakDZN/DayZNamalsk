@@ -13,13 +13,22 @@ class Mission
 		"ca_modules_functions",
 		"namalsk",
 		"ns_dayz",
+<<<<<<< HEAD
 		"ns_modules"
+=======
+		"ns_modules",
+		"cacharacters_e"
+>>>>>>> DayZ: Namalsk Update v0.72
 	};
 	addOnsAuto[]=
 	{
 		"dayz_weapons",
 		"ca_modules_functions",
 		"ns_modules",
+<<<<<<< HEAD
+=======
+		"cacharacters_e",
+>>>>>>> DayZ: Namalsk Update v0.72
 		"namalsk"
 	};
 	randomSeed=11171215;
@@ -36,7 +45,11 @@ class Mission
 	};
 	class Groups
 	{
+<<<<<<< HEAD
 		items=3;
+=======
+		items=5;
+>>>>>>> DayZ: Namalsk Update v0.72
 		class Item0
 		{
 			side="WEST";
@@ -623,7 +636,11 @@ class Mission
 				items=1;
 				class Item0
 				{
+<<<<<<< HEAD
 					position[]={711.78632,0.5991993,3415.5725};
+=======
+					position[]={709.26312,0.63080907,3419.7778};
+>>>>>>> DayZ: Namalsk Update v0.72
 					id=51;
 					side="LOGIC";
 					vehicle="AIISpawn_NS_AII";
@@ -633,6 +650,46 @@ class Mission
 				};
 			};
 		};
+<<<<<<< HEAD
+=======
+		class Item3
+		{
+			side="EAST";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={78.115158,1.8671114,112.9837};
+					id=52;
+					side="EAST";
+					vehicle="TK_INS_Soldier_EP1";
+					leader=1;
+					skill=0.60000002;
+					text="sefik";
+					init="this allowDamage false;";
+				};
+			};
+		};
+		class Item4
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={709.88788,-50.00206,3315.8684};
+					id=53;
+					side="LOGIC";
+					vehicle="AmbientBlowout_NS_BLOW";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+				};
+			};
+		};
+>>>>>>> DayZ: Namalsk Update v0.72
 	};
 	class Markers
 	{

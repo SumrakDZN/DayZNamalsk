@@ -5,17 +5,13 @@ object_spawnDamVehicle =	compile preprocessFileLineNumbers "\z\addons\dayz_code\
 server_playerLogin =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerLogin.sqf";
 server_playerSetup =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerSetup.sqf";
 server_onPlayerDisconnect = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_onPlayerDisconnect.sqf";
-server_routinePlayerCheck =	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_routinePlayerCheck.sqf";
 server_updateObject =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updateObject.sqf";
 server_playerDied =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerDied.sqf";
-server_updatePlayer	=		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updatePlayer.sqf";
-server_playerStat =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerStat.sqf";
 server_publishObj = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_publishObject.sqf";
 local_publishObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_publishObj.sqf";		//Creates the object in DB
-local_deleteObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\local_deleteObj.sqf";		//Creates the object in DB
+local_deleteObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_deleteObj.sqf";		//Creates the object in DB
 local_createObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_createObj.sqf";		//Creates the object in DB
 server_playerSync =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerSync.sqf";
-//zombie_initialize =			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\zombie_initialize.sqf";
 zombie_findOwner =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\zombie_findOwner.sqf";
 
 server_updateNearbyObjects =	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updateNearbyObjects.sqf";
@@ -29,40 +25,25 @@ vehicle_handleInteract = {
 	private["_object"];
 	_object = _this select 0;
 	[_object, "all"] call server_updateObject;
-	[_object, "damage", true] call server_updateObject;
 };
 
 //event Handlers
 eh_localCleanup =			{
+	private ["_object"];
 	_object = _this select 0;
 	_object addEventHandler ["local", {
 		if(_this select 1) then {
 			private["_type","_unit"];
 			_unit = _this select 0;
 			_type = typeOf _unit;
-			 _myGroupUnit = group _unit;
- 			_unit removeAllMPEventHandlers "mpkilled";
- 			_unit removeAllMPEventHandlers "mphit";
- 			_unit removeAllMPEventHandlers "mprespawn";
- 			
- 			_unit removeAllEventHandlers "FiredNear";
-			_unit removeAllEventHandlers "HandleDamage";
-			_unit removeAllEventHandlers "Killed";
-			_unit removeAllEventHandlers "Fired";
-			_unit removeAllEventHandlers "GetOut";
-			_unit removeAllEventHandlers "GetIn";
-			_unit removeAllEventHandlers "Local";
-			clearVehicleInit _unit;
 			deleteVehicle _unit;
-			deleteGroup _myGroupUnit;
-			_unit = nil;
 			diag_log ("CLEANUP: DELETED A " + str(_type) );
 		};
 	}];
 };
 
 server_characterSync = {
-	//dayzCharDisco = [_characterID,_playerPos,[_weapons,_magazines],[typeOf _backpack,getWeaponCargo _backpack,getMagazineCargo _backpack],_medical,_currentState,_currentModel];
+	private ["_characterID","_playerPos","_playerGear","_playerBackp","_medical","_currentState","_currentModel","_key"];
 	_characterID = 	_this select 0;	
 	_playerPos =	_this select 1;
 	_playerGear =	_this select 2;
@@ -83,7 +64,7 @@ fnc_buildWeightedArray = 	compile preprocessFileLineNumbers "\z\addons\dayz_code
 onPlayerDisconnected 		"[_uid,_name] call server_onPlayerDisconnect;";
 
 server_hiveWrite = {
-	private["_resultArray","_data"];
+	private["_data"];
 	//diag_log ("ATTEMPT WRITE: " + _this);
 	_data = "HiveEXT" callExtension _this;
 	diag_log ("WRITE: " + _data);
@@ -99,50 +80,88 @@ server_hiveReadWrite = {
 	_resultArray;
 };
 
-spawn_heliCrash = {
-	private["_position","_veh","_num","_config","_itemType","_itemChance","_weights","_index","_iArray"];
-	
+heliCrash_dzn = {
+	private["_hcx","_helicrash","_veh","_num","_config","_itemType","_itemChance","_weights","_index","_iArray","_wpos","_lootpos"];
+	_hcx = _this select 0;
 	waitUntil{!isNil "BIS_fnc_selectRandom"};
 	if (isDedicated) then {
-	_position = [getMarkerPos "center",0,4000,10,0,2000,0] call BIS_fnc_findSafePos;
-	diag_log("DEBUG: Spawning a crashed helicopter at " + str(_position));
-	_veh = createVehicle ["UH1Wreck_DZ",_position, [], 0, "CAN_COLLIDE"];
-	dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_veh];
-	_veh setVariable ["ObjectID",1,true];
-	dayzFire = [_veh,2,time,false,false];
-	publicVariable "dayzFire";
-	if (isServer) then {
-		nul=dayzFire spawn BIS_Effects_Burn;
-	};
-	_num = round(random 4) + 3;
-	_config = 		configFile >> "CfgBuildingLootNamalsk" >> "HeliCrash";
-	_itemType =		[] + getArray (_config >> "itemType");
-	//diag_log ("DW_DEBUG: _itemType: " + str(_itemType));	
-	_itemChance =	[] + getArray (_config >> "itemChance");
-	//diag_log ("DW_DEBUG: _itemChance: " + str(_itemChance));	
-	//diag_log ("DW_DEBUG: (isnil fnc_buildWeightedArray): " + str(isnil "fnc_buildWeightedArray"));	
-	
-	waituntil {!isnil "fnc_buildWeightedArray"};
-	
-	_weights = [];
-	_weights = 		[_itemType,_itemChance] call fnc_buildWeightedArray;
-	//diag_log ("DW_DEBUG: _weights: " + str(_weights));	
-	for "_x" from 1 to _num do {
-		//create loot
-		_index = _weights call BIS_fnc_selectRandom;
-		sleep 1;
-		if (count _itemType > _index) then {
-			//diag_log ("DW_DEBUG: " + str(count (_itemType)) + " select " + str(_index));
-			_iArray = _itemType select _index;
-			_iArray set [2,_position];
-			_iArray set [3,5];
-			_iArray call spawn_loot;
-			_nearby = _position nearObjects ["WeaponHolder",20];
-			{
-				_x setVariable ["permaLoot",true];
-			} forEach _nearBy;
+		/*
+		"Land_mi8_crashed";4210.79;8913.34 _hcx == 1
+		"Land_mi8_crashed";5433.65;9282.45 _hcx == 2
+		"Land_mi8_crashed";5645.02;7973.14 _hcx == 3
+		"Land_mi8_crashed";5363.63;7161.82 _hcx == 4
+		"Land_mi8_crashed";2814.39;6391.89 _hcx == 5
+		"Land_mi8_crashed";4335.19;6424.07 _hcx == 6
+		"Land_mi8_crashed";4073.73;6457.54 _hcx == 7
+		"Land_mi8_crashed";5496.03;5985.08 _hcx == 8
+		"Land_wreck_c130j_ep1";3189.98;7507.8 _hcx == 9
+		*/
+		_helicrash = [0,0,0];
+		switch (_hcx) do {
+			case 1: {
+				_helicrash = ([4210.79,8913.34,0] nearestObject "Land_mi8_crashed");
+			};
+			case 2: {
+				_helicrash = ([5433.65,9282.45,0] nearestObject "Land_mi8_crashed");
+			};
+			case 3: {
+				_helicrash = ([5645.02,7973.14,0] nearestObject "Land_mi8_crashed");
+			};
+			case 4: {
+				_helicrash = ([5363.63,7161.82,0] nearestObject "Land_mi8_crashed");
+			};
+			case 5: {
+				_helicrash = ([2814.39,6391.89,0] nearestObject "Land_mi8_crashed");
+			};
+			case 6: {
+				_helicrash = ([4335.19,6424.07,0] nearestObject "Land_mi8_crashed");
+			};
+			case 7: {
+				_helicrash = ([4073.73,6457.54,0] nearestObject "Land_mi8_crashed");
+			};
+			case 8: {
+				_helicrash = ([5496.03,5985.08,0] nearestObject "Land_mi8_crashed");
+			};
+			case 9: {
+				_helicrash = ([3189.98,7507.8 ,0] nearestObject "Land_wreck_c130j_ep1");
+			};
+			default {
+				diag_log("ERROR: Cannot spawn helicrash loot (objNull)!");
+			};
 		};
-	};
+		
+		diag_log("DEBUG: Spawning HeliCrashNamalsk permaLoot on helicrash #" + str(_hcx) + " " + str(getPos _helicrash) + "");
+
+		_config = 		configFile >> dayzNam_buildingLoot >> "HeliCrashNamalsk";
+		_itemType =		[] + getArray (_config >> "itemType");
+		_itemChance =	[] + getArray (_config >> "itemChance");
+		
+		waituntil {!isnil "fnc_buildWeightedArray"};
+		
+		_weights = [];
+		_weights = 		[_itemType,_itemChance] call fnc_buildWeightedArray;
+		_lootpos = [] + getArray (configFile >> dayzNam_buildingLoot >> (typeOf _helicrash) >> "lootPos");
+
+		if (_helicrash != objNull) then {
+			for "_x" from 1 to (count _lootpos) do {
+				//create lootpos
+				_wpos = _helicrash modelToWorld (_lootpos select (_x - 1));
+				//create loot
+				_index = _weights call BIS_fnc_selectRandom;
+				sleep 1;
+				if (count _itemType > _index) then {
+					//diag_log ("DW_DEBUG: " + str(count (_itemType)) + " select " + str(_index));
+					_iArray = _itemType select _index;
+					_iArray set [2,_wpos];
+					_iArray set [3,5];
+					_iArray call spawn_loot;
+					_nearby = _wpos nearObjects ["WeaponHolder",20];
+					{
+						_x setVariable ["permaLoot",true];
+					} forEach _nearBy;
+				};
+			};
+		};
 	};
 };
 
@@ -158,7 +177,7 @@ medical_ckg_dzn = {
 	_veh setVariable ["ObjectID",1,true];
 
 	_num = round(random 3) + 1;
-	_config = 		configFile >> "CfgBuildingLootNamalsk" >> "HospitalNamalsk";
+	_config = 		configFile >> dayzNam_buildingLoot >> "HospitalNamalsk";
 	_itemType =		[] + getArray (_config >> "itemType");	
 	_itemChance =	[] + getArray (_config >> "itemChance");
 
@@ -216,31 +235,31 @@ server_getDiff2 =	{
 };
 
 dayz_objectUID = {
-	private["_position","_p1","_p2","_p3","_dir","_key","_object"];
+	private["_position","_dir","_key","_object"];
 	_object = _this;
 	_position = getPosATL _object;
-	_p1 = round((_position select 0) * 10);
-	_p2 = round((_position select 1) * 10);
-	_p3 = round((_position select 2) * 10);
-	_dir = round(getDir _object);
-	_key = format["%1%2%3%4",_p1,_p2,_p3,_dir];
+	_dir = direction _object;
+	_key = [_dir,_position] call dayz_objectUID2;
 	_key
 };
 
 dayz_objectUID2 = {
-	private["_position","_p1","_p2","_p3","_dir","_key"];
-	_dir = round(_this select 0);
+	private["_position","_dir","_key"];
+	_dir = _this select 0;
+	_key = "";
 	_position = _this select 1;
-	_p1 = round((_position select 0) * 10);
-	_p2 = round((_position select 1) * 10);
-	_p3 = round((_position select 2) * 10);
-	_key = format["%1%2%3%4",_p1,_p2,_p3,_dir];
+	{
+		_x = _x * 10;
+		if ( _x < 0 ) then { _x = _x * -10 };
+		_key = _key + str(round(_x));
+	} forEach _position;
+	_key = _key + str(round(_dir));
 	_key
 };
 
 dayz_recordLogin = {
 	private["_key"];
 	_key = format["CHILD:103:%1:%2:%3:",_this select 0,_this select 1,_this select 2];
-	diag_log ("DISCONNECT: "+ str(_key));
+	diag_log ("HIVE: WRITE: "+ str(_key));
 	_key call server_hiveWrite;
 };

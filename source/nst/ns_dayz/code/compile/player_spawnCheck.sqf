@@ -10,7 +10,7 @@ if (!_inVehicle) then {
 	_tooManyZs = {alive _x} count (_position nearEntities ["zZombie_Base",400]) > dayz_maxLocalZombies;
 	{
 		_type = typeOf _x;
-		_config = 		configFile >> "CfgBuildingLootNamalsk" >> _type;
+		_config = 		configFile >> dayzNam_buildingLoot >> _type;
 		_canLoot = 		isClass (_config);		
 		if (_canLoot) then {			
 			_dis = _x distance player;

@@ -34,4 +34,4 @@ if (count _list < dayz_maxAnimals) then {
 		_id = [_pos,_agent] execFSM "\z\addons\dayz_code\system\animal_agent.fsm";
 	};
 	sleep 1;
-};z
+};

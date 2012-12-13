@@ -11,7 +11,7 @@ while {!r_player_dead} do {
 		_pause = ((random 5) + 2) + _length;
 	};
 
-	if (!r_player_unconscious and !r_pitchWhine) then {
+	if (!r_player_unconscious and !r_pitchWhine and !ns_blow_ambient_music) then {
 		playMusic _sound;
 	};
 	sleep _pause;

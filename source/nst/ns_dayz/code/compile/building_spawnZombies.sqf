@@ -1,7 +1,7 @@
 private["_serial","_positions","_min","_lootGroup","_iArray","_iItem","_iClass","_iPos","_item","_mags","_qty","_max","_tQty","_canType","_obj","_type","_nearBy","_clean","_unitTypes","_max","_isNoone","_config","_num","_originalPos","_zombieChance","_rnd","_fastRun"];
 _obj = 			_this select 0;
 _type = 		typeOf _obj;
-_config = 		configFile >> "CfgBuildingLootNamalsk" >> _type;
+_config = 		configFile >> dayzNam_buildingLoot >> _type;
 _canLoot = 		isClass (_config);
 _fastRun = 		_this select 1;
 _originalPos = 	getPosATL _obj;
@@ -49,5 +49,11 @@ if (_canLoot) then {
 			};
 		} forEach _positions;
 	};
+	
+	if (_type == "Land_bspawn" && dzn_ns_bloodsucker) then {
+		"ns_bloodsucker" createUnit [[(_originalPos select 0) - (random 60), (_originalPos select 1) + (random 60), 0], group sefik, "",1,"CORPORAL"];
+		diag_log ("DEBUG: " + _type + " / ns_bloodsucker spawn");
+	};
+	
 	dayz_buildingMonitor set [count dayz_buildingMonitor,_obj];
 };

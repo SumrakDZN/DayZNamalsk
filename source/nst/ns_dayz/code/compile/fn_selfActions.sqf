@@ -68,7 +68,7 @@ if (!isNull cursorTarget and !_inVehicle and (player distance cursorTarget < 4))
 		player removeAction s_player_deleteBuild;
 		s_player_deleteBuild = -1;
 	};
-	
+	/*
 	//Allow player to force save
 	if((_isVehicle or _isTent) and _canDo and !_isMan) then {
 		if (s_player_forceSave < 0) then {
@@ -78,7 +78,7 @@ if (!isNull cursorTarget and !_inVehicle and (player distance cursorTarget < 4))
 		player removeAction s_player_forceSave;
 		s_player_forceSave = -1;
 	};
-	
+	*/
 	//Allow player to fill jerrycan
 	if(_hasFuelE and _isFuel and _canDo) then {
 		if (s_player_fillfuel < 0) then {
@@ -135,7 +135,7 @@ if (!isNull cursorTarget and !_inVehicle and (player distance cursorTarget < 4))
 	};
 	
 	//Repairing Vehicles
-	if ((dayz_myCursorTarget != cursorTarget) and !_isMan and _hasToolbox) then {
+	if ((dayz_myCursorTarget != cursorTarget) and !_isMan and _hasToolbox and (damage cursorTarget < 1)) then {
 		_vehicle = cursorTarget;
 		{dayz_myCursorTarget removeAction _x} forEach s_player_repairActions;s_player_repairActions = [];
 		dayz_myCursorTarget = _vehicle;
