@@ -191,10 +191,10 @@ allowConnection = true;
 
 //Spawn static helicrash loot - DayZ: Namalsk
 for "_x" from 1 to 9 do {
-	_id = [_x] spawn heliCrash_dzn;
+	_id = [_x] spawn server_heliCrash_dzn;
 };
 
 // Spawn medical care packages - DayZ: Namalsk
 for "_x" from 1 to 6 do {
-	_id = [] spawn medical_ckg_dzn;
+	_id = [] spawn server_medical_ckg_dzn;
 };

@@ -6,14 +6,11 @@ hiveInUse	=	true;
 initialized = false;
 dayz_previousID = 0;
 
-<<<<<<< HEAD
-=======
 dzn_ns_bloodsucker = true;		// Make this falso for disabling bloodsucker spawn
 ns_blowout = true;			// Make this false for disabling random EVR discharges (blowout module)
 ns_blowout_dayz = true;		// Leave this always true or it will create a very huuuge mess
-dayzNam_buildingLoot = "CfgBuildingLootNamalskNOSniper";	// can be CfgBuildingLootNamalskNOER7 (function of this pretty obvious), CfgBuildingLootNamalskNOSniper (CfgBuildingLootNamalskNOER7 + no sniper rifles), default is CfgBuildingLootNamalsk
+dayzNam_buildingLoot = "CfgBuildingLootNamalsk";	// can be CfgBuildingLootNamalskNOER7 (function of this pretty obvious), CfgBuildingLootNamalskNOSniper (CfgBuildingLootNamalskNOER7 + no sniper rifles), default is CfgBuildingLootNamalsk
 
->>>>>>> DayZ: Namalsk Update v0.72
 call compile preprocessFileLineNumbers "\nst\ns_dayz\code\init\variables.sqf"; //Initilize the Variables (IMPORTANT: Must happen very early)
 progressLoadingScreen 0.1;
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\publicEH.sqf";	//Initilize the publicVariable event handlers
@@ -23,12 +20,9 @@ progressLoadingScreen 0.4;
 call compile preprocessFileLineNumbers "\nst\ns_dayz\code\init\compiles.sqf"; //Compile regular functions
 progressLoadingScreen 1.0;
 
-<<<<<<< HEAD
-=======
 player setVariable ["BIS_noCoreConversations", true];
 enableRadio false;
 
->>>>>>> DayZ: Namalsk Update v0.72
 "filmic" setToneMappingParams [0.153, 0.357, 0.231, 0.1573, 0.011, 3.750, 6, 4]; setToneMapping "Filmic";
 
 if (isServer) then {
