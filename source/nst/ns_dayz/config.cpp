@@ -34,7 +34,7 @@ class CfgMods {
    hidePicture = "false";
    hideName = "false";
    action = "http://www.nightstalkers.cz/en_index_dn.php";
-   version = "0.70";
+   version = "0.73";
   };
 };
 /*
@@ -1014,7 +1014,7 @@ class CfgSurvivalNamalsk
   };
   class Cow: Default
   {
-   yield = 4; //8
+   yield = 6; //8
   };
   class Cow01: Cow{};
   class Cow02: Cow{};
@@ -1026,17 +1026,21 @@ class CfgSurvivalNamalsk
   };
   class Sheep: Default
   {
-   yield = 2; //5
+   yield = 4; //5
   };
   class WildBoar: Default
   {
-   yield = 3; //4
+   yield = 4; //4
   };
  };
 };
 
 
 class CfgLoot {
+	bloodsucker[] = {
+		{ "ItemBloodbag"},
+		{ 0.02 }
+	};
 	civilianNamalsk[] = {
 		{ "TrashTinCan","TrashJackDaniels","ItemSodaEmpty","ItemSodaCoke","ItemSodaPepsi","FoodCanBakedBeans","FoodCanSardines","FoodCanFrankBeans","FoodCanPasta","8Rnd_9x18_Makarov","8Rnd_9x18_MakarovSD","7Rnd_45ACP_1911","2Rnd_shotgun_74Slug","2Rnd_shotgun_74Pellets","ItemBandage","ItemPainkiller" },
 		{ 0.09,0.09,0.09,0.03,0.03,0.01,0.01,0.01,0.01,0.07,0.03,0.05,0.05,0.05,0.06,0.06 }
@@ -3606,6 +3610,9 @@ class CfgBuildingLootNamalsk: CfgBuildingLoot {
 			{ -0.217285,-14.1816,-4.8399 },
 			{ 0.369629,-17.7705,-5.03864 },
 			{ -1.04736,-16.7305,-4.84344 }
+		};
+		hangPos[] = {
+			{-0.520508,3.19873,-6.151}
 		};
 	};
 	

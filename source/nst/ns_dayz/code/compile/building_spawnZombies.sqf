@@ -50,9 +50,23 @@ if (_canLoot) then {
 		} forEach _positions;
 	};
 	
-	if (_type == "Land_bspawn" && dzn_ns_bloodsucker) then {
-		"ns_bloodsucker" createUnit [[(_originalPos select 0) - (random 60), (_originalPos select 1) + (random 60), 0], group sefik, "",1,"CORPORAL"];
+	private["_bloodsucker", "_lootType"];
+	if (_type == "Land_bspawn" && dzn_ns_bloodsucker && ((random 100) < dzn_ns_bloodsucker_den)) then {
+		_bloodsucker = "ns_bloodsucker" createUnit [[(_originalPos select 0) - (random 60), (_originalPos select 1) + (random 60), 0], group sefik, "",1,"CORPORAL"];
 		diag_log ("DEBUG: " + _type + " / ns_bloodsucker spawn");
+		_rnd = random 1;
+		if (_rnd > 0.3) then {
+			_lootType = 		configFile >> "CfgVehicles" >> "ns_bloodsucker" >> "zombieLoot";
+			if (isText _lootType) then {
+				_array = []+ getArray (configFile >> "cfgLoot" >> getText(_lootType));
+				if (count _array > 0) then {
+					_loot = _array call BIS_fnc_selectRandomWeighted;
+					if(!isNil "_array") then {
+						_bloodsucker addMagazine _loot;
+					};
+				};
+			};
+		};
 	};
 	
 	dayz_buildingMonitor set [count dayz_buildingMonitor,_obj];

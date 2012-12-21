@@ -33,15 +33,16 @@ Missing:
 	_building_factor 	=	4;  // DayZ: Namalsk, was 7
 	_sun_factor			=	4;  //max sunfactor linear over the day. highest value in the middle of the day
 	_warm_clothes		=	35; // DayZ: Namalsk
-	_ghillie_clothes	=	8; // DayZ: Namalsk
+	_ghillie_clothes	=	8;  // DayZ: Namalsk
+	_ghillie_wclothes	=	16; // DayZ: Namalsk
 	
 	_water_factor		=	-40;
 	_snow_factor		=	-16; // DayZ: Namalsk
 	_snowfall_factor	=	-14; // DayZ: Namalsk
 	_rain_factor		=	-8;
-	_night_factor		=	-8; // DayZ: Namalsk, was -1.5
+	_night_factor		=	-8;  // DayZ: Namalsk, was -1.5
 	_wind_factor		=	-1;
-	_camo_clothes		=	-2;
+	_camo_clothes		=	-2;  // DayZ: Namalsk
 	
 	_difference 	= 0;
 	_hasfireffect	= false;
@@ -118,10 +119,13 @@ Missing:
 	};
 	
 	//DayZ: Namalsk ghillie suit
-	if (((typeOf player) == "Sniper1_DZ") || ((typeOf player) == "Sniper1W_DZN")) then {
+	if (((typeOf player) == "Sniper1_DZ")) then {
 		_difference 	= _difference + _ghillie_clothes;
 	};
-
+	if ((typeOf player) == "Sniper1W_DZN") then {
+		_difference 	= _difference + _ghillie_wclothes;
+	};
+	
 	//NEGATIVE  EFFECTS
 
 	//DayZ: Namalsk camo clothing
