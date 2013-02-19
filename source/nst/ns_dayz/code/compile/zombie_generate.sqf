@@ -1,9 +1,9 @@
 private["_position","_doLoiter","_unitTypes","_isNoone","_loot","_array","_agent","_type","_radius","_method","_nearByPlayer","_attempt","_myDest","_newDest","_lootType"];
 _position = 	_this select 0;
-_doLoiter = 	_this select 1;
-_unitTypes = 	_this select 2;
+_unitTypes = 	_this select 1;
+_doLoiter = 	true;
 
-_isNoone = 	{isPlayer _x} count (_position nearEntities ["AllVehicles",30]) == 0;
+_isNoone = 	{isPlayer _x} count (_position nearEntities ["CAManBase",30]) == 0;
 _loot = 	"";
 _array = 	[];
 _agent = 	objNull;
@@ -46,14 +46,10 @@ if (random 1 > 0.7) then {
 
 //diag_log ("CREATED: "  + str(_agent));
 
+
+
 //_agent setVariable["host",player,true];
-if (!_doLoiter) then {
-	_agent setPosATL _position;
-	_agent setDir round(random 180);
-	if (_nearByPlayer) then {
-		deleteVehicle _agent;
-	};
-} else {
+if (_doLoiter) then {
 	if (_nearByPlayer) then {
 		_attempt = 0;
 		while {_nearByPlayer} do {
@@ -86,6 +82,7 @@ if (_rnd > 0.3) then {
 		_array = []+ getArray (configFile >> "cfgLoot" >> getText(_lootType));
 		if (count _array > 0) then {
 			_loot = _array call BIS_fnc_selectRandomWeighted;
+			//diag_log ("Zed Loot: " +(_loot));
 			if(!isNil "_array") then {
 				_agent addMagazine _loot;
 			};

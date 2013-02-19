@@ -134,7 +134,7 @@ Missing:
 	};
 
 	//water
-	if(surfaceIsWater getPosATL player || dayz_isSwimming) then {
+	if((surfaceIsWater getPosATL player) && dayz_isSwimming) then {
 		_difference = _difference + _water_factor;
 	};
 	

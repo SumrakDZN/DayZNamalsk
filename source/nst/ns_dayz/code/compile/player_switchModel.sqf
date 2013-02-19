@@ -190,5 +190,5 @@ private ["_newBackpackType","_backpackWpn","_backpackMag"];
 
 	_playerUID=getPlayerUID player;
 	_playerObjName = format["player%1",_playerUID];
-	call compile format["player%1 = player;",_playerUID];
+	call compile format["%1 = player;",_playerObjName];
 	publicVariable _playerObjName;

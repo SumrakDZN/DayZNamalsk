@@ -1,8 +1,13 @@
-startLoadingScreen ["","DayZ_loadingScreen"];
+/*	
+	INITILIZATION
+*/
+startLoadingScreen ["","RscDisplayLoadCustom"];
+cutText ["","BLACK OUT"];
 enableSaving [false, false];
 
-dayZ_instance = 1;	//The instance
-hiveInUse	=	true;
+//REALLY IMPORTANT VALUES
+dayZ_instance = 1;					//The instance
+dayzHiveRequest = [];
 initialized = false;
 dayz_previousID = 0;
 
@@ -10,7 +15,8 @@ dzn_ns_bloodsucker = true;		// Make this falso for disabling bloodsucker spawn
 dzn_ns_bloodsucker_den = 40;	// Spawn chance of bloodsuckers, max 100 (100 == 0.72 version status == 100% spawn), ignore if dzn_ns_bloodsucker set to false
 ns_blowout = true;			// Make this false for disabling random EVR discharges (blowout module)
 ns_blowout_dayz = true;		// Leave this always true or it will create a very huuuge mess
-dayzNam_buildingLoot = "CfgBuildingLootNamalskNOSniper";	// can be CfgBuildingLootNamalskNOER7 (function of this pretty obvious), CfgBuildingLootNamalskNOSniper (CfgBuildingLootNamalskNOER7 + no sniper rifles), default is CfgBuildingLootNamalsk
+ns_blow_delaymod = 1;		// Multiplier of times between each EVR dischargers, 1x value default (normal pre-0.74 times)
+dayzNam_buildingLoot = "CfgBuildingLootNamalsk";	// can be CfgBuildingLootNamalskNOER7 (function of this pretty obvious), CfgBuildingLootNamalskNOSniper (CfgBuildingLootNamalskNOER7 + no sniper rifles), default is CfgBuildingLootNamalsk
 
 call compile preprocessFileLineNumbers "\nst\ns_dayz\code\init\variables.sqf"; //Initilize the Variables (IMPORTANT: Must happen very early)
 progressLoadingScreen 0.1;
@@ -26,9 +32,20 @@ enableRadio false;
 
 "filmic" setToneMappingParams [0.153, 0.357, 0.231, 0.1573, 0.011, 3.750, 6, 4]; setToneMapping "Filmic";
 
+if ((!isServer) && (isNull player) ) then
+{
+waitUntil {!isNull player};
+waitUntil {time > 3};
+};
+
+if ((!isServer) && (player != player)) then
+{
+  waitUntil {player == player};
+  waitUntil {time > 3};
+};
+
 if (isServer) then {
-	hiveInUse = true;
-	_serverMonitor = [] execVM "\z\addons\dayz_server\system\server_monitor.sqf";
+	_serverMonitor = 	[] execVM "\z\addons\dayz_code\system\server_monitor.sqf";
 };
 
 if (!isDedicated) then {
