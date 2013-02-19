@@ -1,38 +1,69 @@
 waituntil {!isnil "bis_fnc_init"};
 
+BIS_MPF_remoteExecutionServer = {
+	if ((_this select 1) select 2 == "JIPrequest") then {
+		[nil,(_this select 1) select 0,"loc",rJIPEXEC,[any,any,"per","execVM","ca\Modules\Functions\init.sqf"]] call RE;
+	};
+};
+
 BIS_Effects_Burn =			{};
-object_spawnDamVehicle =	compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_spawnDamVehicle.sqf";
 server_playerLogin =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerLogin.sqf";
 server_playerSetup =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerSetup.sqf";
 server_onPlayerDisconnect = compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_onPlayerDisconnect.sqf";
 server_updateObject =		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updateObject.sqf";
 server_playerDied =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerDied.sqf";
-server_publishObj = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_publishObject.sqf";
-local_publishObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_publishObj.sqf";		//Creates the object in DB
-local_deleteObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_deleteObj.sqf";		//Creates the object in DB
-local_createObj = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_createObj.sqf";		//Creates the object in DB
+server_publishObj = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_publishObject.sqf";	//Creates the object in DB
+server_deleteObj =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_deleteObj.sqf"; 	//Removes the object from the DB
 server_playerSync =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerSync.sqf";
 zombie_findOwner =			compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\zombie_findOwner.sqf";
-
 server_updateNearbyObjects =	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_updateNearbyObjects.sqf";
+server_spawnCrashSite  =    compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_spawnCrashSite.sqf";
 
 // DayZ: Namalsk functions
 server_heliCrash_dzn = 		compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_heliCrash_dzn.sqf";
 server_medical_ckg_dzn = 	compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_medical_ckg_dzn.sqf";
 
-//Get instance name (e.g. dayz_1.chernarus)
-fnc_instanceName = {
-	"dayz_" + str(dayz_instance) + "." + worldName
-};
-
 vehicle_handleInteract = {
 	private["_object"];
 	_object = _this select 0;
+	needUpdate_objects = needUpdate_objects - [_object];
 	[_object, "all"] call server_updateObject;
 };
 
+vehicle_handleServerKilled = {
+	private["_unit","_killer"];
+	_unit = _this select 0;
+	_killer = _this select 1;
+		
+	[_unit, "killed"] call server_updateObject;
+	
+	_unit removeAllMPEventHandlers "MPKilled";
+	_unit removeAllEventHandlers "Killed";
+	_unit removeAllEventHandlers "HandleDamage";
+	_unit removeAllEventHandlers "GetIn";
+	_unit removeAllEventHandlers "GetOut";
+};
+
+check_publishobject = {
+	private["_allowed","_allowedObjects","_object"];
+
+	_object = _this select 0;
+	_playername = _this select 1;
+	_allowedObjects = ["TentStorage", "Hedgehog_DZ", "Sandbag1_DZ","TrapBear","Wire_cat1"];
+	_allowed = false;
+
+	diag_log format ["DEBUG: Checking if Object: %1 is allowed published by %2", _object, _playername];
+
+	if ((typeOf _object) in _allowedObjects) then {
+		diag_log format ["DEBUG: Object: %1 published by %2 is Safe",_object, _playername];
+		_allowed = true;
+	};
+
+	_allowed
+};
+
 //event Handlers
-eh_localCleanup =			{
+eh_localCleanup = {
 	private ["_object"];
 	_object = _this select 0;
 	_object addEventHandler ["local", {
@@ -40,10 +71,41 @@ eh_localCleanup =			{
 			private["_type","_unit"];
 			_unit = _this select 0;
 			_type = typeOf _unit;
+			 _myGroupUnit = group _unit;
+ 			_unit removeAllMPEventHandlers "mpkilled";
+ 			_unit removeAllMPEventHandlers "mphit";
+ 			_unit removeAllMPEventHandlers "mprespawn";
+ 			_unit removeAllEventHandlers "FiredNear";
+			_unit removeAllEventHandlers "HandleDamage";
+			_unit removeAllEventHandlers "Killed";
+			_unit removeAllEventHandlers "Fired";
+			_unit removeAllEventHandlers "GetOut";
+			_unit removeAllEventHandlers "GetIn";
+			_unit removeAllEventHandlers "Local";
+			clearVehicleInit _unit;
 			deleteVehicle _unit;
+			deleteGroup _myGroupUnit;
+			_unit = nil;
 			diag_log ("CLEANUP: DELETED A " + str(_type) );
 		};
 	}];
+};
+
+server_hiveWrite = {
+	private["_data"];
+	//diag_log ("ATTEMPT WRITE: " + _this);
+	_data = "HiveExt" callExtension _this;
+	diag_log ("WRITE: " +str(_data));
+};
+
+server_hiveReadWrite = {
+	private["_key","_resultArray","_data"];
+	_key = _this;
+	//diag_log ("ATTEMPT READ/WRITE: " + _key);
+	_data = "HiveExt" callExtension _key;
+	diag_log ("READ/WRITE: " +str(_data));
+	_resultArray = call compile format ["%1",_data];
+	_resultArray
 };
 
 server_characterSync = {
@@ -61,28 +123,8 @@ server_characterSync = {
 	_key call server_hiveWrite;
 };
 
-//was missing for server
-fnc_buildWeightedArray = 	compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_buildWeightedArray.sqf";		//Checks which actions for nearby casualty
-
 //onPlayerConnected 		"[_uid,_name] spawn server_onPlayerConnect;";
 onPlayerDisconnected 		"[_uid,_name] call server_onPlayerDisconnect;";
-
-server_hiveWrite = {
-	private["_data"];
-	//diag_log ("ATTEMPT WRITE: " + _this);
-	_data = "HiveEXT" callExtension _this;
-	diag_log ("WRITE: " + _data);
-};
-
-server_hiveReadWrite = {
-	private["_key","_resultArray","_data"];
-	_key = _this select 0;
-	//diag_log ("ATTEMPT READ/WRITE: " + _key);
-	_data = "HiveEXT" callExtension _key;
-	diag_log ("READ/WRITE: " + _data);
-	_resultArray = call compile format ["%1;",_data];
-	_resultArray;
-};
 
 server_getDiff =	{
 	private["_variable","_object","_vNew","_vOld","_result"];
@@ -119,7 +161,7 @@ dayz_objectUID = {
 	_position = getPosATL _object;
 	_dir = direction _object;
 	_key = [_dir,_position] call dayz_objectUID2;
-	_key
+    _key
 };
 
 dayz_objectUID2 = {
@@ -139,6 +181,5 @@ dayz_objectUID2 = {
 dayz_recordLogin = {
 	private["_key"];
 	_key = format["CHILD:103:%1:%2:%3:",_this select 0,_this select 1,_this select 2];
-	diag_log ("HIVE: WRITE: "+ str(_key));
 	_key call server_hiveWrite;
 };
