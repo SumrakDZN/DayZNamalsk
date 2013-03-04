@@ -5,6 +5,14 @@ dayz_hiveVersionNo = 	getNumber(configFile >> "CfgMods" >> "DayZ" >> "hiveVersio
 dayzNam_versionNo = getText(configFile >> "CfgMods" >> "nc_dzn" >> "version");
 _script = getText(missionConfigFile >> "onPauseScript");
 
+if ((count playableUnits == 0) and !isDedicated) then {
+	isSinglePlayer = true;
+};
+
+waitUntil{initialized}; //means all the functions are now defined
+
+diag_log "HIVE: Starting";
+
 if (_script != "") then
 {
 	diag_log "MISSION: File Updated";
@@ -15,14 +23,6 @@ if (_script != "") then
 		sleep 1;
 	};
 };
-
-if ((count playableUnits == 0) and !isDedicated) then {
-	isSinglePlayer = true;
-};
-
-waitUntil{initialized}; //means all the functions are now defined
-
-diag_log "HIVE: Starting";
 
 //Stream in objects
 	/* STREAM OBJECTS */
@@ -109,6 +109,7 @@ diag_log "HIVE: Starting";
 					_objWpnQty = (_intentory select 0) select 1;
 					_countr = 0;					
 					{
+						if (_x == "Crossbow") then { _x = "Crossbow_DZ" }; // Convert Crossbow to Crossbow_DZ
 						_isOK = 	isClass(configFile >> "CfgWeapons" >> _x);
 						if (_isOK) then {
 							_block = 	getNumber(configFile >> "CfgWeapons" >> _x >> "stopThis") == 1;
@@ -124,6 +125,7 @@ diag_log "HIVE: Starting";
 					_objWpnQty = (_intentory select 1) select 1;
 					_countr = 0;
 					{
+						if (_x == "BoltSteel") then { _x = "WoodenArrow" }; // Convert BoltSteel to WoodenArrow
 						_isOK = 	isClass(configFile >> "CfgMagazines" >> _x);
 						if (_isOK) then {
 							_block = 	getNumber(configFile >> "CfgMagazines" >> _x >> "stopThis") == 1;
@@ -178,7 +180,10 @@ diag_log "HIVE: Starting";
 	if(_outcome == "PASS") then {
 		_date = _result select 1; 
 		if(isDedicated) then {
-			["dayzSetDate",_date] call broadcastRpcCallAll;
+			//["dayzSetDate",_date] call broadcastRpcCallAll;
+			setDate _date;
+			dayzSetDate = _date;
+			publicVariable "dayzSetDate";
 		};
 
 		diag_log ("HIVE: Local Time set to " + str(_date));
@@ -195,6 +200,8 @@ if (isDedicated) then {
 
 allowConnection = true;
 
+// [_guaranteedLoot, _randomizedLoot, _frequency, _variance, _spawnChance, _spawnMarker, _spawnRadius, _spawnFire, _fadeFire]
+// nul = [3, 4, (50 * 60), (15 * 60), 0.75, 'center', 4000, true, false] spawn server_spawnCrashSite;
 
 //Spawn static helicrash loot - DayZ: Namalsk
 for "_x" from 1 to 9 do {

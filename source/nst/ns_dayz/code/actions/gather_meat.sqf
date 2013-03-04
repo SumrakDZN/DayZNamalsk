@@ -15,7 +15,10 @@ if ((_hasKnife or _hasKnifeBlunt) and !_hasHarvested) then {
 	_text = getText (configFile >> "CfgVehicles" >> _type >> "displayName");
 	
 	player playActionNow "Medic";
-	[player,"gut",0,false] call dayz_zombieSpeak;
+	_dis=10;
+	_sfx = "gut";
+	[player,_sfx,0,false,_dis] call dayz_zombieSpeak;  
+	[player,_dis,true,(getPosATL player)] spawn player_alertZombies;
 	_item setVariable["meatHarvested",true,true];
 	
 	_qty = 2;
@@ -23,8 +26,6 @@ if ((_hasKnife or _hasKnifeBlunt) and !_hasHarvested) then {
 		_qty =	getNumber (_config >> "yield");
 	};
 	if (_hasKnifeBlunt) then { _qty = round(_qty / 2); };
-	
-	_id = [player,50,true,(getPosATL player)] spawn player_alertZombies;
 	
 	_array = [_item,_qty];
 	
