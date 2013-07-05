@@ -3,10 +3,6 @@
 */
 //Player only
 if (!isDedicated) then {
-	_config = 	configFile >> "CfgLoot";
-	_config1 = 	configFile >> "CfgMagazines" >> "FoodEdible";
-	_config2 = 	configFile >> "CfgWeapons" >> "Loot";
-
 	"filmic" setToneMappingParams [0.07, 0.31, 0.23, 0.37, 0.011, 3.750, 6, 4]; setToneMapping "Filmic";
 
 	BIS_Effects_Burn = 			compile preprocessFile "\ca\Data\ParticleEffects\SCRIPTS\destruction\burn.sqf"; 
@@ -39,7 +35,7 @@ if (!isDedicated) then {
 	player_music = 				compile preprocessFileLineNumbers "\nst\ns_dayz\code\compile\player_music.sqf";			//Used to generate ambient music
 	player_login = 				compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_login.sqf";			//Used to generate ambient music
 	player_death =				compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_death.sqf";
-	player_switchModel =		compile preprocessFileLineNumbers "\nst\ns_dayz\code\compile\player_switchModel.sqf";
+	player_switchModel = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_switchModel.sqf";
 	player_checkStealth =		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_checkStealth.sqf";
 	world_sunRise =				compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_sunRise.sqf";
 	world_surfaceNoise =		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_surfaceNoise.sqf";
@@ -51,25 +47,23 @@ if (!isDedicated) then {
 	//Objects
 	object_roadFlare = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_roadFlare.sqf";
 	object_setpitchbank	=		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_setpitchbank.sqf";
+	object_monitorGear = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_monitorGear.sqf";
 	
 	//Zombies
 	zombie_findTargetAgent = 	compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\zombie_findTargetAgent.sqf";
 	zombie_loiter = 			compile preprocessFileLineNumbers "\nst\ns_dayz\code\compile\zombie_loiter.sqf";			//Server compile, used for loiter behaviour
 	zombie_generate = 			compile preprocessFileLineNumbers "\nst\ns_dayz\code\compile\zombie_generate.sqf";			//Server compile, used for loiter behaviour
-	wild_spawnZombies = 		compile preprocessFileLineNumbers "\nst\ns_dayz\code\compile\wild_spawnZombies.sqf";			//Server compile, used for loiter behaviour
+	//swarm_generate = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\swarm_generate.sqf";
 	
 	//
 	dog_findTargetAgent =   compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\dog_findTargetAgent.sqf";
-	
-	// Vehicle damage fix
-	vehicle_handleDamage    = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\vehicle_handleDamage.sqf";
-	vehicle_handleKilled    = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\vehicle_handleKilled.sqf";
 	
 	//actions
 	player_countmagazines =	compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_countmagazines.sqf";
 	player_addToolbelt =		compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_addToolbelt.sqf";
 	player_reloadMag =			compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_reloadMags.sqf";
 	player_tentPitch =			compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\tent_pitch.sqf";
+	player_createstash = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_createstash.sqf";
 	player_drink =				compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_drink.sqf";
 	player_eat =				compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_eat.sqf";
 	player_useMeds =			compile preprocessFileLineNumbers "\nst\ns_dayz\code\actions\player_useMeds.sqf";
@@ -83,6 +77,10 @@ if (!isDedicated) then {
 	object_pickup = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\object_pickup.sqf";
 	player_flipvehicle = 		compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_flipvehicle.sqf";
 	player_sleep = 				compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_sleep.sqf";
+	player_combineMag = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_combineMags.sqf";
+	player_createquiver = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_createQuiver.sqf";
+	player_fillquiver = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_fillQuiver.sqf";
+	player_takearrow = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_takeArrow.sqf";
 	player_repairEquipment_dzn = compile preprocessFileLineNumbers "\nst\ns_dayz\code\actions\player_repairEquipment_dzn.sqf";
 	
 	//ui
@@ -90,7 +88,16 @@ if (!isDedicated) then {
 	player_gearSync	=			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_gearSync.sqf";
 	player_gearSet	=			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_gearSet.sqf";
 	ui_changeDisplay = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\ui_changeDisplay.sqf";
-	
+
+	//playerstats
+	horde_epeen_fnc_fill_page = compile preProcessFile "\z\addons\dayz_code\actions\playerstats\fill_page_fnc.sqf";
+	horde_epeen_determine_humanity_fnc = compile preProcessFile "\z\addons\dayz_code\actions\playerstats\determine_humanity_fnc.sqf";
+	horde_epeen_setText_journal_fnc = compile preProcessFile "\z\addons\dayz_code\actions\playerstats\epeen_setText_journal.sqf";
+	horde_epeen_setText_humanity_fnc = compile preProcessFile "\z\addons\dayz_code\actions\playerstats\epeen_setText_humanity.sqf";
+	horde_epeen_setText_stats_fnc = compile preProcessFile "\z\addons\dayz_code\actions\playerstats\epeen_setText_stats.sqf";
+	horde_epeen_show_humanity_fnc = compile preProcessFile "\z\addons\dayz_code\actions\playerstats\show_humanity_fnc.sqf";
+
+
 	//System
 	player_monitor =			compile preprocessFileLineNumbers "\z\addons\dayz_code\system\player_monitor.sqf";
 	player_spawn_1 =			compile preprocessFileLineNumbers "\z\addons\dayz_code\system\player_spawn_1.sqf";
@@ -98,8 +105,17 @@ if (!isDedicated) then {
 	onPreloadStarted 			"dayz_preloadFinished = false;";
 	onPreloadFinished 			"dayz_preloadFinished = true;";
 	
+	infectedcamps = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_infectedcamps.sqf";
+	camp_spawnZombies = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\camp_spawnZombies.sqf";			//Server compile, used for loiter behaviour
+
+	//Crafting
+	//player_craftItem = compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_craftItem.sqf";
+
 	// TODO: need move it in player_monitor.fsm
 	// allow player disconnect from server, if loading hang, kicked by BE etc.
+
+	//This is still needed but the fsm should terminate if any errors pop up.
+
 	[] spawn {
 		private["_timeOut","_display","_control1","_control2"];
 		disableSerialization;
@@ -109,8 +125,9 @@ if (!isDedicated) then {
 		_display = uiNameSpace getVariable "BIS_loadingScreen";
 		_control1 = _display displayctrl 8400;
 		_control2 = _display displayctrl 102;
-	// 40 sec timeout
-		while { _timeOut < 400 && !dayz_clientPreload } do {
+	// 120 sec timeout
+		while { _timeOut < 3000 && !dayz_clientPreload && !dayz_authed } do {
+
 			if ( isNull _display ) then {
 				waitUntil { !dialog; };
 				startLoadingScreen ["","RscDisplayLoadCustom"];
@@ -118,107 +135,126 @@ if (!isDedicated) then {
 				_control1 = _display displayctrl 8400;
 				_control2 = _display displayctrl 102;
 			};
+
 			if ( dayz_loadScreenMsg != "" ) then {
 				_control1 ctrlSetText dayz_loadScreenMsg;
 				dayz_loadScreenMsg = "";
 			};
-			_control2 ctrlSetText format["%1",round(_timeOut*0.1)];
+			_control2 ctrlSetText format["%1",round(_timeOut*0.01)];
 			_timeOut = _timeOut + 1;
-			sleep 0.1;
+			sleep 0.01;
 		};
-
 		endLoadingScreen;
-		if ( !dayz_clientPreload ) then {
-
+		/*
+		if ( !dayz_clientPreload && !dayz_authed ) then {
 			diag_log "DEBUG: loadscreen guard ended with timeout.";
 			disableUserInput false;
-			1 cutText ["Something went wrong! disconnect and try again!", "PLAIN"];
+			1 cutText ["Disconnected!", "PLAIN"];
 			player enableSimulation false;
 		} else { diag_log "DEBUG: loadscreen guard ended."; };
+		*/
 	};
+
 	dayz_losChance = {
 		private["_agent","_maxDis","_dis","_val","_maxExp","_myExp"];
-		_agent = 	_this select 0;
-		_dis =		_this select 1;
-		_maxDis = 	_this select 2;
-		//diag_log ("VAL:  " + str(_this));
-		_val = 		(_maxDis - _dis) max 0;
-		_maxExp = 	((exp 2) * _maxDis);
-		_myExp = 	((exp 2) * (_val)) / _maxExp;
+		_agent = _this select 0;
+		_dis = _this select 1;
+		_maxDis = _this select 2;
+	//diag_log ("VAL:  " + str(_this));
+		_val = (_maxDis - _dis) max 0;
+		_maxExp = ((exp 2) * _maxDis);
+		_myExp = ((exp 2) * (_val)) / _maxExp;
 		_myExp = _myExp * 0.7;
 		_myExp
 	};
-	
+
 	ui_initDisplay = {
 		private["_control","_ctrlBleed","_display","_ctrlFracture","_ctrlDogFood","_ctrlDogWater","_ctrlDogWaterBorder", "_ctrlDogFoodBorder"];
 		disableSerialization;
 		_display = uiNamespace getVariable 'DAYZ_GUI_display';
-		_control = 	_display displayCtrl 1204;
+		_control = _display displayCtrl 1204;
 		_control ctrlShow false;
 		if (!r_player_injured) then {
-			_ctrlBleed = 	_display displayCtrl 1303;
+			_ctrlBleed = _display displayCtrl 1303;
 			_ctrlBleed ctrlShow false;
 		};
 		if (!r_fracture_legs and !r_fracture_arms) then {
-			_ctrlFracture = 	_display displayCtrl 1203;
+			_ctrlFracture = _display displayCtrl 1203;
 			_ctrlFracture ctrlShow false;
 		};
 		_ctrlDogFoodBorder = _display displayCtrl 1501;
 		_ctrlDogFoodBorder ctrlShow false;
 		_ctrlDogFood = _display displayCtrl 1701;
 		_ctrlDogFood ctrlShow false;
-		
+
 		_ctrlDogWaterBorder = _display displayCtrl 1502;
 		_ctrlDogWaterBorder ctrlShow false;
 		_ctrlDogWater = _display displayCtrl 1702;
 		_ctrlDogWater ctrlShow false
 	};
-	
+
 	dayz_losCheck = {
 		private["_target","_agent","_cantSee"];
-		_target = _this select 0;
+		_target = _this select 0; // PUT THE PLAYER IN FIRST ARGUMENT!!!!
 		_agent = _this select 1;
 		_cantSee = true;
 		if (!isNull _target) then {
-			_tPos = eyePos _target;	//(getPosASL _target);
-			_zPos = eyePos _agent;	//(getPosASL _agent);
+			_tPos = eyePos _target;
+			_zPos = eyePos _agent;
 			if ((count _tPos > 0) and (count _zPos > 0)) then {
 				_cantSee = terrainIntersectASL [_tPos, _zPos];
-				//diag_log ("terrainIntersectASL: " + str(_cantSee));
 				if (!_cantSee) then {
-					_cantSee = lineIntersects [_tPos, _zPos];
-					//diag_log ("lineIntersects: " + str(_cantSee));
+					_cantSee = lineIntersects [_tPos, _zPos, _agent, vehicle _target];
 				};
 			};
 		};
 		_cantSee
 	};
-	
-	eh_zombieInit = 	{
-		private["_unit","_pos"];
-		//_unit = 	_this select 0;
-		//_pos =		getPosATL _unit;
-		//_id = [_pos,_unit] execFSM "\z\AddOns\dayz_code\system\zombie_agent.fsm";
+
+	dayz_losCheck_attack = {
+		private["_target","_agent","_cantSee"];
+		_target = _this select 0;
+		_agent = _this select 1;
+		_cantSee = true;
+		if (!isNull _target) then {
+			_tPos = eyePos _target;
+			_zPos = eyePos _agent;
+			if ((count _tPos > 0) and (count _zPos > 0)) then {
+				_cantSee = terrainIntersectASL [_tPos, _zPos];
+				if (!_cantSee) then {
+					_ob_arr = lineIntersectsWith [_zPos, _tPos, _agent, _target];
+					_cantSee = ((count _ob_arr) != 0 and {((_ob_arr select 0) isKindOf "All")});
+				};
+			};
+		};
+		_cantSee
 	};
-	
-	dayz_equipCheck = {
-		private ["_empty", "_needed","_diff","_success"];
-		_config = _this;
-		_empty = [player] call BIS_fnc_invSlotsEmpty;
-		_needed = [_config] call BIS_fnc_invSlotType;
-		_diff = [_empty,_needed] call BIS_fnc_vectorDiff;
-		
-		_success = true;
-		{
-			if (_x > 0) then {_success = false};
-		} forEach _diff;
-		hint format["Config: %5\nEmpty: %1\nNeeded: %2\nDiff: %3\nSuccess: %4",_empty,_needed,_diff,_success,_config];
-		_success
-	};
-	
+
+// 	eh_zombieInit = {
+// 		private["_unit","_pos"];
+// 		//_unit = _this select 0;
+// 		//_pos = getPosATL _unit;
+// 		//_id = [_pos,_unit] execFSM "\z\AddOns\dayz_code\system\zombie_agent.fsm";
+// 	};
+
+// 	dayz_equipCheck = {
+// 		private ["_empty", "_needed","_diff","_success"];
+// 		_config = _this;
+// 		_empty = [player] call BIS_fnc_invSlotsEmpty;
+// 		_needed = [_config] call BIS_fnc_invSlotType;
+// 		_diff = [_empty,_needed] call BIS_fnc_vectorDiff;
+//
+// 		_success = true;
+// 		{
+// 			if (_x > 0) then {_success = false};
+// 		} forEach _diff;
+// 		hint format["Config: %5\nEmpty: %1\nNeeded: %2\nDiff: %3\nSuccess: %4",_empty,_needed,_diff,_success,_config];
+// 		_success
+// 	};
+
 	dayz_spaceInterrupt = {
-		private ["_dikCode", "_handled"];
-		_dikCode = 	_this select 1;
+		private ["_dikCode", "_handled","_displayg"];
+		_dikCode = _this select 1;
 		_handled = false;
 		if (_dikCode in (actionKeys "GetOver")) then {
 			if (!r_fracture_legs and (time - dayz_lastCheckBit > 4)) then {
@@ -232,10 +268,16 @@ if (!isDedicated) then {
 		};
 		//if (_dikCode == 57) then {_handled = true}; // space
 		//if (_dikCode in actionKeys 'MoveForward' or _dikCode in actionKeys 'MoveBack') then {r_interrupt = true};
-		if (_dikCode == 210) then //SCROLL LOCK
+		/*
+		if (_dikCode == 210) then //insert Key
 		{
 			_nill = execvm "\z\addons\dayz_code\actions\playerstats.sqf";
 		};
+		*/
+		//Prevent exploit of drag body
+		if ((_dikCode in actionKeys "Prone") and r_drag_sqf) then { force_dropBody = true; };
+		if ((_dikCode in actionKeys "Crouch") and r_drag_sqf) then { force_dropBody = true; };
+
 		if (_dikCode in actionKeys "MoveLeft") then {r_interrupt = true};
 		if (_dikCode in actionKeys "MoveRight") then {r_interrupt = true};
 		if (_dikCode in actionKeys "MoveForward") then {r_interrupt = true};
@@ -243,15 +285,15 @@ if (!isDedicated) then {
 		if (_dikCode in actionKeys "ForceCommandingMode") then {_handled = true};
 		if (_dikCode in actionKeys "PushToTalk" and (time - dayz_lastCheckBit > 10)) then {
 			dayz_lastCheckBit = time;
-			[player,50,true,(getPosATL player)] spawn player_alertZombies;
+			[player,15,true,(getPosATL player)] spawn player_alertZombies;
 		};
 		if (_dikCode in actionKeys "VoiceOverNet" and (time - dayz_lastCheckBit > 10)) then {
 			dayz_lastCheckBit = time;
-			[player,50,true,(getPosATL player)] spawn player_alertZombies;
+			[player,15,true,(getPosATL player)] spawn player_alertZombies;
 		};
 		if (_dikCode in actionKeys "PushToTalkDirect" and (time - dayz_lastCheckBit > 10)) then {
 			dayz_lastCheckBit = time;
-			[player,15,false,(getPosATL player)] spawn player_alertZombies;
+			[player,5,false,(getPosATL player)] spawn player_alertZombies;
 		};
 		if (_dikCode in actionKeys "Chat" and (time - dayz_lastCheckBit > 10)) then {
 			dayz_lastCheckBit = time;
@@ -265,14 +307,33 @@ if (!isDedicated) then {
 			dayz_lastCheckBit = time;
 			call dayz_forceSave;
 		};
+		if (_dikCode == 0xB8 or _dikCode == 0x38 or _dikCode == 0x3E or _dikCode == 0x2A or _dikCode == 0x36 or _dikCode == 0x01) then {
+			_displayg = findDisplay 106;
+			if (!isNull _displayg) then {
+			call player_gearSync;
+			call dayz_forceSave;
+			} else {
+				if (dialog) then {
+					call player_gearSync;
+					call dayz_forceSave;
+				};
+			};
+		};
 		/*
 		if (_dikCode in actionKeys "IngamePause") then {
-			_idOnPause = [] spawn dayz_onPause;
+			waitUntil {
+				_display = findDisplay 49;
+				!isNull _display;
+			};
+			_btnRespawn = _display displayCtrl 1010;
+			_btnAbort = _display displayCtrl 104;
+			_btnRespawn ctrlEnable false;
+			_btnAbort ctrlEnable false;
 		};
 		*/
 		_handled
 	};
-	
+
 	player_CombatRoll = {
 		DoRE = ({isPlayer _x} count (player nearEntities ["AllVehicles",100]) > 1);
 		if (canRoll && animationState player in ["amovpercmrunslowwrfldf","amovpercmrunsraswrfldf","amovpercmevaslowwrfldf","amovpercmevasraswrfldf"]) then {
@@ -291,17 +352,17 @@ if (!isDedicated) then {
 			_handled = true;
 		};
 	};
-	
-	player_serverModelChange = {
-		private["_object","_model"];
-		_object = _this select 0;
-		_model = _this select 1;
-		if (_object == player) then {
-			_model call player_switchModel;
-		};
-	};
-	
-	player_guiControlFlash = 	{
+
+// 	player_serverModelChange = {
+// 		private["_object","_model"];
+// 		_object = _this select 0;
+// 		_model = _this select 1;
+// 		if (_object == player) then {
+// 			_model call player_switchModel;
+// 		};
+// 	};
+
+	player_guiControlFlash = {
 		private["_control"];
 		_control = _this;
 		if (ctrlShown _control) then {
@@ -310,12 +371,12 @@ if (!isDedicated) then {
 			_control ctrlShow true;
 		};
 	};
-	
+
 	gear_ui_offMenu = {
 		private["_control","_parent","_menu"];
 		disableSerialization;
-		_control = 	_this select 0;
-		_parent = 	findDisplay 106;
+		_control = _this select 0;
+		_parent = findDisplay 106;
 		if (!(_this select 3)) then {
 			for "_i" from 0 to 9 do {
 				_menu = _parent displayCtrl (1600 + _i);
@@ -329,11 +390,12 @@ if (!isDedicated) then {
 		};
 	};
 
+
 	gear_ui_init = {
 		private["_control","_parent","_menu","_dspl","_grpPos"];
 		disableSerialization;
 		_parent = findDisplay 106;
-		_control = 	_parent displayCtrl 6902;
+		_control = _parent displayCtrl 6902;
 		for "_i" from 0 to 9 do {
 			_menu = _parent displayCtrl (1600 + _i);
 			_menu ctrlShow false;
@@ -344,15 +406,15 @@ if (!isDedicated) then {
 		_control ctrlShow false;
 		_control ctrlCommit 0;
 	};
-	
-	dayz_eyeDir = {
-		private["_vval","_vdir"];
-		_vval = (eyeDirection _this);
-		_vdir = (_vval select 0) atan2 (_vval select 1);
-		if (_vdir < 0) then {_vdir = 360 + _vdir};
-		_vdir
-	};
-	
+
+// 	dayz_eyeDir = {
+// 		private["_vval","_vdir"];
+// 		_vval = (eyeDirection _this);
+// 		_vdir = (_vval select 0) atan2 (_vval select 1);
+// 		if (_vdir < 0) then {_vdir = 360 + _vdir};
+// 		_vdir
+// 	};
+
 	dayz_lowHumanity = {
 		private["_unit","_humanity","_delay"];
 		_unit = _this;
@@ -367,33 +429,47 @@ if (!isDedicated) then {
 			dayz_heartBeat = false;
 		};
 	};
-	/*
+
 	dayz_meleeMagazineCheck = {
-		private["_meleeNum","_magType","_wpnType"];
-		_wpnType = _this;
-		_magType = 	([] + getArray (configFile >> "CfgWeapons" >> _wpnType >> "magazines")) select 0;
-		_meleeNum = ({_x == _magType} count magazines player);
-		if (_meleeNum > 1) then {
-			if (player hasWeapon _wpnType) then {
-				_meleeNum = _meleeNum - 1;
-			};
-			for "_i" from 1 to _meleeNum do {
-				player removeMagazine _magType;
+		private["_meleeNum","_magType","_wpnType","_ismelee"];
+		_wpnType = primaryWeapon player;
+		_ismelee = (gettext (configFile >> "CfgWeapons" >> _wpnType >> "melee"));
+		if (_ismelee == "true") then {
+			_magType = ([] + getArray (configFile >> "CfgWeapons" >> _wpnType >> "magazines")) select 0;
+			_meleeNum = ({_x == _magType} count magazines player);
+			if (_meleeNum < 1) then {
+				player addMagazine _magType;
 			};
 		};
 	};
-	*/
-	dayz_originalPlayer =		player;
+
+	dayz_futurePos = {
+		private ["_vehicle","_velo","_speed","_nextPlayerPos"];
+
+		_vehicle = (vehicle _this);
+		_velo = velocity _vehicle;
+		_speed = ([0, 0, 0] distance (_velo)); // buggy: if player/veh is blocked by an object, speed is not zero
+		_nextPlayerPos = getPosATL _this;
+		if (_speed > 0) then {
+			// try compute next player pos. This works both whether player is bare foot, or in a vehicle, whatever his place.
+			_velo = [ (_velo select 0) / _speed, (_velo select 1) / _speed, (_velo select 2) / _speed];  // normalize speed vector
+			_nextPlayerPos set [0, (_nextPlayerPos select 0) + (_velo select 0) * 1]; // 1  = a meter alongside the movement
+			_nextPlayerPos set [1, (_nextPlayerPos select 1) + (_velo select 1) * 1];
+			_nextPlayerPos set [2, (_nextPlayerPos select 2) + (_velo select 2) * 1];
+		};
+
+		_nextPlayerPos
+	};
+
+	dayz_originalPlayer = player;
 };
+
 	progressLoadingScreen 0.8;
 	//Both
 	BIS_fnc_selectRandom =		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_selectRandom.sqf";		//Checks which actions for nearby casualty
 	fnc_buildWeightedArray = 	compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_buildWeightedArray.sqf";		//Checks which actions for nearby casualty
-	fnc_usec_damageVehicle =	compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_damageHandlerVehicle.sqf";		//Event handler run on damage
 	zombie_initialize = 		compile preprocessFileLineNumbers "\z\addons\dayz_code\init\zombie_init.sqf";
 	object_vehicleKilled =		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_vehicleKilled.sqf";		//Event handler run on damage
-	object_setHitServer =		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_setHitServer.sqf";	//process the hit as a NORMAL damage (useful for persistent vehicles)
-	object_setFixServer =		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_setFixServer.sqf";	//process the hit as a NORMAL damage (useful for persistent vehicles)
 	object_getHit =				compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_getHit.sqf";			//gets the hit value for a HitPoint (i.e. HitLegs) against the selection (i.e. "legs"), returns the value
 	object_setHit =				compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_setHit.sqf";			//process the hit as a NORMAL damage (useful for persistent vehicles)
 	object_processHit =			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_processHit.sqf";		//process the hit in the REVO damage system (records and sets hit)
@@ -401,9 +477,10 @@ if (!isDedicated) then {
 	object_cargoCheck =			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_cargoCheck.sqf";		//Run by the player or server to monitor changes in cargo contents
 	fnc_usec_damageHandler =	compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_damageHandler.sqf";		//Event handler run on damage
 	// Vehicle damage fix
-	vehicle_handleDamage    = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\vehicle_handleDamage.sqf";
-	vehicle_handleKilled    = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\vehicle_handleKilled.sqf";
-	fnc_vehicleEventHandler = 	compile preprocessFileLineNumbers "\z\addons\dayz_code\init\vehicle_init.sqf";			//Initialize vehicle
+	fnc_veh_handleDam = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\veh_handleDam.sqf";
+	fnc_veh_handleKilled = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\veh_handleKilled.sqf";
+	fnc_veh_handleRepair = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\veh_handleRepair.sqf";	//process the hit as a NORMAL damage (useful for persistent vehicles)
+	fnc_veh_ResetEH = compile preprocessFileLineNumbers "\z\addons\dayz_code\init\veh_ResetEH.sqf";			//Initialize vehicle
 	fnc_inString = 				compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_inString.sqf";	
 	fnc_isInsideBuilding = 		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_isInsideBuilding.sqf";	//_isInside = [_unit,_building] call fnc_isInsideBuilding;
 	dayz_zombieSpeak = 			compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_speak.sqf";			//Used to generate random speech for a unit
@@ -426,12 +503,13 @@ if (!isDedicated) then {
 	player_projectileNear = 		compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_projectileNear.sqf";
 	
 	player_sumMedical = {
-		private["_character","_wounds","_legs","_arms","_medical"];
-		_character = 	_this;
-		_wounds =		[];
+		private["_character","_wounds","_legs","_arms","_medical", "_status"];
+		_character = _this;
+		_wounds = [];
 		if (_character getVariable["USEC_injured",false]) then {
 			{
-				if (_character getVariable[_x,false]) then {
+				_status = _character getVariable["hit_"+_x,false];
+				if ((typeName _status == "BOOLEAN") AND {(_status)}) then {
 					_wounds set [count _wounds,_x];
 				};
 			} forEach USEC_typeOfWounds;
@@ -454,7 +532,9 @@ if (!isDedicated) then {
 		];
 		_medical
 	};
-	
+
+	fn_niceSpot = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_niceSpot.sqf";
+
 	//Server Only
 	if (isServer) then {
 		call compile preprocessFileLineNumbers "\z\addons\dayz_server\init\server_functions.sqf";
@@ -464,5 +544,4 @@ if (!isDedicated) then {
 	
 	//Start Dynamic Weather
 	execVM "\nst\ns_dayz\code\external\DynamicWeatherEffects.sqf";		// DayZ: Namalsk
-	//execVM "\z\addons\dayz_code\external\DynamicWeatherEffects.sqf";	// classic DayZ
 	initialized = true;

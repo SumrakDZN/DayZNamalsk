@@ -1,4 +1,4 @@
-private["_item"];
+private["_item","_onLadder","_hasmeditem","_config","_text","_id"];
 _item = _this;
 call gear_ui_init;
 _onLadder =		(getNumber (configFile >> "CfgMovesMaleSdr" >> "States" >> (animationState player) >> "onLadder")) == 1;
@@ -9,7 +9,7 @@ _hasmeditem = _this in magazines player;
 _config = configFile >> "CfgMagazines" >> _item;
 _text = getText (_config >> "displayName");
 
-if (!_hasmeditem) exitWith {cutText [format[(localize "str_player_31"),_text,"use"] , "PLAIN DOWN"]};
+if (!_hasmeditem) exitWith {cutText [format[(localize "str_player_31"),_text,(localize "str_player_31_use")] , "PLAIN DOWN"]};
 
 switch (_item) do {
 	case "ItemBandage": {

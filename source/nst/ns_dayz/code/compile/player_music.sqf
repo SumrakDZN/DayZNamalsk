@@ -1,4 +1,4 @@
-private["_sound","_pause"];
+private["_zombie","_type","_chance","_rnd","_sound","_pause"];
 while {!r_player_dead} do {
 	if (round(random 5) == 0) then {
 		_sound = "ns_namalsk_coast" + str(round(random 1) + 1);

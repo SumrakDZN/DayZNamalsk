@@ -1,29 +1,31 @@
+private ["_location", "_distCfg","_configClass","_distAct","_rubbish","_config","_locHdr","_position","_w8", "_ahead" ];
+_w8 = _this select 0;
 //diag_log "running location check...";
+_rubbish = dayz_Trash == 1;
 {
-	private ["_location","_distCfg","_configClass","_distAct","_config","_position"];
-	_location = 	_x select 0;
-	_distCfg = 		(_x select 2) + 200;
-	_configClass =  _x select 1;
-	_distAct = player distance position _location;
-	
-	if ((_distAct < _distCfg) and !(_location in dayz_locationsActive)) then {
-		//Record Active Location
-		//diag_log "Load!";
-		dayz_locationsActive set [count dayz_locationsActive,_location];
-		
-		//Get Town Details
-		_config = 	configFile >> "CfgTownGeneratorNamalsk" >> _configClass;
-		_locHdr = 	configName _config;
-		_position = []+ getArray	(_config >> "position");
-		
-		_config call stream_locationFill;
-		//player sidechat (_locHdr + " " + str(count _config));
+	_location = _x select 0;
+	_distCfg = (_x select 2);
+	_configClass = _x select 1;
+	_distAct = player distance _location;
+	_ahead = (speed player) / 3.6 * 6;
+
+	if (!(_forEachIndex in dayz_locationsActive)) then {
+		if ((_distAct < _distCfg + dayz_spawnArea + _ahead) and _rubbish) then {
+			dayz_locationsActive set [count dayz_locationsActive,_forEachIndex];
+			_config = configFile >> "CfgTownGeneratorNamalsk" >> _configClass;
+			_locHdr = configName _config;
+			//if (typeName _locHdr != "STRING") then { _locHdr = str _location; };
+			diag_log format ["%1: creating %2 objects at '%3'", __FILE__, count _config, _locHdr];
+			[_config, _w8] call stream_locationFill; // create wrecks & rubbish as local objects
+		};
 	} else {
-		if ((_distAct > _distCfg) and (_location in dayz_locationsActive)) then {
-			//Delete Town Objects
-			_config = 	configFile >> "CfgTownGenerator" >> _configClass;
-			_config call stream_locationDel;
-			dayz_locationsActive = dayz_locationsActive - [_location];
+		if (_distAct > _distCfg + dayz_canDelete + _ahead) then {
+			_config = configFile >> "CfgTownGeneratorNamalsk" >> _configClass;
+			_locHdr = configName _config;
+			//if (typeName _locHdr != "STRING") then { _locHdr = str _location; };
+			diag_log format ["%1: removing %2 objects from '%3'", __FILE__, count _config, _locHdr];
+			[_config, _w8] call stream_locationDel; // delete wrecks & rubbish
+			dayz_locationsActive = dayz_locationsActive - [_forEachIndex];
 		};
 	};
 } forEach dayz_Locations;

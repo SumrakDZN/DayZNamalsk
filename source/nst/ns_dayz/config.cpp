@@ -34,7 +34,7 @@ class CfgMods {
    hidePicture = "false";
    hideName = "false";
    action = "http://www.nightstalkers.cz/en_index_dn.php";
-   version = "0.741";
+   version = "0.75";
   };
 };
 /*
@@ -1023,27 +1023,6 @@ class CfgWeapons {
 			};
 		};
 	};
-	class BrokenItemRadio: ItemCore {
-		scope=2;
-		displayName="$STR_NS_BrokenItemRadio";
-		model = "\nst\ns_dayz\items\radio\radio_dzn.p3d";
-		picture="\nst\ns2\inv\gear_picture_radio_ca.paa";
-		descriptionShort="$STR_NS_BrokenItemRadio_DESC";
-	};
-	class BrokenItemGPS: ItemCore {
-		scope=2;
-		displayName="$STR_NS_BrokenItemGPS";
-		model = "\nst\ns_dayz\items\gps\gps_dzn.p3d";
-		picture="\nst\ns2\inv\gear_picture_gps_ca.paa";
-		descriptionShort="$STR_NS_BrokenItemGPS_DESC";
-	};
-	class BrokenNVGoggles: ItemCore {
-		scope=2;
-		displayName="$STR_NS_BrokenNV";
-		model = "\nst\ns_dayz\items\nvg\nvg_dzn.p3d";
-		picture="\nst\ns2\inv\w_nvg_ca.paa";
-		descriptionShort="$STR_NS_BrokenItemGPS_DESC";
-	};
 };
 
 class WeaponCloudsMGun;
@@ -1650,13 +1629,66 @@ class CfgVehicles {
     memoryPoint = "rfemur";
    };
   };
+  class HitDamage {
+   class Group0 {
+    hitSounds[] = {
+     { 
+      { "dayz_sfx\zombie\chase_0.ogg",0.17782794,1,120 },0.1 },
+     { 
+      { "dayz_sfx\zombie\chase_1.ogg",0.17782794,1,120 },0.1 },
+     { 
+      { "dayz_sfx\zombie\chase_2.ogg",0.17782794,1,120 },0.1 },
+     { 
+      { "dayz_sfx\zombie\chase_3.ogg",0.17782794,1,120 },0.1 },
+     { 
+      { "dayz_sfx\zombie\chase_4.ogg",0.17782794,1,120 },0.1 },
+     { 
+      { "dayz_sfx\zombie\chase_5.ogg",0.17782794,1,120 },0.1 },
+     { 
+      { "dayz_sfx\zombie\chase_6.ogg",0.17782794,1,120 },0.1 },
+     { 
+      { "dayz_sfx\zombie\chase_7.ogg",0.17782794,1,120 },0.1 },
+     { 
+      { "dayz_sfx\zombie\chase_8.ogg",0.17782794,1,120 },0.1 },
+     { 
+      { "dayz_sfx\zombie\chase_9.ogg",0.17782794,1,120 },0.1 }};
+    damageSounds[] = {
+     { "body",
+      { "dayz_sfx\zombie\chase_0.ogg",0.056234132,1,120,0.125,20,40,60 } },
+     { "body",
+      { "dayz_sfx\zombie\chase_1.ogg",0.056234132,1,120,0.125,20,40,60 } },
+     { "body",
+      { "dayz_sfx\zombie\chase_2.ogg",0.056234132,1,120,0.125,20,40,60 } },
+     { "body",
+      { "dayz_sfx\zombie\chase_3.ogg",0.056234132,1,120,0.125,20,40,60 } },
+     { "body",
+      { "dayz_sfx\zombie\chase_4.ogg",0.056234132,1,120,0.125,20,40,60 } },
+     { "body",
+      { "dayz_sfx\zombie\chase_5.ogg",0.056234132,1,120,0.125,20,40,60 } },
+     { "body",
+      { "dayz_sfx\zombie\chase_6.ogg",0.056234132,1,120,0.125,20,40,60 } },
+     { "body",
+      { "dayz_sfx\zombie\chase_7.ogg",0.056234132,1,120,0.125,20,40,60 } },
+     { "hands",
+      { "dayz_sfx\zombie\chase_8.ogg",0.056234132,1,120,0.25,20,40,60 } },
+     { "hands",
+      { "dayz_sfx\zombie\chase_9.ogg",0.056234132,1,120,0.25,20,40,60 } },
+     { "hands",
+      { "dayz_sfx\zombie\chase_10.ogg",0.056234132,1,120,0.25,20,40,60 } },
+     { "hands",
+      { "dayz_sfx\zombie\chase_11.ogg",0.056234132,1,120,0.25,20,40,60 } },
+     { "legs",
+      { "dayz_sfx\zombie\chase_12.ogg",0.056234132,1,120,20,40,60 } },
+     { "legs",
+      { "dayz_sfx\zombie\chase_13.ogg",0.056234132,1,120,20,40,60 } }};
+   };
+  };
  };
-
  class z_soldier: zZombie_Base
  {
   displayName = "Zombie Soldier";
   model = "\ca\characters2\Blufor\Soldier_Light";
-  zombieLoot = "military";
+  zombieLoot = "militaryNamalsk";
   class HitPoints: HitPoints
   {
    class HitHead
@@ -1759,252 +1791,473 @@ class CfgVehicles {
  class z_nac_soldier: z_soldier {
   displayName = "Zombie Soldier NAC (Light)";
   model = "\nst\ns_fraction\nac\nac_soldier_2";
- };
+ };  
   class z_nac_soldier_heavy: z_soldier_heavy {
   displayName = "Zombie Soldier NAC (Heavy)";
   model = "\nst\ns_fraction\nac\nac_soldier_1";
  };
  
+ //Classic
+ class z_suit1: zZombie_Base {
+  zombieLoot = "genericNamalskNoFood";
+ };
+ class z_suit2: z_suit1 {};
  
+ class z_worker1: zZombie_Base {
+  zombieLoot = "genericNamalskNoFood";
+ };
+ class z_worker2: z_worker1 {};
+ class z_worker3: z_worker1 {};
+ 
+ class z_doctor: zZombie_Base {
+  zombieLoot = "medicalNamalsk";
+ };
+ 
+ class z_teacher: z_doctor {
+  zombieLoot = "civilianNamalsk";
+ };
+ 
+ class z_villager1: zZombie_Base {
+  zombieLoot = "genericNamalskNoFood";
+ };
+ class z_villager2: z_villager1 {};
+ class z_villager3: z_villager1 {};
+ 
+ //new zeds
+	class zZombie_new_Base : zZombie_Base {
+		scope = public;
+		glassesEnabled = 0;
+		identityTypes[] = {"Zombie3"};
+		class TalkTopics {};
+		languages[] = {};
+		//Armor * hitpointArmor = Total Armor
+		armor = 10; 
+		
+		class Eventhandlers {
+			init = "_this call zombie_initialize;";
+			local = "if(_this select 1) then {[(position (_this select 0)),(_this select 0),true] execFSM '\z\AddOns\dayz_code\system\zombie_agent.fsm'};";
+		};
+		
+		class HitPoints {
+			class HitHead {
+				armor = 0.1;
+				material = -1;
+				name = "head_hit";
+				passThrough = true;
+				memoryPoint = "pilot";
+			};
+			
+			class HitBody : HitHead {
+				armor = 2;
+				name = "body";
+				memoryPoint = "aimPoint";
+			};
+			
+			class HitSpine : HitHead {
+				armor = 2;
+				name = "Spine2";
+				memoryPoint = "aimPoint";
+			};
+			
+			class HitHands : HitHead {
+				armor = 0.5;
+				material = -1;
+				name = "hands";
+				passThrough = true;
+			};
+			class HitLArm : HitHands {
+				name = "LeftArm";
+				memoryPoint = "lelbow";
+			};
+			
+			class HitRArm : HitHands {
+				name = "RightArm";
+				memoryPoint = "relbow";
+			};
+			
+			class HitLForeArm : HitHands {
+				name = "LeftForeArm";
+				memoryPoint = "lwrist";
+			};
+			
+			class HitRForeArm : HitHands {
+				name = "RightForeArm";
+				memoryPoint = "rwrist";
+			};
+			
+			class HitLHand : HitHands {
+				name = "LeftHand";
+				memoryPoint = "LeftHandMiddle1";
+			};
+			
+			class HitRHand : HitHands {
+				name = "RightHand";
+				memoryPoint = "RightHandMiddle1";
+			};
+			
+			class HitLegs : HitHands {
+				armor = 10;
+				name = "legs";
+				memoryPoint = "pelvis";
+			};
+			
+			class HitLLeg : HitHands {
+				name = "LeftLeg";
+				memoryPoint = "lknee";
+			};
+			
+			class HitLLegUp : HitHands {
+				name = "LeftUpLeg";
+				memoryPoint = "lfemur";
+			};
+			
+			class HitRLeg : HitHands {
+				name = "RightLeg";
+				memoryPoint = "rknee";
+			};
+			
+			class HitRLegUp : HitHands {
+				name = "RightUpLeg";
+				memoryPoint = "rfemur";
+			};
+		};
+	};
+	
+	class z_milNewBase : zZombie_new_Base {
+		zombieLoot = "militaryNamalsk";
+		model = "\ca\characters2\civil\Villager\Villager";
+		//hiddenSelections[] = {"Camo"};
+		//hiddenSelectionsTextures[] = {"\ca\characters2\civil\villager\data\villager_co.paa"};
+		
+		class Wounds {
+			tex[] = {};
+			mat[] = {"ca\characters\heads\male\defaulthead\data\hhl.rvmat", "ca\characters\heads\male\defaulthead\data\hhl_Wounds.rvmat", "ca\characters\heads\male\defaulthead\data\hhl_Wounds.rvmat", "ca\characters2\Civil\Villager\Data\villager.RVmat", "ca\characters2\Civil\Villager\Data\villager_w1.RVmat", "ca\characters2\Civil\Villager\Data\villager_w2.RVmat"};
+		};
+	};
+	class z_new_milSoldier2 : z_milNewBase {
+		model = "\CA\characters2\USMC\USMC_soldier";
+	};
+	class z_new_milSoldier3 : z_milNewBase {
+		model = "\CA\characters2\USMC\USMC_soldier_Light";
+	};
+	class z_new_milSoldier4 : z_milNewBase {
+		model = "\CA\characters2\Rus\Soldier";
+	};
+	class z_new_milSoldier5 : z_milNewBase {
+		model = "\CA\characters2\Rus\Soldier_Light";
+	};
+	
+	class z_new_milWorker_base : zZombie_new_Base {
+		zombieLoot = "genericNamalskNoFood";
+		model = "\Ca\characters_E\Overall\Overall";
+		hiddenSelections[] = {"Camo"};
+		hiddenSelectionsTextures[] = {"\Ca\characters_E\Overall\Data\Overall_4_co.paa"};
+		
+		class Wounds {
+			tex[] = {};
+			mat[] = {"Ca\characters_E\Overall\Data\Overall.rvmat", "Ca\characters_E\Overall\Data\W1_Overall.rvmat", "Ca\characters_E\Overall\Data\W2_Overall.rvmat"};
+		};
+	};
+	
+	class z_new_milWorker2 : z_new_milWorker_base {
+		hiddenSelectionsTextures[] = {"z\addons\dayz_communityassets\zeds\overall\overall_2_co.paa"};
+	};
+	class z_new_milworker3 : z_new_milWorker_base {
+		hiddenSelectionsTextures[] = {"z\addons\dayz_communityassets\zeds\overall\Overall_3_co.paa"};
+	};
+	class z_new_milworker4 : z_new_milWorker_base {
+		hiddenSelectionsTextures[] = {"z\addons\dayz_communityassets\zeds\overall\Overall_4_co.paa"};
+	};
 };
 
-class CfgSurvivalNamalsk
-{
- class Inventory
- {
-  class Default
-  {
-   magazines[] = {"ItemBandage","ItemPainkiller"};
-   weapons[] = {"ItemFlashlight"};
-   backpackWeapon = "";
-   backpack = "DZ_Patrol_Pack_EP1";
-  };
- };
- class Meat
- {
-  class Default
-  {
-   yield = 1; //2
-   rawfoodtype = "FoodmeatRaw";
-  };
-  class Cow: Default
-  {
-   yield = 6; //8
-   rawfoodtype = "FoodbeefRaw";
-  };
-  class Cow01: Cow{};
-  class Cow02: Cow{};
-  class Cow03: Cow{};
-  class Cow04: Cow{};
-  class Goat: Default
-  {
-   yield = 2; //3
-   rawfoodtype = "FoodmuttonRaw";
-  };
-  class Sheep: Default
-  {
-   yield = 4; //5
-   rawfoodtype = "FoodmuttonRaw";
-  };
-  class WildBoar: Default
-  {
-   yield = 4; //4
-   rawfoodtype = "FoodbaconRaw";
-  };
-	class Hen: Default {
-		yield = 1;
-		rawfoodtype = "FoodchickenRaw";
+class CfgSurvivalNamalsk {
+	class Inventory {
+		class Default {
+			RandomMagazines = 3;
+			//weapons[] = {"Makarov"}; //8Rnd_9x18_Makarov
+			GuaranteedMagazines[] = {"ItemBandage","ItemHeatPack","HandRoadFlare"};
+			RandomPossibilitieMagazines[] = {"ItemBandage","ItemHeatPack","ItemPainkiller"};
+			//weapons[] = {"HandRoadFlare"};
+			backpackWeapon = "";
+			//backpack = "DZ_Patrol_Pack_EP1";
+		};
 	};
-	class Rabbit: Default {
-		yield = 1;
-		rawfoodtype = "FoodrabbitRaw";
+	class Meat {
+		class Default {
+			yield = 1; //2
+			rawfoodtype = "FoodmeatRaw";
+		};
+		class Cow: Default {
+			yield = 6; //8
+			rawfoodtype = "FoodbeefRaw";
+		};
+		class Cow01: Cow{};
+		class Cow02: Cow{};
+		class Cow03: Cow{};
+		class Cow04: Cow{};
+		class Goat: Default {
+			yield = 2; //3
+			rawfoodtype = "FoodgoatRaw";
+		};
+		class Sheep: Default {
+			yield = 4; //5
+			rawfoodtype = "FoodmuttonRaw";
+		};
+		class WildBoar: Default {
+			yield = 4; //4
+			rawfoodtype = "FoodbaconRaw";
+		};
+		class Hen: Default {
+			yield = 1;
+			rawfoodtype = "FoodchickenRaw";
+		};
+		class Rabbit: Default {
+			yield = 1;
+			rawfoodtype = "FoodrabbitRaw";
+		};
 	};
- };
 };
 
 
 class CfgLoot {
 	bloodsucker[] = {
-		{ "ItemBloodbag"},
-		{ 0.08 }
+		{"ItemBloodbag", 0.08}
 	};
 	civilianNamalsk[] = {
-		{ "TrashTinCan","TrashJackDaniels","ItemSodaEmpty","ItemSodaCoke","ItemSodaPepsi","FoodCanBakedBeans","FoodCanSardines","FoodCanFrankBeans","FoodCanPasta","8Rnd_9x18_Makarov","8Rnd_9x18_MakarovSD","7Rnd_45ACP_1911","2Rnd_shotgun_74Slug","2Rnd_shotgun_74Pellets","ItemBandage","ItemPainkiller" },
-		{ 0.09,0.09,0.09,0.03,0.03,0.01,0.01,0.01,0.01,0.07,0.03,0.05,0.05,0.05,0.06,0.06 }
+		{"TrashTinCan", 0.09},
+		{"TrashJackDaniels", 0.09},
+		{"ItemSodaEmpty", 0.09},
+		{"ItemSodaCoke", 0.03},
+		{"ItemSodaPepsi", 0.03},
+		{"FoodCanBakedBeans", 0.01},
+		{"FoodCanSardines", 0.01},
+		{"FoodCanFrankBeans", 0.01},
+		{"FoodCanPasta", 0.01},
+		{"8Rnd_9x18_Makarov", 0.07},
+		{"8Rnd_9x18_MakarovSD", 0.03},
+		{"7Rnd_45ACP_1911", 0.05},
+		{"2Rnd_shotgun_74Slug", 0.05},
+		{"2Rnd_shotgun_74Pellets", 0.05},
+		{"ItemBandage", 0.06},
+		{"ItemPainkiller", 0.06}
 	};
 	
 	foodNamalsk[] = {
-		{
-			//trash
-			"TrashTinCan",
-			"TrashJackDaniels",
-			"ItemSodaEmpty",
-			"ItemSodaCoke",
-			"ItemSodaPepsi",
-			"FoodCanBakedBeans",
-			"FoodCanSardines",
-			"FoodCanFrankBeans",
-			"FoodCanPasta",
-			"FoodCanUnlabeled",
-			//Bags
-			"FoodPistachio",
-			"FoodNutmix"
-		},
-		{
-			//trash
-			0.13,
-			0.13,
-			0.13,
-			0.09,
-			0.13,
-			0.09,
-			0.09,
-			0.09,
-			0.09,
-			0.06,
-			//Bags
-			0.05,
-			0.04
-		}
+		{"TrashTinCan",0.13},
+		{"TrashJackDaniels",0.13},
+		{"ItemSodaEmpty",0.05},
+		{"ItemSodaCoke",0.05},
+		{"ItemSodaPepsi",0.05},
+		{"ItemSodaMtngreen",0.01},
+		{"ItemSodaR4z0r",0.01},
+		{"ItemSodaClays",0.01},
+		{"ItemSodaSmasht",0.01}, 
+		{"ItemSodaDrwaste",0.01}, 
+		{"ItemSodaLemonade",0.01}, 
+		{"ItemSodaLvg",0.01}, 
+		{"ItemSodaMzly",0.01}, 
+		{"ItemSodaRabbit",0.01},
+		{"FoodCanBakedBeans",0.05},
+		{"FoodCanSardines",0.05},
+		{"FoodCanFrankBeans",0.05},
+		{"FoodCanPasta",0.05},
+		{"FoodCanBadguy",0.01},
+		{"FoodCanBoneboy",0.01},
+		{"FoodCanCorn",0.01},
+		{"FoodCanCurgon",0.01},
+		{"FoodCanDemon",0.01},
+		{"FoodCanFraggleos",0.01},
+		{"FoodCanHerpy",0.001},
+		{"FoodCanDerpy",0.01},
+		{"FoodCanOrlok",0.01},
+		{"FoodCanPowell",0.01},
+		{"FoodCanTylers",0.01},
+		{"FoodCanUnlabeled",0.04},
+		{"FoodPistachio",0.03},
+		{"FoodNutmix",0.04},
+		{"FoodChipsSulahoops",0.01},
+		{"FoodChipsMysticales",0.01},
+		{"FoodCandyAnders",0.01},
+		{"FoodCandyLegacys",0.01},
+		{"FoodCandyMintception",0.01},
+		{"FoodCanRusUnlabeled",0.05},
+		{"FoodCanRusStew",0.05},
+		{"FoodCanRusPork",0.05},
+		{"FoodCanRusPeas",0.05},
+		{"FoodCanRusMilk",0.04},
+		{"FoodCanRusCorn",0.05}
 	};
-	/*foodNamalsk[] = {
-		{ "TrashTinCan","TrashJackDaniels","ItemSodaEmpty","ItemSodaCoke","ItemSodaPepsi","FoodCanBakedBeans","FoodCanSardines","FoodCanFrankBeans","FoodCanPasta","ItemBandage" },
-		{ 0.13,0.13,0.13,0.09,0.13,0.09,0.09,0.09,0.09,0.04 }
-	};*/
+
 	genericNamalsk[] = {
-		{
-			"TrashTinCan",
-			"ItemSodaEmpty",
-			"ItemSodaCoke",
-			"ItemSodaPepsi",
-			"TrashJackDaniels",
-			"FoodCanBakedBeans",
-			"FoodCanSardines",
-			"FoodCanFrankBeans",
-			"FoodCanPasta",
-			"ItemWaterbottleUnfilled",
-			"ItemWaterbottle",
-			"ItemBandage",
-			"7Rnd_45ACP_1911",
-			"5x_22_LR_17_HMR",
-			"10x_303",
-			"6Rnd_45ACP",
-			"2Rnd_shotgun_74Slug",
-			"2Rnd_shotgun_74Pellets",
-			"8Rnd_9x18_Makarov",
-			"15Rnd_W1866_Slug",
-			"WoodenArrow",
-			"HandRoadFlare",
-			"ItemPainkiller",
-			"HandChemGreen",
-			"HandChemBlue",
-			"HandChemRed",
-			"ItemHeatPack"
-		},
-		{
-			0.06,
-			0.06,
-			0.01,
-			0.01,
-			0.06,
-			0.01,
-			0.01,
-			0.01,
-			0.01,
-			0.01,
-			0.01,
-			0.11,
-			0.03,
-			0.01,
-			0.04,
-			0.04,
-			0.05,
-			0.05,
-			0.09,
-			0.02,
-			0.04,
-			0.07,
-			0.02,
-			0.01,
-			0.03,
-			0.03,
-			0.04
-		}
+		{"TrashTinCan", 0.06},
+		{"ItemSodaEmpty", 0.06},
+		{"ItemSodaCoke", 0.01},
+		{"ItemSodaPepsi", 0.01},
+		{"TrashJackDaniels", 0.06},
+		{"FoodCanBakedBeans", 0.01},
+		{"FoodCanSardines", 0.01},
+		{"FoodCanFrankBeans", 0.01},
+		{"FoodCanPasta", 0.01},
+		{"ItemWaterbottleUnfilled", 0.01},
+		{"ItemWaterbottle", 0.01},
+		{"ItemBandage", 0.11},
+		{"7Rnd_45ACP_1911", 0.03},
+		{"5x_22_LR_17_HMR", 0.01},
+		{"10x_303", 0.04},
+		{"6Rnd_45ACP", 0.04},
+		{"2Rnd_shotgun_74Slug", 0.05},
+		{"2Rnd_shotgun_74Pellets", 0.05},
+		{"8Rnd_9x18_Makarov", 0.09},
+		{"15Rnd_W1866_Slug", 0.02},
+		{"WoodenArrow", 0.04},
+		{"HandRoadFlare", 0.07},
+		{"ItemPainkiller", 0.02},
+		{"HandChemGreen", 0.01},
+		{"HandChemBlue", 0.03},
+		{"HandChemRed", 0.03},
+		{"ItemHeatPack", 0.04},
+		{"ItemNails", 0.01}
 	};
-	/*genericNamalsk[] = {
-		{ "TrashTinCan","ItemSodaEmpty","ItemSodaCoke","ItemSodaPepsi","TrashJackDaniels","FoodCanBakedBeans","FoodCanSardines","FoodCanFrankBeans","FoodCanPasta","ItemWaterbottleUnfilled","ItemWaterbottle","ItemBandage","7Rnd_45ACP_1911","5x_22_LR_17_HMR","10x_303","6Rnd_45ACP","2Rnd_shotgun_74Slug","2Rnd_shotgun_74Pellets","8Rnd_9x18_Makarov","8Rnd_9x18_MakarovSD","15Rnd_W1866_Slug","BoltSteel","HandRoadFlare","ItemPainkiller","HandChemGreen","HandChemBlue","HandChemRed","ItemHeatPack" },
-		{ 0.06,0.06,0.01,0.01,0.04,0.01,0.01,0.01,0.01,0.01,0.01,0.11,0.03,0.01,0.04,0.04,0.05,0.05,0.09,0.02,0.04,0.07,0.03,0.02,0.01,0.03,0.03,0.04 }
-	};*/
+
 	genericNamalskNoFood[] = {
-		{
-			"TrashTinCan",
-			"ItemSodaEmpty",
-			"TrashJackDaniels",
-			"ItemWaterbottleUnfilled",
-			"ItemBandage",
-			"7Rnd_45ACP_1911",
-			"5x_22_LR_17_HMR",
-			"10x_303",
-			"6Rnd_45ACP",
-			"2Rnd_shotgun_74Slug",
-			"2Rnd_shotgun_74Pellets",
-			"8Rnd_9x18_Makarov",
-			"15Rnd_W1866_Slug",
-			"WoodenArrow",
-			"HandRoadFlare",
-			"ItemPainkiller",
-			"HandChemGreen",
-			"HandChemBlue",
-			"HandChemRed",
-			"ItemHeatPack"
-		},
-		{
-			0.13,
-			0.13,
-			0.13,
-			0.01,
-			0.11,
-			0.03,
-			0.01,
-			0.04,
-			0.04,
-			0.05,
-			0.05,
-			0.09,
-			0.02,
-			0.04,
-			0.07,
-			0.02,
-			0.01,
-			0.03,
-			0.03,
-			0.04
-		}
+		{"TrashTinCan", 0.13},
+		{"ItemSodaEmpty", 0.13},
+		{"TrashJackDaniels", 0.13},
+		{"ItemWaterbottleUnfilled", 0.01},
+		{"ItemBandage", 0.11},
+		{"7Rnd_45ACP_1911", 0.03},
+		{"5x_22_LR_17_HMR", 0.01},
+		{"10x_303", 0.04},
+		{"6Rnd_45ACP", 0.04},
+		{"2Rnd_shotgun_74Slug", 0.05},
+		{"2Rnd_shotgun_74Pellets", 0.05},
+		{"8Rnd_9x18_Makarov", 0.09},
+		{"15Rnd_W1866_Slug", 0.02},
+		{"WoodenArrow", 0.04},
+		{"HandRoadFlare", 0.07},
+		{"ItemPainkiller", 0.02},
+		{"HandChemGreen", 0.01},
+		{"HandChemBlue", 0.03},
+		{"HandChemRed", 0.03},
+		{"ItemHeatPack", 0.04},
+		{"ItemNails", 0.01}		
 	};
-	/*genericNamalskNoFood[] = {
-		{ "TrashTinCan","ItemSodaEmpty","TrashJackDaniels","ItemBandage","7Rnd_45ACP_1911","5x_22_LR_17_HMR","10x_303","6Rnd_45ACP","2Rnd_shotgun_74Slug","2Rnd_shotgun_74Pellets","8Rnd_9x18_Makarov","8Rnd_9x18_MakarovSD","15Rnd_W1866_Slug","BoltSteel","HandRoadFlare","ItemPainkiller","HandChemGreen","HandChemBlue","HandChemRed","ItemHeatPack" },
-		{ 0.06,0.06,0.04,0.11,0.03,0.01,0.04,0.04,0.05,0.05,0.09,0.02,0.04,0.07,0.03,0.02,0.01,0.03,0.03,0.04 }
-	};*/
+
 	militaryNAC[] = {
-		{ "TrashTinCan","ItemSodaEmpty","ItemSodaCoke","ItemSodaPepsi","ItemBandage","ItemPainkiller","ItemMorphine","nsw_er7mm","30Rnd_556x45_Stanag","20Rnd_762x51_DMR","17Rnd_9x19_glock17","15Rnd_9x19_M9SD","15Rnd_9x19_M9","30Rnd_762x39_AK47","30Rnd_545x39_AK","5Rnd_762x51_M24","10Rnd_127x99_m107","8Rnd_B_Beneli_74Slug","1Rnd_HE_M203","FlareWhite_M203","FlareGreen_M203","1Rnd_Smoke_M203","200Rnd_556x45_M249","HandGrenade_west","SmokeShell","SmokeShellRed","SmokeShellGreen","8Rnd_B_Beneli_Pellets","30Rnd_556x45_StanagSD","30Rnd_9x19_MP5","30Rnd_9x19_MP5SD","100Rnd_762x51_M240","8Rnd_B_Saiga12_74Slug", "30Rnd_545x39_AKSD", "30Rnd_556x45_G36", "30Rnd_556x45_G36SD", "75Rnd_545x39_RPK", "100Rnd_762x54_PK","HandChemGreen","HandChemBlue","HandChemRed","ItemHeatPack","1Rnd_HE_GP25", "10Rnd_9x39_SP5_VSS", "20Rnd_9x39_SP5_VSS" },
-		{ 0.18,0.09,0.01,0.01,0.04,0.04,0.01,0.01,0.04,0.04,0.05,0.01,0.02,0.04,0.04,0.01,0.01,0.04,0.01,0.01,0.01,0.01,0.01,0.01,0.04,0.02,0.02,0.04,0.01,0.02,0.01,0.01,0.03,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.04,0.01,0.01,0.01 }
+		{"TrashTinCan", 0.18},
+		{"ItemSodaEmpty", 0.09},
+		{"ItemSodaCoke", 0.01},
+		{"ItemSodaPepsi", 0.01},
+		{"ItemWaterbottleUnfilled", 0.01},
+		{"ItemBandage", 0.04},
+		{"ItemPainkiller", 0.04},
+		{"ItemMorphine", 0.01},
+		{"nsw_er7mm", 0.01},
+		{"30Rnd_556x45_Stanag", 0.04},
+		{"20Rnd_762x51_DMR", 0.04},
+		{"17Rnd_9x19_glock17", 0.05},
+		{"15Rnd_9x19_M9SD", 0.01},
+		{"15Rnd_9x19_M9", 0.02},
+		{"30Rnd_762x39_AK47", 0.04},
+		{"30Rnd_545x39_AK", 0.04},
+		{"5Rnd_762x51_M24", 0.01},
+		{"8Rnd_B_Beneli_74Slug", 0.04},
+		{"1Rnd_HE_M203", 0.01},
+		{"FlareWhite_M203", 0.01},
+		{"FlareGreen_M203", 0.01},
+		{"1Rnd_Smoke_M203", 0.01},
+		{"200Rnd_556x45_M249", 0.01},
+		{"HandGrenade_west", 0.01},
+		{"SmokeShell", 0.04},
+		{"SmokeShellRed", 0.02},
+		{"SmokeShellGreen", 0.02},
+		{"8Rnd_B_Beneli_Pellets", 0.04},
+		{"30Rnd_556x45_StanagSD", 0.01},
+		{"30Rnd_9x19_MP5", 0.02},
+		{"30Rnd_9x19_MP5SD", 0.01},
+		{"100Rnd_762x51_M240", 0.01},
+		{"8Rnd_B_Saiga12_74Slug", 0.03},
+		{"30Rnd_545x39_AKSD", 0.02},
+		{"30Rnd_556x45_G36", 0.02},
+		{"30Rnd_556x45_G36SD", 0.02},
+		{"75Rnd_545x39_RPK", 0.02},
+		{"100Rnd_762x54_PK", 0.02},
+		{"HandChemGreen", 0.02},
+		{"HandChemBlue", 0.02},
+		{"HandChemRed", 0.02},
+		{"ItemHeatPack", 0.04},
+		{"1Rnd_HE_GP25", 0.01},
+		{"10Rnd_9x39_SP5_VSS", 0.01},
+		{"20Rnd_9x39_SP5_VSS", 0.01}
 	};
+	
 	militaryNamalsk[] = {
-		{ "TrashTinCan","ItemSodaEmpty","ItemSodaCoke","ItemSodaPepsi","ItemWaterbottleUnfilled","ItemBandage","ItemPainkiller","ItemMorphine","30Rnd_556x45_Stanag","20Rnd_762x51_DMR","17Rnd_9x19_glock17","15Rnd_9x19_M9SD","15Rnd_9x19_M9","30Rnd_762x39_AK47","30Rnd_545x39_AK","5Rnd_762x51_M24","10Rnd_127x99_m107","8Rnd_B_Beneli_74Slug","1Rnd_HE_M203","FlareWhite_M203","FlareGreen_M203","1Rnd_Smoke_M203","200Rnd_556x45_M249","HandGrenade_west","SmokeShell","SmokeShellRed","SmokeShellGreen","8Rnd_B_Beneli_Pellets","30Rnd_556x45_StanagSD","30Rnd_9x19_MP5","30Rnd_9x19_MP5SD","100Rnd_762x51_M240","8Rnd_B_Saiga12_74Slug", "30Rnd_545x39_AKSD", "30Rnd_556x45_G36", "30Rnd_556x45_G36SD", "75Rnd_545x39_RPK", "100Rnd_762x54_PK","HandChemGreen","HandChemBlue","HandChemRed","ItemHeatPack","1Rnd_HE_GP25", "10Rnd_9x39_SP5_VSS", "20Rnd_9x39_SP5_VSS" },
-		{ 0.18,0.09,0.02,0.02,0.01,0.04,0.04,0.01,0.02,0.01,0.02,0.01,0.02,0.02,0.02,0.01,0.01,0.02,0.01,0.01,0.01,0.01,0.01,0.01,0.02,0.02,0.02,0.02,0.01,0.02,0.01,0.01,0.03,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.04,0.01,0.01,0.01 }
+		{"TrashTinCan", 0.18},
+		{"ItemSodaEmpty", 0.09},
+		{"ItemSodaCoke", 0.01},
+		{"ItemSodaPepsi", 0.01},
+		{"ItemWaterbottleUnfilled", 0.01},
+		{"ItemBandage", 0.04},
+		{"ItemPainkiller", 0.04},
+		{"ItemMorphine", 0.01},
+		{"30Rnd_556x45_Stanag", 0.04},
+		{"20Rnd_762x51_DMR", 0.04},
+		{"17Rnd_9x19_glock17", 0.05},
+		{"15Rnd_9x19_M9SD", 0.01},
+		{"15Rnd_9x19_M9", 0.02},
+		{"30Rnd_762x39_AK47", 0.04},
+		{"30Rnd_545x39_AK", 0.04},
+		{"5Rnd_762x51_M24", 0.01},
+		{"8Rnd_B_Beneli_74Slug", 0.04},
+		{"1Rnd_HE_M203", 0.01},
+		{"FlareWhite_M203", 0.01},
+		{"FlareGreen_M203", 0.01},
+		{"1Rnd_Smoke_M203", 0.01},
+		{"200Rnd_556x45_M249", 0.01},
+		{"HandGrenade_west", 0.01},
+		{"SmokeShell", 0.04},
+		{"SmokeShellRed", 0.02},
+		{"SmokeShellGreen", 0.02},
+		{"8Rnd_B_Beneli_Pellets", 0.04},
+		{"30Rnd_556x45_StanagSD", 0.01},
+		{"30Rnd_9x19_MP5", 0.02},
+		{"30Rnd_9x19_MP5SD", 0.01},
+		{"100Rnd_762x51_M240", 0.01},
+		{"8Rnd_B_Saiga12_74Slug", 0.03},
+		{"30Rnd_545x39_AKSD", 0.02},
+		{"30Rnd_556x45_G36", 0.02},
+		{"30Rnd_556x45_G36SD", 0.02},
+		{"75Rnd_545x39_RPK", 0.02},
+		{"100Rnd_762x54_PK", 0.02},
+		{"HandChemGreen", 0.02},
+		{"HandChemBlue", 0.02},
+		{"HandChemRed", 0.02},
+		{"ItemHeatPack", 0.04},
+		{"1Rnd_HE_GP25", 0.01},
+		{"10Rnd_9x39_SP5_VSS", 0.01},
+		{"20Rnd_9x39_SP5_VSS", 0.01}
 	};
+
 	medicalNamalsk[] = {
-		{ "ItemBandage","ItemPainkiller","ItemMorphine","ItemEpinephrine","ItemHeatPack","ItemAntibiotic" },
-		{ 1,0.5,0.5,0.2,0.2,0.1 }
+		{"ItemBandage", 1},
+		{"ItemPainkiller", 0.5},
+		{"ItemMorphine", 0.5},
+		{"ItemEpinephrine", 0.2},
+		{"ItemHeatPack", 0.2},
+		{"ItemAntibiotic", 0.1}
 	};
+	
 	hospitalNamalsk[] = {
-		{ "ItemBandage","ItemPainkiller","ItemMorphine","ItemEpinephrine","ItemBloodbag","ItemAntibiotic" },
-		{ 0.43,0.17,0.13,0.09,0.17,0.05 }
+		{"ItemBandage", 0.43},
+		{"ItemPainkiller", 0.17},
+		{"ItemMorphine", 0.13},
+		{"ItemEpinephrine", 0.09},
+		{"ItemBloodbag", 0.17},
+		{"ItemAntibiotic", 0.05}
 	};
 };
 
 class CfgBuildingLoot {
-	
 	// Original loot tables
 	class Default;
 	class Residential;
@@ -2016,617 +2269,627 @@ class CfgBuildingLoot {
 	class MilitarySpecial;
 	class HeliCrash;
 	class Church;
-
 };
 
 class CfgBuildingLootNamalsk: CfgBuildingLoot {
+	//LOOT TABLES FOR DAYZ NAMALSK
 	
-	//LOOT TABLES FOR NAMALSK
+	/* RESIDENTIAL */
 	class ResidentialNamalsk: Residential {
-		zombieChance = 0.3;
+		zombieChance = 0.6;
 		maxRoaming = 5;
 		zombieClass[] = {"zZombie_Base","z_hunter","z_teacher","z_villager1","z_villager2","z_villager3"};
 		lootChance = 0.4;
 		lootPos[] = {};
-		itemType[] = {
-			{ "ItemSodaMdew","magazine" },
-			{ "ItemWatch","generic" },
-			{ "ItemCompass","generic" },
-			{ "ItemMap","weapon" },
-			{ "Makarov","weapon" },
-			{ "MakarovSD_DZN","weapon" },
-			{ "Colt1911","weapon" },
-			{ "ItemFlashlight","generic" },
-			{ "ItemKnife","generic" },
-			{ "ItemMatchbox","generic" },
-			{ "","genericNamalsk" },
-			{ "LeeEnfield","weapon" },
-			{ "revolver_EP1","weapon" },
-			{ "CZ_VestPouch_EP1","object" },
-			{ "DZ_CivilBackpack_EP1","object" },
-			{ "DZ_ALICE_Pack_EP1","object" },
-			{ "Winchester1866","weapon" },
-			{ "WeaponHolder_ItemTent","object" },
-			{ "","militaryNamalsk" },
-			{ "","trash" },
-			{ "Crossbow_DZ","weapon" },
-			{ "Binocular","weapon" },
-			{ "PartWoodPile","magazine" },
-			{ "Skin_Camo1_DZ","magazine" },
-			{ "Skin_Sniper1_DZ","magazine" },
-			{ "Skin_Sniper1W_DZN","magazine" },
-			{ "WeaponHolder_MeleeCrowbar","object" },
-			{ "MR43","weapon" }
+		lootType[] = {
+			{"ItemSodaMdew","magazine", 0.01},
+			{"ItemWatch","generic", 0.05},
+			{"ItemCompass","generic", 0.05},
+			{"ItemMap","weapon", 0.03},
+			{"Makarov","weapon", 0.04},
+			{"MakarovSD_DZN","weapon", 0.01},
+			{"Colt1911","weapon", 0.05},
+			{"ItemFlashlight","generic", 0.03},
+			{"ItemKnife","generic", 0.08},
+			{"ItemMatchbox","generic", 0.06},
+			{"LeeEnfield","weapon", 0.03},
+			{"revolver_EP1","weapon", 0.04},
+			{"CZ_VestPouch_EP1","object", 0.01},
+			{"DZ_CivilBackpack_EP1","object", 0.03},
+			{"DZ_ALICE_Pack_EP1","object", 0.03},
+			{"Winchester1866","weapon", 0.01},
+			{"WeaponHolder_ItemTent","object", 0.01},
+			{"Crossbow_DZ","weapon", 0.01},
+			{"Binocular","weapon", 0.02},
+			{"PartWoodPile","magazine", 0.06},
+			{"Skin_Camo1_DZ","magazine", 0.01},
+			{"Skin_Sniper1_DZ","magazine", 0.01},
+			{"Skin_Sniper1W_DZN","magazine", 0.01},
+			{"WeaponHolder_ItemHatchet","object", 0.05},
+			{"WeaponHolder_ItemCrowbar","object", 0.05},
+			{"MeleeBaseBallBat","weapon", 0.02},
+			{"MR43","weapon", 0.03},
+			{"","militaryNamalsk", 0.03},
+			{"","trash", 0.5},
+			{"","genericNamalsk", 0.06}  
 		};
-		itemChance[] = {0.01,0.15,0.05,0.03,0.13,0.03,0.05,0.03,0.08,0.06,0.10,0.06,0.04,0.01,0.03,0.03,0.01,0.01,0.03,0.5,0.01,0.06,0.06,0.01,0.01,0.01,0.08,0.03};
 	};
 	class OfficeNamalsk: ResidentialNamalsk {
 		maxRoaming = 6;
 	};
+	
+	/* INDUSTRIAL */
 	class IndustrialNamalsk: Industrial {
-		zombieChance = 0.4;
+		zombieChance = 0.8;
 		zombieClass[] = {"z_worker1","z_worker2","z_worker3"};
 		maxRoaming = 2;
 		lootChance = 0.3;
 		lootPos[] = {};
-		itemType[] = {
-			{ "","genericNamalskNoFood" },
-			{ "","trash" },
-			{ "","militaryNamalsk" },
-			{ "WeaponHolder_PartGeneric","object" },
-			{ "WeaponHolder_PartWheel","object" },
-			{ "WeaponHolder_PartFueltank","object" },
-			{ "WeaponHolder_PartEngine","object" },
-			{ "WeaponHolder_PartGlass","object" },
-			{ "WeaponHolder_PartVRotor","object" },
-			{ "WeaponHolder_ItemJerrycan","object" },
-			{ "WeaponHolder_ItemHatchet","object" },
-			{ "ItemKnife","military" },
-			{ "ItemToolbox","weapon" },
-			{ "ItemSolder","weapon" },
-			{ "ItemTankTrap","magazine" }
+		lootType[] = {
+			{"WeaponHolder_PartGeneric","object", 0.04},
+			{"WeaponHolder_PartWheel","object", 0.05},
+			{"WeaponHolder_PartFueltank","object", 0.02},
+			{"WeaponHolder_PartEngine","object", 0.02},
+			{"WeaponHolder_PartGlass","object", 0.04},
+			{"WeaponHolder_PartVRotor","object", 0.01},
+			{"WeaponHolder_ItemJerrycan","object", 0.04},
+			{"WeaponHolder_ItemHatchet","object", 0.05},
+			{"WeaponHolder_ItemCrowbar","object", 0.05},
+			{"ItemKnife","military", 0.03},
+			{"ItemToolbox","weapon", 0.02},
+			{"ItemSolder","weapon", 0.01},
+			{"ItemTankTrap","magazine", 0.04},
+			{"","genericNamalskNoFood", 0.10},
+			{"","trash", 0.50},
+			{"","militaryNamalsk", 0.04}
 		};
-		itemChance[] = {0.10,0.34,0.04,0.04,0.05,0.02,0.06,0.04,0.01,0.04,0.11,0.07,0.02,0.01,0.04};
 	};
+	
+	/* FARM */
 	class FarmNamalsk: Farm {
-		zombieChance = 0.3;
+		zombieChance = 0.5;
 		maxRoaming = 3;
 		zombieClass[] = {"zZombie_Base","z_hunter","z_hunter","z_hunter","z_villager1","z_villager2","z_villager3"};
 		lootChance = 0.5;
 		lootPos[] = {};
-		itemType[] = {
-			{ "ItemMatchbox","generic" },
-			{ "WeaponHolder_ItemJerrycan","object" },
-			{ "","genericNamalsk" },
-			{ "huntingrifle","weapon" },
-			{ "LeeEnfield","weapon" },
-			{ "Winchester1866","weapon" },
-			{ "","trash" },
-			{ "Crossbow_DZ","weapon" },
-			{ "PartWoodPile","magazine" },
-			{ "WeaponHolder_ItemHatchet","object" },
-			{ "MR43","weapon" },
-			{ "TrapBear","magazine" },
-			{"","foodNamalsk"},
-			{"WeaponHolder_ItemMachete", "object"}
+		lootType[] = {
+			{"WeaponHolder_ItemJerrycan","object", 0.02},
+			{"huntingrifle","weapon", 0.01},
+			{"LeeEnfield","weapon", 0.04},
+			{"Winchester1866","weapon", 0.03},
+			{"Crossbow_DZ","weapon", 0.03},
+			{"PartWoodPile","magazine", 0.08},
+			{"WeaponHolder_ItemHatchet","object", 0.05},
+			{"MeleeMachete", "object", 0.03},
+			{"MR43","weapon", 0.06},
+			{"TrapBear","magazine", 0.01},
+			{"ItemMatchbox","generic", 0.06},
+			{"","genericNamalsk", 0.02},
+			{"","trash", 0.50},
+			{"","foodNamalsk", 0.04}
 		};
-		itemChance[] = {0.06,0.02,0.02,0.01,0.04,0.03,0.34,0.03,0.11,0.17,0.06,0.01,0.04,0.03};
 	};
 
+	/* MARKET */
 	class SuperMarketNamalsk: SuperMarket {
 		lootChance = 0.6;
 		minRoaming = 2;
 		maxRoaming = 6;
-		zombieChance = 0.3;
+		zombieChance = 0.8;
 		zombieClass[] = {"zZombie_Base","zZombie_Base","z_teacher","z_suit1","z_suit2"};
-		itemType[] = {
-		 { "ItemWatch","generic" },
-		 { "ItemCompass","generic" },
-		 { "ItemMap","weapon" },
-		 { "Makarov","weapon" },
-		 { "MakarovSD_DZN","weapon" },
-		 { "Colt1911","weapon" },
-		 { "ItemFlashlight","generic" },
-		 { "ItemKnife","generic" },
-		 { "ItemMatchbox","generic" },
-		 { "","genericNamalsk" },
-		 { "LeeEnfield","weapon" },
-		 { "revolver_EP1","weapon" },
-		 { "CZ_VestPouch_EP1","object" },
-		 { "DZ_CivilBackpack_EP1","object" },
-		 { "DZ_ALICE_Pack_EP1","object" },
-		 { "Winchester1866","weapon" },
-		 { "WeaponHolder_ItemTent","object" },
-		 { "","foodNamalsk" },
-		 { "","trash" },
-		 { "Crossbow_DZ","weapon" },
-		 { "Binocular","weapon" },
-		 { "PartWoodPile","magazine" },
-		 { "MR43","weapon" }
+		lootPos[] = {};
+		lootType[] = {
+			{"ItemWatch","generic", 0.05},
+			{"ItemCompass","generic", 0.01},
+			{"ItemMap","weapon", 0.05},
+			{"Makarov","weapon", 0.02},
+			{"MakarovSD_DZN","weapon", 0.02},
+			{"Colt1911","weapon", 0.02},
+			{"ItemFlashlight","generic", 0.05},
+			{"ItemKnife","generic", 0.02},
+			{"ItemMatchbox","generic", 0.05},
+			{"LeeEnfield","weapon", 0.01},
+			{"revolver_EP1","weapon", 0.01},
+			{"CZ_VestPouch_EP1","object", 0.01},
+			{"DZ_CivilBackpack_EP1","object", 0.02 },
+			{"DZ_ALICE_Pack_EP1","object", 0.02},
+			{"Winchester1866","weapon", 0.03},
+			{"WeaponHolder_ItemTent","object", 0.01},
+			{"Crossbow_DZ","weapon", 0.02},
+			{"Binocular","weapon", 0.03},
+			{"PartWoodPile","magazine", 0.05},
+			{"MR43","weapon", 0.01},
+			{"","genericNamalsk", 0.05},
+			{"","foodNamalsk", 0.01},
+			{"","trash", 0.50}
 		};
-		itemChance[] = {0.15,0.01,0.05,0.02,0.02,0.02,0.05,0.02,0.05,0.05,0.01,0.01,0.01,0.02,0.03,0.01,0.01,0.3,0.15,0.01,0.05,0.02,0.01};
 	};
 	
+	/* HOSPITAL */
 	class HospitalNamalsk: Hospital {
-		zombieChance = 0.4;
+		zombieChance = 1;
 		minRoaming = 2;
 		maxRoaming = 6;
 		zombieClass[] = {"z_doctor","z_doctor","z_doctor"};
 		lootChance = 1;
 		lootPos[] = {};
-		itemType[] = {
-			{ "","trash" },
-			{ "","hospitalNamalsk" },
-			{ "MedBox0_DZN","object" }
+		lootType[] = {
+			{"","trash", 0.5},
+			{"","hospitalNamalsk", 0.5},
+			{"MedBox0_DZN","object", 0.01}
 		};
-		itemChance[] = {0.3,0.5,0.1};
 	};
 	
+	
+	/* HELICRASH */
 	class HeliCrash {
-		zombieChance = 0;
+		zombieChance = 1;
 		maxRoaming = 2;
 		zombieClass[] = {"z_soldier_pilot"};
 		lootChance = 0.5;
 		lootPos[] = {};
-		itemType[] = {
-			{ "","trash" }
+		lootType[] = {
+			{ "","trash", 1}
 		};
-		itemChance[] = {1};
 	};
-	// DONE FOR 0.75
 	class HeliCrashNamalsk: HeliCrash {
-		zombieChance = 0;
-		maxRoaming = 5;
+		zombieChance = 1;
+		maxRoaming = 8;
 		zombieClass[] = {"z_ru_soldier_pilot","z_ru_soldier_light"};
 		lootChance = 0.5;
 		lootPos[] = {};
-		itemType[] = {
-			{ "PK_DZN","weapon" },
-			{ "Pecheneg_DZN","weapon" },
-			{ "AKS_GOLD_DZN","weapon" },
-			{ "FN_FAL","weapon" },
-			{ "Bizon","weapon" },
-			{ "bizon_silenced","weapon" },
-			{ "M14_EP1","weapon" },
-			{ "FN_FAL_ANPVS4","weapon" },
-			{ "M107_DZ","weapon" },
-			{ "BAF_AS50_scoped","weapon" },
-			{ "Mk_48_DZ","weapon" },
-			{ "M249_DZ","weapon" },
-			{ "BAF_L85A2_UGL_ACOG_DZN","weapon" },
-			{ "DMR","weapon" },
-			{ "KSVK_DZN","weapon" },
-			{ "","militaryNamalsk" },
-			{ "","medicalNamalsk" },
-			{ "MedBox0_DZN","object" },
-			{ "AmmoBoxSmall_556","object" },
-			{ "AmmoBoxSmall_762","object" },
-			{ "Skin_Camo1_DZ","magazine" },
-			{ "Skin_Sniper1_DZ","magazine" },
-			{ "Skin_Sniper1W_DZN","magazine" },
-			{ "Skin_CamoWinter_DZN","magazine" },
-			{ "Skin_CamoWinterW_DZN","magazine" },
-			{ "BrokenItemGPS","weapon" },
-			{ "BrokenNVGoggles","weapon" },
-			{ "BrokenItemRadio","generic" },
-			{ "APSI","generic" }
+		lootType[] = {
+			{"PK_DZN","weapon", 0.03},
+			{"Pecheneg_DZN","weapon", 0.01},
+			{"AKS_GOLD_DZN","weapon", 0.01},
+			{"FN_FAL","weapon", 0.05},
+			{"Bizon","weapon", 0.05},
+			{"bizon_silenced","weapon", 0.05},
+			{"M14_EP1","weapon", 0.05},
+			{"FN_FAL_ANPVS4","weapon", 0.04},
+			{"Mk_48_DZ","weapon", 0.03},
+			{"M249_DZ","weapon", 0.05},
+			{"BAF_L85A2_UGL_ACOG_DZN","weapon", 0.05},
+			{"DMR","weapon", 0.01},
+			{"KSVK_DZN","weapon", 0.01},
+			{"","militaryNamalsk", 2},
+			{"","medicalNamalsk", 0.5},
+			{"MedBox0_DZN","object", 0.01},
+			{"AmmoBoxSmall_556","object", 0.01},
+			{"AmmoBoxSmall_762","object", 0.01},
+			{"Skin_Camo1_DZ","magazine", 0.08},
+			{"Skin_Sniper1_DZ","magazine", 0.08},
+			{"Skin_Sniper1W_DZN","magazine", 0.08},
+			{"Skin_CamoWinter_DZN","magazine", 0.04},
+			{"Skin_CamoWinterW_DZN","magazine", 0.04},
+			{"BrokenItemGPS","weapon", 0.04},
+			{"BrokenNVGoggles","weapon", 0.04},
+			{"BrokenItemRadio","generic", 0.02},
+			{"APSI","generic", 0.01}
 		};
-		itemChance[] = {0.03,0.01,0.01,0.05,0.05,0.05,0.05,0.04,0.01,0.01,0.03,0.05,0.05,0.01,0.01,2,0.5,0.1,0.05,0.05,0.08,0.08,0.08,0.04,0.04,0.04,0.04,0.02,0.01};
 	};
 
-	// DONE FOR 0.75
+	/* MILITARY */
 	class MilitaryNamalsk: Military {
 		zombieChance = 0.3;
-		maxRoaming = 6;
+		maxRoaming = 10;
+		zombieClass[] = {"z_ru_soldier","z_ru_soldier_light","z_us_soldier","z_us_soldier_light"};
 		lootChance = 0.4;
 		lootPos[] = {};
-		itemType[] = {
-			{ "Saiga12K_DZN","weapon" },
-			{ "G36C","weapon" },
-			{ "G36K_camo","weapon" },
-			{ "RPK_74_DZN","weapon" },
-			{ "AK_47_S","weapon" },
-			{ "AKS_74_UN_kobra_DZN","weapon" },
-			{ "AK_74_GL","weapon" },
-			{ "AK_107_kobra","weapon" },
-			{ "AK_107_GL_kobra","weapon" },
-			{ "M9","weapon" },
-			{ "M16A2","weapon" },
-			{ "M16A2GL","weapon" },
-			{ "M9SD","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "AK_74","weapon" },
-			{ "M4A1_Aim","weapon" },
-			{ "AKS_74_kobra","weapon" },
-			{ "AKS_74_U","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "M1014","weapon" },
-			{ "M4A1","weapon" },
-			{ "M14_EP1","weapon" },
-			{ "UZI_EP1","weapon" },
-			{ "Remington870_lamp","weapon" },
-			{ "glock17_EP1","weapon" },
-			{ "MP5A5","weapon" },
-			{ "MP5SD","weapon" },
-			{ "M4A3_CCO_EP1","weapon" },
-			{ "Binocular","weapon" },
-			{ "ItemFlashlightRed","military" },
-			{ "ItemKnife","military" },
-			{ "ItemMap","military" },
-			{ "DZ_Assault_Pack_EP1","object" },
-			{ "DZ_Patrol_Pack_EP1","object" },
-			{ "BAF_AssaultPack_DZN","object" },
-			{ "","medical" },
-			{ "","genericNamalskNoFood" },
-			{ "","militaryNamalsk" },
-			{ "ItemEtool","weapon" },
-			{ "ItemSandbag","magazine" },
-			{ "BrokenItemGPS","weapon" },
-			{ "BrokenNVGoggles","weapon" },
-			{ "BrokenItemGPS","weapon" },
-			{ "BrokenNVGoggles","weapon" },
-			{ "APSI","generic" },
-			{ "FoodNutmix","magazine" }
+		lootType[] = {
+			{"Saiga12K_DZN","weapon", 0.1},
+			{"G36C","weapon", 0.08},
+			{"G36K_camo","weapon", 0.05},
+			{"RPK_74_DZN","weapon", 0.04},
+			{"AK_47_S","weapon", 0.18},
+			{"AKS_74_UN_kobra_DZN","weapon", 0.03},
+			{"AK_74_GL","weapon", 0.07},
+			{"AK_107_kobra","weapon", 0.06},
+			{"AK_107_GL_kobra","weapon", 0.05},
+			{"M9","weapon", 0.05},
+			{"M16A2","weapon", 0.05},
+			{"M16A2GL","weapon", 0.01},
+			{"M9SD","weapon", 0.02},
+			{"AK_47_M","weapon", 0.15},
+			{"AK_74","weapon", 0.08},
+			{"M4A1_Aim","weapon", 0.01},
+			{"AKS_74_kobra","weapon", 0.08},
+			{"AKS_74_U","weapon", 0.05},
+			{"AK_47_M","weapon", 0.05},
+			{"M1014","weapon", 0.1},
+			{"M4A1","weapon", 0.02},
+			{"M14_EP1","weapon", 0.01},
+			{"UZI_EP1","weapon", 0.05},
+			{"Remington870_lamp","weapon", 0.08},
+			{"glock17_EP1","weapon", 0.1},
+			{"MP5A5","weapon", 0.04},
+			{"MP5SD","weapon", 0.02},
+			{"M4A3_CCO_EP1","weapon", 0.01},
+			{"Binocular","weapon", 0.06},
+			{"ItemFlashlightRed","military", 0.1},
+			{"ItemKnife","military", 0.1},
+			{"ItemMap","military", 0.05},
+			{"DZ_Assault_Pack_EP1","object", 0.06},
+			{"DZ_Patrol_Pack_EP1","object", 0.04},
+			{"DZ_British_ACU","object", 0.03},
+			{"ItemEtool","weapon", 0.05},
+			{"ItemSandbag","magazine", 0.02},
+			{"BrokenItemGPS","weapon", 0.03},
+			{"BrokenNVGoggles","weapon", 0.03},
+			{"APSI","generic", 0.01},
+			{"FoodNutmix","magazine", 0.04},
+			{"","medical", 0.1},
+			{"","genericNamalskNoFood", 0.15},
+			{"","militaryNamalsk", 3.5},
+			{"","trash",0.30}
 		};
-		itemChance[] = {0.1,0.08,0.05,0.04,0.18,0.03,0.07,0.06,0.05,0.05,0.05,0.01,0.02,0.15,0.08,0.01,0.08,0.05,0.05,0.1,0.02,0.01,0.05,0.08,0.1,0.04,0.02,0.01,0.06,0.1,0.1,0.05,0.06,0.04,0.03,0.1,0.15,3.5,0.05,0.02,0.04,0.04,0.03,0.03,0.01,0.04};
-		zombieClass[] = {"z_ru_soldier","z_ru_soldier_light","z_us_soldier","z_us_soldier_light"};
 	};
-	
-	// DONE FOR 0.75
 	class MilitaryNamalskWinter: Military {
 		zombieChance = 0.3;
-		maxRoaming = 6;
+		maxRoaming = 10;
 		zombieClass[] = {"z_ru_soldier","z_ru_soldier_light","z_us_soldier","z_us_soldier_light"};
 		lootChance = 0.4;
 		lootPos[] = {};
-		itemType[] = {
-			{ "Saiga12K_DZN","weapon" },
-			{ "G36C","weapon" },
-			{ "G36K_camo","weapon" },
-			{ "RPK_74_DZN","weapon" },
-			{ "AK_47_S","weapon" },
-			{ "AKS_74_UN_kobra_DZN","weapon" },
-			{ "AK_74_GL","weapon" },
-			{ "AK_107_kobra","weapon" },
-			{ "AK_107_GL_kobra","weapon" },
-			{ "M9","weapon" },
-			{ "M16A2","weapon" },
-			{ "M16A2GL","weapon" },
-			{ "M9SD","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "AK_74","weapon" },
-			{ "M4A1_Aim","weapon" },
-			{ "AKS_74_kobra","weapon" },
-			{ "AKS_74_U","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "M1014","weapon" },
-			{ "M4A1","weapon" },
-			{ "M14_EP1","weapon" },
-			{ "UZI_EP1","weapon" },
-			{ "Remington870_lamp","weapon" },
-			{ "glock17_EP1","weapon" },
-			{ "MP5A5","weapon" },
-			{ "MP5SD","weapon" },
-			{ "M4A3_CCO_EP1","weapon" },
-			{ "Binocular","weapon" },
-			{ "ItemFlashlightRed","military" },
-			{ "ItemKnife","military" },
-			{ "ItemMap","military" },
-			{ "DZ_Assault_Pack_EP1","object" },
-			{ "DZ_Patrol_Pack_EP1","object" },
-			{ "BAF_AssaultPack_DZN","object" },
-			{ "","medical" },
-			{ "","genericNamalskNoFood" },
-			{ "","militaryNamalsk" },
-			{ "ItemEtool","weapon" },
-			{ "ItemSandbag","magazine" },
-			{ "Skin_CamoWinter_DZN","magazine" },
-			{ "Skin_CamoWinterW_DZN","magazine" },
-			{ "BrokenItemGPS","weapon" },
-			{ "BrokenNVGoggles","weapon" },
-			{ "APSI","generic" },
-			{ "FoodMRE","magazine" },
-			{ "FoodNutmix","magazine" }
+		lootType[] = {
+			{"Saiga12K_DZN","weapon", 0.1},
+			{"G36C","weapon", 0.08},
+			{"G36K_camo","weapon", 0.05},
+			{"RPK_74_DZN","weapon", 0.04},
+			{"AK_47_S","weapon", 0.18},
+			{"AKS_74_UN_kobra_DZN","weapon", 0.03},
+			{"AK_74_GL","weapon", 0.07},
+			{"AK_107_kobra","weapon", 0.06},
+			{"AK_107_GL_kobra","weapon", 0.05},
+			{"M9","weapon", 0.05},
+			{"M16A2","weapon", 0.05},
+			{"M16A2GL","weapon", 0.01},
+			{"M9SD","weapon", 0.02},
+			{"AK_47_M","weapon", 0.15},
+			{"AK_74","weapon", 0.08},
+			{"M4A1_Aim","weapon", 0.01},
+			{"AKS_74_kobra","weapon", 0.08},
+			{"AKS_74_U","weapon", 0.05},
+			{"AK_47_M","weapon", 0.05},
+			{"M1014","weapon", 0.1},
+			{"M4A1","weapon", 0.02},
+			{"M14_EP1","weapon", 0.01},
+			{"UZI_EP1","weapon", 0.05},
+			{"Remington870_lamp","weapon", 0.08},
+			{"glock17_EP1","weapon", 0.1},
+			{"MP5A5","weapon", 0.04},
+			{"MP5SD","weapon", 0.02},
+			{"M4A3_CCO_EP1","weapon", 0.01},
+			{"Binocular","weapon", 0.06},
+			{"ItemFlashlightRed","military", 0.1},
+			{"ItemKnife","military", 0.1},
+			{"ItemMap","military", 0.05},
+			{"DZ_Assault_Pack_EP1","object", 0.06},
+			{"DZ_Patrol_Pack_EP1","object", 0.04},
+			{"DZ_British_ACU","object", 0.03},
+			{"ItemEtool","weapon", 0.05},
+			{"ItemSandbag","magazine", 0.02},
+			{"BrokenItemGPS","weapon", 0.03},
+			{"BrokenNVGoggles","weapon", 0.03},
+			{"Skin_CamoWinter_DZN","magazine", 0.02},
+			{"Skin_CamoWinterW_DZN","magazine", 0.02},
+			{"APSI","generic", 0.01},
+			{"FoodMRE","magazine", 0.02},
+			{"FoodNutmix","magazine", 0.04},
+			{"","medical", 0.1},
+			{"","genericNamalskNoFood", 0.15},
+			{"","militaryNamalsk", 3.5},
+			{"","trash",0.30}
 		};
-		itemChance[] = {0.1,0.08,0.05,0.04,0.18,0.03,0.07,0.06,0.05,0.05,0.05,0.01,0.02,0.15,0.09,0.01,0.08,0.05,0.05,0.1,0.02,0.01,0.05,0.08,0.1,0.04,0.02,0.01,0.06,0.1,0.1,0.05,0.06,0.04,0.03,0.1,0.15,3.5,0.05,0.02,0.02,0.02,0.03,0.03,0.01,0.02,0.04};
 	};
 
+	/* MILITARY SPECIAL */
 	class MilitarySpecialNamalsk : MilitarySpecial {
 		zombieChance = 0.4;
 		minRoaming = 2;
-		maxRoaming = 6;
+		maxRoaming = 10;
 		lootChance = 0.4;
 		lootPos[] = {};
 		zombieClass[] = {"z_ru_soldier","z_ru_soldier_light","z_us_soldier","z_us_soldier_light"};
-		itemType[] = {
-			{ "VSS_vintorez_DZN","weapon" },
-			{ "M4A1_RCO_GL","weapon" },
-			{ "Saiga12K_DZN","weapon" },
-			{ "G36C","weapon" },
-			{ "G36K_camo","weapon" },
-			{ "G36_C_SD_eotech_DZN","weapon" },
-			{ "G36A_camo","weapon" },
-			{ "MG36_DZN","weapon" },
-			{ "RPK_74_DZN","weapon" },
-			{ "PK_DZN","weapon" },
-			{ "AK_47_S","weapon" },
-			{ "AKS_74_UN_kobra_DZN","weapon" },
-			{ "AKS_74_pso","weapon" },
-			{ "AK_74_GL","weapon" },
-			{ "AK_107_kobra","weapon" },
-			{ "AK_107_pso","weapon" },
-			{ "AK_107_GL_kobra","weapon" },
-			{ "AK_107_GL_pso_DZN","weapon" },
-			{ "M16A2","weapon" },
-			{ "M16A2GL","weapon" },
-			{ "M249_DZ","weapon" },
-			{ "M9SD","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "AK_74","weapon" },
-			{ "M4A1_Aim","weapon" },
-			{ "AKS_74_kobra","weapon" },
-			{ "AKS_74_U","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "M1014","weapon" },
-			{ "M4A1","weapon" },
-			{ "M14_EP1","weapon" },
-			{ "UZI_EP1","weapon" },
-			{ "Remington870_lamp","weapon" },
-			{ "glock17_EP1","weapon" },
-			{ "M240_DZ","weapon" },
-			{ "M4A1_AIM_SD_camo","weapon" },
-			{ "M16A4_ACG","weapon" },
-			{ "M4A1_HWS_GL_camo","weapon" },
-			{ "Mk_48_DZ","weapon" },
-			{ "M4A3_CCO_EP1","weapon" },
-			{ "AmmoBoxSmall_556","object" },
-			{ "AmmoBoxSmall_762","object" },
-			{ "Binocular","weapon" },
-			{ "ItemFlashlightRed","military" },
-			{ "ItemKnife","military" },
-			{ "ItemMap","military" },
-			{ "Binocular_Vector","military" },
-			{ "DZ_Assault_Pack_EP1","object" },
-			{ "DZ_Patrol_Pack_EP1","object" },
-			{ "BAF_AssaultPack_DZN","object" },
-			{ "DZ_Backpack_EP1","object" },
-			{ "","medicalNamalsk" },
-			{ "","genericNamalskNoFood" },
-			{ "","militaryNamalsk" },
-			{ "PipeBomb","magazine" },
-			{ "BrokenItemGPS","weapon" },
-			{ "BrokenNVGoggles","weapon" },
-			{ "FoodMRE","magazine" },
-			{ "FoodNutmix","magazine" }
+		lootType[] = {
+			{"VSS_vintorez_DZN","weapon", 0.02},
+			{"M4A1_RCO_GL","weapon", 0.04},
+			{"Saiga12K_DZN","weapon", 0.12},
+			{"G36C","weapon", 0.17},
+			{"G36K_camo","weapon", 0.06},
+			{"G36_C_SD_eotech_DZN","weapon", 0.14},
+			{"G36A_camo","weapon", 0.05},
+			{"MG36_DZN","weapon", 0.01},
+			{"RPK_74_DZN","weapon", 0.06},
+			{"PK_DZN","weapon", 0.03},
+			{"AK_47_S","weapon", 0.22},
+			{"AKS_74_UN_kobra_DZN","weapon", 0.14},
+			{"AKS_74_pso","weapon", 0.04},
+			{"AK_74_GL","weapon", 0.12},
+			{"AK_107_kobra","weapon", 0.10},
+			{"AK_107_pso","weapon", 0.04},
+			{"AK_107_GL_kobra","weapon", 0.08},
+			{"AK_107_GL_pso_DZN","weapon", 0.02},
+			{"M16A2","weapon", 0.1},
+			{"M16A2GL","weapon", 0.05},
+			{"M249_DZ","weapon", 0.01},
+			{"M9SD","weapon", 0.02},
+			{"AK_47_M","weapon", 0.2},
+			{"AK_74","weapon", 0.1},
+			{"M4A1_Aim","weapon", 0.02},
+			{"AKS_74_kobra","weapon", 0.1},
+			{"AKS_74_U","weapon", 0.1},
+			{"AK_47_M","weapon", 0.1},
+			{"M1014","weapon", 0.15},
+			{"M4A1","weapon", 0.1},
+			{"M14_EP1","weapon", 0.03},
+			{"UZI_EP1","weapon", 0.2},
+			{"Remington870_lamp","weapon", 0.1},
+			{"glock17_EP1","weapon", 0.2},
+			{"M240_DZ","weapon", 0.01},
+			{"M4A1_AIM_SD_camo","weapon", 0.04},
+			{"M16A4_ACG","weapon", 0.05},
+			{"M4A1_HWS_GL_camo","weapon", 0.02},
+			{"Mk_48_DZ","weapon", 0.01},
+			{"M4A3_CCO_EP1","weapon", 0.08},
+			{"Sa58P_EP1","weapon",0.02},
+			{"Sa58V_EP1","weapon",0.02},
+			{"AmmoBoxSmall_556","object", 0.01},
+			{"AmmoBoxSmall_762","object", 0.01},
+			{"Binocular","weapon", 0.1},
+			{"ItemFlashlightRed","military", 0.05},
+			{"ItemKnife","military", 0.15},
+			{"ItemMap","military", 0.03},
+			{"Binocular_Vector","military", 0.01},
+			{"DZ_Assault_Pack_EP1","object", 0.02},
+			{"DZ_Patrol_Pack_EP1","object", 0.05},
+			{"DZ_British_ACU","object", 0.03},
+			{"DZ_Backpack_EP1","object", 0.01},
+			{"PipeBomb","magazine", 0.01},
+			{"BrokenItemGPS","weapon", 0.03},
+			{"BrokenNVGoggles","weapon", 0.03},
+			{"FoodMRE","magazine", 0.02},
+			{"FoodNutmix","magazine", 0.04},
+			{"","medicalNamalsk", 0.3},
+			{"","genericNamalskNoFood", 0.28},
+			{"","militaryNamalsk", 7.0},
+			{"","trash",0.30}
 		};
-		itemChance[] = {0.02,0.04,0.12,0.17,0.06,0.14,0.05,0.01,0.06,0.03,0.22,0.14,0.04,0.12,0.10,0.04,0.08,0.02,0.1,0.05,0.01,0.02,0.2,0.1,0.02,0.1,0.1,0.1,0.15,0.1,0.03,0.2,0.1,0.2,0.01,0.04,0.05,0.02,0.01,0.08,0.04,0.02,0.1,0.05,0.15,0.03,0.01,0.02,0.05,0.03,0.01,0.3,0.28,7.0,0.01,0.03,0.03,0.02,0.04};
 	};
 	class MilitarySpecialNamalskWinter: MilitarySpecialNamalsk {
 		zombieChance = 0.4;
 		minRoaming = 2;
-		maxRoaming = 6;
+		maxRoaming = 10;
 		lootChance = 0.4;
 		lootPos[] = {};
-		itemType[] = {
-			{ "VSS_vintorez_DZN","weapon" },
-			{ "M4A1_RCO_GL","weapon" },
-			{ "Saiga12K_DZN","weapon" },
-			{ "G36C","weapon" },
-			{ "G36K_camo","weapon" },
-			{ "G36_C_SD_eotech_DZN","weapon" },
-			{ "G36A_camo","weapon" },
-			{ "MG36_DZN","weapon" },
-			{ "RPK_74_DZN","weapon" },
-			{ "PK_DZN","weapon" },
-			{ "AK_47_S","weapon" },
-			{ "AKS_74_UN_kobra_DZN","weapon" },
-			{ "AKS_74_pso","weapon" },
-			{ "AK_74_GL","weapon" },
-			{ "AK_107_kobra","weapon" },
-			{ "AK_107_pso","weapon" },
-			{ "AK_107_GL_kobra","weapon" },
-			{ "AK_107_GL_pso_DZN","weapon" },
-			{ "M16A2","weapon" },
-			{ "M16A2GL","weapon" },
-			{ "M249_DZ","weapon" },
-			{ "M9SD","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "AK_74","weapon" },
-			{ "M4A1_Aim","weapon" },
-			{ "AKS_74_kobra","weapon" },
-			{ "AKS_74_U","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "M24","weapon" },
-			{ "SVD_CAMO","weapon" },
-			{ "M1014","weapon" },
-			{ "M107_DZ","weapon" },
-			{ "DMR","weapon" },
-			{ "M4A1","weapon" },
-			{ "M14_EP1","weapon" },
-			{ "UZI_EP1","weapon" },
-			{ "Remington870_lamp","weapon" },
-			{ "glock17_EP1","weapon" },
-			{ "M240_DZ","weapon" },
-			{ "M4A1_AIM_SD_camo","weapon" },
-			{ "M16A4_ACG","weapon" },
-			{ "M4A1_HWS_GL_camo","weapon" },
-			{ "Mk_48_DZ","weapon" },
-			{ "M4A3_CCO_EP1","weapon" },
-			{ "AmmoBoxSmall_556","object" },
-			{ "AmmoBoxSmall_762","object" },
-			{ "Binocular","weapon" },
-			{ "ItemFlashlightRed","military" },
-			{ "ItemKnife","military" },
-			{ "ItemMap","military" },
-			{ "Binocular_Vector","military" },
-			{ "DZ_Assault_Pack_EP1","object" },
-			{ "DZ_Patrol_Pack_EP1","object" },
-			{ "BAF_AssaultPack_DZN","object" },
-			{ "DZ_Backpack_EP1","object" },
-			{ "","medicalNamalsk" },
-			{ "","genericNamalskNoFood" },
-			{ "","militaryNamalsk" },
-			{ "PipeBomb","magazine" },
-			{ "Skin_CamoWinter_DZN","magazine" },
-			{ "Skin_CamoWinterW_DZN","magazine" },
-			{ "Skin_Sniper1W_DZN","magazine" },
-			{ "BrokenItemGPS","weapon" },
-			{ "BrokenNVGoggles","weapon" },
-			{ "BrokenItemRadio","generic" },
-			{ "APSI","generic" },
-			{ "FoodMRE","magazine" },
-			{ "FoodNutmix","magazine" }
+		lootType[] = {
+			{"VSS_vintorez_DZN","weapon", 0.02},
+			{"M24","weapon", 0.01},
+			{"SVD_CAMO","weapon", 0.01},
+			{"DMR","weapon", 0.01},
+			{"M4A1_RCO_GL","weapon", 0.04},
+			{"Saiga12K_DZN","weapon", 0.12},
+			{"G36C","weapon", 0.17},
+			{"G36K_camo","weapon", 0.06},
+			{"G36_C_SD_eotech_DZN","weapon", 0.14},
+			{"G36A_camo","weapon", 0.05},
+			{"MG36_DZN","weapon", 0.01},
+			{"RPK_74_DZN","weapon", 0.06},
+			{"PK_DZN","weapon", 0.03},
+			{"AK_47_S","weapon", 0.22},
+			{"AKS_74_UN_kobra_DZN","weapon", 0.14},
+			{"AKS_74_pso","weapon", 0.04},
+			{"AK_74_GL","weapon", 0.12},
+			{"AK_107_kobra","weapon", 0.10},
+			{"AK_107_pso","weapon", 0.04},
+			{"AK_107_GL_kobra","weapon", 0.08},
+			{"AK_107_GL_pso_DZN","weapon", 0.02},
+			{"M16A2","weapon", 0.1},
+			{"M16A2GL","weapon", 0.05},
+			{"M249_DZ","weapon", 0.01},
+			{"M9SD","weapon", 0.02},
+			{"AK_47_M","weapon", 0.2},
+			{"AK_74","weapon", 0.1},
+			{"M4A1_Aim","weapon", 0.02},
+			{"AKS_74_kobra","weapon", 0.1},
+			{"AKS_74_U","weapon", 0.1},
+			{"AK_47_M","weapon", 0.1},
+			{"M1014","weapon", 0.15},
+			{"M4A1","weapon", 0.1},
+			{"M14_EP1","weapon", 0.03},
+			{"UZI_EP1","weapon", 0.2},
+			{"Remington870_lamp","weapon", 0.1},
+			{"glock17_EP1","weapon", 0.2},
+			{"M240_DZ","weapon", 0.01},
+			{"M4A1_AIM_SD_camo","weapon", 0.04},
+			{"M16A4_ACG","weapon", 0.05},
+			{"M4A1_HWS_GL_camo","weapon", 0.02},
+			{"Mk_48_DZ","weapon", 0.01},
+			{"M4A3_CCO_EP1","weapon", 0.08},
+			{"Sa58P_EP1","weapon",0.02},
+			{"Sa58V_EP1","weapon",0.02},
+			{"AmmoBoxSmall_556","object", 0.01},
+			{"AmmoBoxSmall_762","object", 0.01},
+			{"Binocular","weapon", 0.1},
+			{"ItemFlashlightRed","military", 0.05},
+			{"ItemKnife","military", 0.15},
+			{"ItemMap","military", 0.03},
+			{"Binocular_Vector","military", 0.01},
+			{"DZ_Assault_Pack_EP1","object", 0.02},
+			{"DZ_Patrol_Pack_EP1","object", 0.05},
+			{"DZ_British_ACU","object", 0.03},
+			{"DZ_Backpack_EP1","object", 0.01},
+			{"PipeBomb","magazine", 0.01},
+			{"Skin_CamoWinter_DZN","magazine", 0.08},
+			{"Skin_CamoWinterW_DZN","magazine", 0.04},
+			{"Skin_Sniper1W_DZN","magazine", 0.04},
+			{"BrokenItemGPS","weapon", 0.03},
+			{"BrokenNVGoggles","weapon", 0.03},
+			{"BrokenItemRadio","generic", 0.01},
+			{"APSI","generic", 0.01},
+			{"FoodMRE","magazine", 0.02},
+			{"FoodNutmix","magazine", 0.04},
+			{"","medicalNamalsk", 0.3},
+			{"","genericNamalskNoFood", 0.28},
+			{"","militaryNamalsk", 7.0},
+			{"","trash",0.30}
 		};
-		itemChance[] = {0.02,0.04,0.12,0.17,0.06,0.14,0.05,0.01,0.06,0.03,0.22,0.14,0.04,0.12,0.10,0.04,0.08,0.02,0.1,0.05,0.01,0.02,0.2,0.1,0.02,0.1,0.1,0.1,0.01,0.01,0.2,0.01,0.01,0.1,0.03,0.2,0.1,0.2,0.01,0.04,0.05,0.02,0.01,0.08,0.04,0.02,0.1,0.05,0.15,0.03,0.01,0.02,0.05,0.03,0.01,0.3,0.28,7.0,0.01,0.02,0.02,0.04,0.03,0.03,0.01,0.01,0.02,0.04};
 	};
-	class MilitarySpecialNAC: MilitarySpecial {
+	class MilitarySpecialNAC: MilitarySpecialNamalsk {
 		zombieChance = 0.4;
 		minRoaming = 8;
 		maxRoaming = 9;
 		zombieClass[] = {"z_nac_soldier","z_nac_soldier_heavy"};
 		lootChance = 0.4;
 		lootPos[] = {};
-		itemType[] = {
-			{ "VSS_vintorez_DZN","weapon" },
-			{ "M4A1_RCO_GL","weapon" },
-			{ "Saiga12K_DZN","weapon" },
-			{ "G36C","weapon" },
-			{ "G36K_camo","weapon" },
-			{ "G36_C_SD_eotech_DZN","weapon" },
-			{ "G36A_camo","weapon" },
-			{ "MG36_DZN","weapon" },
-			{ "RPK_74_DZN","weapon" },
-			{ "PK_DZN","weapon" },
-			{ "AK_47_S","weapon" },
-			{ "AKS_74_UN_kobra_DZN","weapon" },
-			{ "AKS_74_pso","weapon" },
-			{ "AK_74_GL","weapon" },
-			{ "AK_107_kobra","weapon" },
-			{ "AK_107_pso","weapon" },
-			{ "AK_107_GL_kobra","weapon" },
-			{ "AK_107_GL_pso_DZN","weapon" },
-			{ "M16A2","weapon" },
-			{ "M16A2GL","weapon" },
-			{ "M249_DZ","weapon" },
-			{ "M9SD","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "AK_74","weapon" },
-			{ "M4A1_Aim","weapon" },
-			{ "AKS_74_kobra","weapon" },
-			{ "AKS_74_U","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "M24","weapon" },
-			{ "SVD_CAMO","weapon" },
-			{ "M1014","weapon" },
-			{ "M107_DZ","weapon" },
-			{ "DMR","weapon" },
-			{ "M4A1","weapon" },
-			{ "M14_EP1","weapon" },
-			{ "UZI_EP1","weapon" },
-			{ "Remington870_lamp","weapon" },
-			{ "glock17_EP1","weapon" },
-			{ "M240_DZ","weapon" },
-			{ "M4A1_AIM_SD_camo","weapon" },
-			{ "M16A4_ACG","weapon" },
-			{ "M4A1_HWS_GL_camo","weapon" },
-			{ "Mk_48_DZ","weapon" },
-			{ "M4A3_CCO_EP1","weapon" },
-			{ "AmmoBoxSmall_556","object" },
-			{ "AmmoBoxSmall_762","object" },
-			{ "Binocular","weapon" },
-			{ "ItemFlashlightRed","military" },
-			{ "ItemKnife","military" },
-			{ "ItemMap","military" },
-			{ "Binocular_Vector","military" },
-			{ "DZ_Assault_Pack_EP1","object" },
-			{ "DZ_Patrol_Pack_EP1","object" },
-			{ "BAF_AssaultPack_DZN","object" },
-			{ "DZ_Backpack_EP1","object" },
-			{ "","medicalNamalsk" },
-			{ "","genericNamalskNoFood" },
-			{ "","militaryNAC" },
-			{ "PipeBomb","magazine" },
-			{ "Skin_CamoWinter_DZN","magazine" },
-			{ "Skin_CamoWinterW_DZN","magazine" },
-			{ "Skin_Sniper1W_DZN","magazine" },
-			{ "BrokenItemGPS","weapon" },
-			{ "BrokenNVGoggles","weapon" },
-			{ "BrokenItemRadio","generic" },
-			{ "APSI","generic" }
+		lootType[] = {
+			{"VSS_vintorez_DZN","weapon", 0.02},
+			{"M24","weapon", 0.01},
+			{"SVD_CAMO","weapon", 0.01},
+			{"DMR","weapon", 0.01},
+			{"M4A1_RCO_GL","weapon", 0.04},
+			{"Saiga12K_DZN","weapon", 0.12},
+			{"G36C","weapon", 0.17},
+			{"G36K_camo","weapon", 0.06},
+			{"G36_C_SD_eotech_DZN","weapon", 0.14},
+			{"G36A_camo","weapon", 0.05},
+			{"MG36_DZN","weapon", 0.01},
+			{"RPK_74_DZN","weapon", 0.06},
+			{"PK_DZN","weapon", 0.03},
+			{"AK_47_S","weapon", 0.22},
+			{"AKS_74_UN_kobra_DZN","weapon", 0.14},
+			{"AKS_74_pso","weapon", 0.04},
+			{"AK_74_GL","weapon", 0.12},
+			{"AK_107_kobra","weapon", 0.10},
+			{"AK_107_pso","weapon", 0.04},
+			{"AK_107_GL_kobra","weapon", 0.08},
+			{"AK_107_GL_pso_DZN","weapon", 0.02},
+			{"M16A2","weapon", 0.1},
+			{"M16A2GL","weapon", 0.05},
+			{"M249_DZ","weapon", 0.01},
+			{"M9SD","weapon", 0.02},
+			{"AK_47_M","weapon", 0.2},
+			{"AK_74","weapon", 0.1},
+			{"M4A1_Aim","weapon", 0.02},
+			{"AKS_74_kobra","weapon", 0.1},
+			{"AKS_74_U","weapon", 0.1},
+			{"AK_47_M","weapon", 0.1},
+			{"M1014","weapon", 0.15},
+			{"M4A1","weapon", 0.1},
+			{"M14_EP1","weapon", 0.03},
+			{"UZI_EP1","weapon", 0.2},
+			{"Remington870_lamp","weapon", 0.1},
+			{"glock17_EP1","weapon", 0.2},
+			{"M240_DZ","weapon", 0.01},
+			{"M4A1_AIM_SD_camo","weapon", 0.04},
+			{"M16A4_ACG","weapon", 0.05},
+			{"M4A1_HWS_GL_camo","weapon", 0.02},
+			{"Mk_48_DZ","weapon", 0.01},
+			{"M4A3_CCO_EP1","weapon", 0.08},
+			{"Sa58P_EP1","weapon",0.02},
+			{"Sa58V_EP1","weapon",0.02},
+			{"AmmoBoxSmall_556","object", 0.01},
+			{"AmmoBoxSmall_762","object", 0.01},
+			{"Binocular","weapon", 0.1},
+			{"ItemFlashlightRed","military", 0.05},
+			{"ItemKnife","military", 0.15},
+			{"ItemMap","military", 0.03},
+			{"Binocular_Vector","military", 0.01},
+			{"DZ_Assault_Pack_EP1","object", 0.02},
+			{"DZ_Patrol_Pack_EP1","object", 0.05},
+			{"DZ_British_ACU","object", 0.03},
+			{"DZ_Backpack_EP1","object", 0.01},
+			{"PipeBomb","magazine", 0.01},
+			{"Skin_CamoWinter_DZN","magazine", 0.08},
+			{"Skin_CamoWinterW_DZN","magazine", 0.04},
+			{"Skin_Sniper1W_DZN","magazine", 0.04},
+			{"BrokenItemGPS","weapon", 0.03},
+			{"BrokenNVGoggles","weapon", 0.03},
+			{"BrokenItemRadio","generic", 0.01},
+			{"APSI","generic", 0.01},
+			{"FoodMRE","magazine", 0.02},
+			{"FoodNutmix","magazine", 0.04},
+			{"","medicalNamalsk", 0.3},
+			{"","genericNamalskNoFood", 0.28},
+			{"","militaryNAC", 7.0},
+			{"","trash",0.30}
 		};
-		itemChance[] = {0.02,0.04,0.12,0.17,0.06,0.14,0.05,0.01,0.06,0.03,0.22,0.14,0.04,0.12,0.10,0.04,0.08,0.02,0.1,0.05,0.01,0.02,0.2,0.1,0.02,0.1,0.1,0.1,0.01,0.01,0.2,0.01,0.01,0.1,0.03,0.2,0.1,0.2,0.01,0.04,0.05,0.02,0.01,0.08,0.04,0.02,0.1,0.05,0.15,0.03,0.01,0.02,0.05,0.03,0.01,0.3,0.18,6.0,0.01,0.08,0.04,0.04,0.03,0.03,0.01,0.01};
 	};
-	
+
 	class MilitarySpecialNACER7: MilitarySpecialNAC {
-		itemType[] = {
-			{ "VSS_vintorez_DZN","weapon" },
-			{ "M4A1_RCO_GL","weapon" },
-			{ "Saiga12K_DZN","weapon" },
-			{ "G36C","weapon" },
-			{ "G36K_camo","weapon" },
-			{ "G36_C_SD_eotech_DZN","weapon" },
-			{ "G36A_camo","weapon" },
-			{ "MG36_DZN","weapon" },
-			{ "RPK_74_DZN","weapon" },
-			{ "PK_DZN","weapon" },
-			{ "AK_47_S","weapon" },
-			{ "AKS_74_UN_kobra_DZN","weapon" },
-			{ "AKS_74_pso","weapon" },
-			{ "AK_74_GL","weapon" },
-			{ "AK_107_kobra","weapon" },
-			{ "AK_107_pso","weapon" },
-			{ "AK_107_GL_kobra","weapon" },
-			{ "AK_107_GL_pso_DZN","weapon" },
-			{ "M16A2","weapon" },
-			{ "M16A2GL","weapon" },
-			{ "M249_DZ","weapon" },
-			{ "nsw_er7s","weapon" },
-			{ "nsw_er7a","weapon" },
-			{ "M9SD","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "AK_74","weapon" },
-			{ "M4A1_Aim","weapon" },
-			{ "AKS_74_kobra","weapon" },
-			{ "AKS_74_U","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "M24","weapon" },
-			{ "SVD_CAMO","weapon" },
-			{ "M1014","weapon" },
-			{ "M107_DZ","weapon" },
-			{ "DMR","weapon" },
-			{ "M4A1","weapon" },
-			{ "M14_EP1","weapon" },
-			{ "UZI_EP1","weapon" },
-			{ "Remington870_lamp","weapon" },
-			{ "glock17_EP1","weapon" },
-			{ "M240_DZ","weapon" },
-			{ "M4A1_AIM_SD_camo","weapon" },
-			{ "M16A4_ACG","weapon" },
-			{ "M4A1_HWS_GL_camo","weapon" },
-			{ "Mk_48_DZ","weapon" },
-			{ "M4A3_CCO_EP1","weapon" },
-			{ "AmmoBoxSmall_556","object" },
-			{ "AmmoBoxSmall_762","object" },
-			{ "Binocular","weapon" },
-			{ "ItemFlashlightRed","military" },
-			{ "ItemKnife","military" },
-			{ "ItemMap","military" },
-			{ "Binocular_Vector","military" },
-			{ "DZ_Assault_Pack_EP1","object" },
-			{ "DZ_Patrol_Pack_EP1","object" },
-			{ "BAF_AssaultPack_DZN","object" },
-			{ "DZ_Backpack_EP1","object" },
-			{ "","medicalNamalsk" },
-			{ "","genericNamalskNoFood" },
-			{ "","militaryNAC" },
-			{ "PipeBomb","magazine" },
-			{ "Skin_CamoWinter_DZN","magazine" },
-			{ "BrokenItemGPS","weapon" },
-			{ "BrokenNVGoggles","weapon" },
-			{ "BrokenItemRadio","generic" },
-			{ "APSI","generic" }
+		lootType[] = {
+			{"VSS_vintorez_DZN","weapon", 0.02},
+			{"M24","weapon", 0.01},
+			{"SVD_CAMO","weapon", 0.01},
+			{"DMR","weapon", 0.01},
+			{"nsw_er7s","weapon", 0.01},
+			{"nsw_er7a","weapon", 0.01},
+			{"M4A1_RCO_GL","weapon", 0.04},
+			{"Saiga12K_DZN","weapon", 0.12},
+			{"G36C","weapon", 0.17},
+			{"G36K_camo","weapon", 0.06},
+			{"G36_C_SD_eotech_DZN","weapon", 0.14},
+			{"G36A_camo","weapon", 0.05},
+			{"MG36_DZN","weapon", 0.01},
+			{"RPK_74_DZN","weapon", 0.06},
+			{"PK_DZN","weapon", 0.03},
+			{"AK_47_S","weapon", 0.22},
+			{"AKS_74_UN_kobra_DZN","weapon", 0.14},
+			{"AKS_74_pso","weapon", 0.04},
+			{"AK_74_GL","weapon", 0.12},
+			{"AK_107_kobra","weapon", 0.10},
+			{"AK_107_pso","weapon", 0.04},
+			{"AK_107_GL_kobra","weapon", 0.08},
+			{"AK_107_GL_pso_DZN","weapon", 0.02},
+			{"M16A2","weapon", 0.1},
+			{"M16A2GL","weapon", 0.05},
+			{"M249_DZ","weapon", 0.01},
+			{"M9SD","weapon", 0.02},
+			{"AK_47_M","weapon", 0.2},
+			{"AK_74","weapon", 0.1},
+			{"M4A1_Aim","weapon", 0.02},
+			{"AKS_74_kobra","weapon", 0.1},
+			{"AKS_74_U","weapon", 0.1},
+			{"AK_47_M","weapon", 0.1},
+			{"M1014","weapon", 0.15},
+			{"M4A1","weapon", 0.1},
+			{"M14_EP1","weapon", 0.03},
+			{"UZI_EP1","weapon", 0.2},
+			{"Remington870_lamp","weapon", 0.1},
+			{"glock17_EP1","weapon", 0.2},
+			{"M240_DZ","weapon", 0.01},
+			{"M4A1_AIM_SD_camo","weapon", 0.04},
+			{"M16A4_ACG","weapon", 0.05},
+			{"M4A1_HWS_GL_camo","weapon", 0.02},
+			{"Mk_48_DZ","weapon", 0.01},
+			{"M4A3_CCO_EP1","weapon", 0.08},
+			{"Sa58P_EP1","weapon",0.02},
+			{"Sa58V_EP1","weapon",0.02},
+			{"AmmoBoxSmall_556","object", 0.01},
+			{"AmmoBoxSmall_762","object", 0.01},
+			{"Binocular","weapon", 0.1},
+			{"ItemFlashlightRed","military", 0.05},
+			{"ItemKnife","military", 0.15},
+			{"ItemMap","military", 0.03},
+			{"Binocular_Vector","military", 0.01},
+			{"DZ_Assault_Pack_EP1","object", 0.02},
+			{"DZ_Patrol_Pack_EP1","object", 0.05},
+			{"DZ_British_ACU","object", 0.03},
+			{"DZ_Backpack_EP1","object", 0.01},
+			{"PipeBomb","magazine", 0.01},
+			{"Skin_CamoWinter_DZN","magazine", 0.08},
+			{"Skin_CamoWinterW_DZN","magazine", 0.04},
+			{"Skin_Sniper1W_DZN","magazine", 0.04},
+			{"BrokenItemGPS","weapon", 0.03},
+			{"BrokenNVGoggles","weapon", 0.03},
+			{"BrokenItemRadio","generic", 0.01},
+			{"APSI","generic", 0.01},
+			{"FoodMRE","magazine", 0.02},
+			{"FoodNutmix","magazine", 0.04},
+			{"","medicalNamalsk", 0.3},
+			{"","genericNamalskNoFood", 0.28},
+			{"","militaryNAC", 7.0},
+			{"","trash",0.30}
 		};
-		itemChance[] = {0.02,0.04,0.12,0.17,0.06,0.14,0.05,0.01,0.06,0.03,0.22,0.14,0.04,0.12,0.10,0.04,0.08,0.02,0.1,0.05,0.01,0.01,0.01,0.02,0.2,0.1,0.02,0.1,0.1,0.1,0.01,0.01,0.2,0.01,0.01,0.1,0.03,0.2,0.1,0.2,0.01,0.04,0.05,0.02,0.01,0.08,0.04,0.02,0.1,0.05,0.15,0.03,0.01,0.02,0.05,0.03,0.01,0.3,0.18,6.0,0.01,0.08,0.03,0.03,0.01,0.01};
 	};
 	// END
 
@@ -2671,6 +2934,11 @@ class CfgBuildingLootNamalsk: CfgBuildingLoot {
 			{ 0.548584,-1.96289,-1.09222 },
 			{ 0.223389,-0.580078,-1.09222 }};
  };
+	class Land_A_Crane_02b: IndustrialNamalsk {
+		lootPos[] = {{-3.4707,-0.149414,-6.06299},{-10.9609,-0.0419922,-5.6626},{-9.85547,-0.046875,0.922455}};
+		maxRoaming = 0;
+		lootChance = 0.4;
+	};
  class Land_A_BuildingWIP: IndustrialNamalsk {
   lootChance = 0.5;
   lootPos[] = {
@@ -3313,7 +3581,7 @@ class CfgBuildingLootNamalsk: CfgBuildingLoot {
 			{-7.43652,-2.28467,-4.30262},
 			{-7.4292,-6.58594,-4.30256},
 			{-3.02051,-11.0151,-4.29419},
-			{-6.02832,1.48242,-0.271424]},
+			{-6.02832,1.48242,-0.271424},
 			{0.791016,10.0015,-0.573923},
 			{4.71875,9.60059,-0.873729}
 		};
@@ -4251,60 +4519,32 @@ class CfgBuildingLootNamalsk: CfgBuildingLoot {
 		maxRoaming = 10;
 		minRoaming = 8;
 		lootPos[] = {
-			{6.10156,8.16602,-9.6134},
-			{-1.64209,-3.69824,-9.60817},
-			{-6.97021,-1.43652,-9.60457},
-			{-17.2271,-3.07715,-9.59765},
-			{-9.56738,2.30176,-9.60282},
-			{-0.0454102,2.50293,-9.60925},
-			{1.771,8.78418,-9.61047},
-			{-12.0161,6.76074,-9.60117},
-			{-4.39893,11.292,-9.75261},
-			{4.07275,9.44336,-5.09157},
-			{8.53418,-0.450195,-5.09157},
-			{10.1885,1.9873,-5.08908},
-			{14.1284,10.3623,-5.08491},
-			{18.8442,3.70996,-5.08822},
-			{20.6367,-2.41504,-5.09127},
-			{23.73,-0.420898,-5.09028},
-			{29.4438,-5.03516,-5.09258},
-			{27.1226,3.19629,-5.08848},
-			{23.4067,8.59277,-5.08579},
-			{26.4009,11.4326,-5.08438},
-			{-0.242188,-0.936523,-5.09048},
-			{-5.21729,-2.86621,-5.09144},
-			{-11.4795,-0.895508,-5.09046},
-			{-16.2632,-5.09473,-5.09255},
-			{-12.4653,2.17871,-5.08892},
-			{-2.07568,2.55176,-5.08874},
-			{-5.65674,6.21094,-5.08692},
-			{1.41748,5.69629,-5.08717},
-			{-13.0376,8.62891,-5.08571},
-			{-21.9346,8.7666,-5.27299},
-			{-21.2212,-1.68359,-9.59496},
-			{7.27002,4.95508,-9.61419},
-			{5.94824,-1.6748,-9.61329},
-			{-7.30029,-5.04785,-9.75131},
-			{0.384766,-5.03418,-9.74776},
-			{-16.2104,-5.21582,-9.783},
-			{-17.8677,2.31543,-9.59722},
-			{-18.2222,7.4502,-9.59698},
-			{-9.87646,11.3154,-9.75717},
-			{0.619141,9.45801,-9.6097},
-			{-6.54834,11.4922,-9.79061},
-			{-1.34912,2.73535,-9.60837},
-			{7.15039,-0.229492,-9.61411},
-			{-7.22705,-5.12988,-5.09257},
-			{-1.88916,-5.21387,-5.09261},
-			{-17.3149,-5.26855,-5.09264},
-			{-21.5688,3.52637,-6.71953},
-			{-9.31885,11.332,-5.08436},
-			{-0.0810547,11.4736,-5.08429},
-			{2.17529,8.93848,-5.09157},
-			{0.491699,3.05762,-5.08848},
-			{19.3364,11.3838,-5.0844},
-			{11.7261,-4.9873,-5.09256},
-			{22.4751,11.376,-5.0844}
+			{3.85156,-2.64697,-9.4838},
+			{6.8125,4.68555,-9.4858},
+			{5.10742,7.09424,-9.48464},
+			{-4.77148,-1.25928,-9.47798},
+			{-7.13281,-2.79395,-9.47638},
+			{-10.8477,-4.98438,-9.60992},
+			{-16.8252,-5.05957,-9.62554},
+			{-17.3955,2.45361,-9.46946},
+			{-12.625,6.45557,-9.47267},
+			{-17.0859,11.292,-9.62354},
+			{-7.16211,7.65039,-9.47636},
+			{1.88477,8.4873,-9.48247},
+			{0.552734,2.51514,-9.48157},
+			{8.02344,-1.51172,-4.96349},
+			{16.0537,-3.91602,-4.96394},
+			{10.4121,6.50781,-4.95875},
+			{18.4375,11.4541,-4.95628},
+			{12.2188,11.4043,-4.95631},
+			{18.7754,3.56348,-4.96021},
+			{22.1299,-2.15674,-4.96306},
+			{28.8018,-4.98291,-4.96447},
+			{21.7959,-5.15088,-4.96456},
+			{27.5557,7.87793,-4.95806},
+			{29.0391,11.6372,-4.95619},
+			{22.6855,11.3364,-4.95634},
+			{22.7773,3.12012,-4.96043}
 		};
 	};
 	class Land_dr_2: FarmNamalsk {
@@ -4480,7 +4720,7 @@ class CfgBuildingLootNamalsk: CfgBuildingLoot {
 		maxRoaming = 6;
 		minRoaming = 4;
 		lootPos[] = {
-			{-2.61523,-7.39648,-2.4629]},
+			{-2.61523,-7.39648,-2.4629},
 			{1.67773,-1.97949,-2.46295},
 			{-1.23242,1.80859,-2.46292},
 			{2.29443,5.56055,-2.46296},
@@ -4930,41 +5170,78 @@ class CfgBuildingLootNamalskNOER7: CfgBuildingLootNamalsk {
 	};
 };
 
+class CfgBuildingLootNamalskNO50s: CfgBuildingLootNamalskNOER7 {
+	class HeliCrashNamalsk: HeliCrash {
+		zombieChance = 1;
+		maxRoaming = 8;
+		zombieClass[] = {"z_ru_soldier_pilot","z_ru_soldier_light"};
+		lootChance = 0.5;
+		lootPos[] = {};
+		lootType[] = {
+			{"PK_DZN","weapon", 0.03},
+			{"Pecheneg_DZN","weapon", 0.01},
+			{"AKS_GOLD_DZN","weapon", 0.01},
+			{"FN_FAL","weapon", 0.05},
+			{"Bizon","weapon", 0.05},
+			{"bizon_silenced","weapon", 0.05},
+			{"M14_EP1","weapon", 0.05},
+			{"FN_FAL_ANPVS4","weapon", 0.04},
+			{"Mk_48_DZ","weapon", 0.03},
+			{"M249_DZ","weapon", 0.05},
+			{"BAF_L85A2_UGL_ACOG_DZN","weapon", 0.05},
+			{"DMR","weapon", 0.01},
+			{"","militaryNamalsk", 2},
+			{"","medicalNamalsk", 0.5},
+			{"MedBox0_DZN","object", 0.01},
+			{"AmmoBoxSmall_556","object", 0.01},
+			{"AmmoBoxSmall_762","object", 0.01},
+			{"Skin_Camo1_DZ","magazine", 0.08},
+			{"Skin_Sniper1_DZ","magazine", 0.08},
+			{"Skin_Sniper1W_DZN","magazine", 0.08},
+			{"Skin_CamoWinter_DZN","magazine", 0.04},
+			{"Skin_CamoWinterW_DZN","magazine", 0.04},
+			{"BrokenItemGPS","weapon", 0.04},
+			{"BrokenNVGoggles","weapon", 0.04},
+			{"BrokenItemRadio","generic", 0.02},
+			{"APSI","generic", 0.01}
+		};
+	};
+};
+
 class CfgBuildingLootNamalskNOSniper: CfgBuildingLootNamalskNOER7 {
 	class HeliCrashNamalsk: HeliCrash {
-		zombieChance = 0;
+		zombieChance = 1;
 		maxRoaming = 5;
 		zombieClass[] = {"z_ru_soldier_pilot","z_ru_soldier_light"};
 		lootChance = 0.5;
 		lootPos[] = {};
-		itemType[] = {
-			{ "PK_DZN","weapon" },
-			{ "Pecheneg_DZN","weapon" },
-			{ "AKS_GOLD_DZN","weapon" },
-			{ "FN_FAL","weapon" },
-			{ "Bizon","weapon" },
-			{ "bizon_silenced","weapon" },
-			{ "M14_EP1","weapon" },
-			{ "FN_FAL_ANPVS4","weapon" },
-			{ "Mk_48_DZ","weapon" },
-			{ "M249_DZ","weapon" },
-			{ "BAF_L85A2_UGL_ACOG_DZN","weapon" },
-			{ "","militaryNamalsk" },
-			{ "","medicalNamalsk" },
-			{ "MedBox0_DZN","object" },
-			{ "AmmoBoxSmall_556","object" },
-			{ "AmmoBoxSmall_762","object" },
-			{ "Skin_Camo1_DZ","magazine" },
-			{ "Skin_Sniper1_DZ","magazine" },
-			{ "Skin_Sniper1W_DZN","magazine" },
-			{ "Skin_CamoWinter_DZN","magazine" },
-			{ "Skin_CamoWinterW_DZN","magazine" },
-			{ "BrokenItemGPS","weapon" },
-			{ "BrokenNVGoggles","weapon" },
-			{ "BrokenItemRadio","generic" },
-			{ "APSI","generic" }
+		lootType[] = {
+			{"PK_DZN","weapon", 0.03},
+			{"Pecheneg_DZN","weapon", 0.01},
+			{"AKS_GOLD_DZN","weapon", 0.01},
+			{"FN_FAL","weapon", 0.05},
+			{"Bizon","weapon", 0.05},
+			{"bizon_silenced","weapon", 0.05},
+			{"M14_EP1","weapon", 0.05},
+			{"FN_FAL_ANPVS4","weapon", 0.04},
+			{"Mk_48_DZ","weapon", 0.03},
+			{"M249_DZ","weapon", 0.05},
+			{"BAF_L85A2_UGL_ACOG_DZN","weapon", 0.05},
+			{"","militaryNamalsk", 2},
+			{"","medicalNamalsk", 0.5},
+			{"MedBox0_DZN","object", 0.01},
+			{"AmmoBoxSmall_556","object", 0.01},
+			{"AmmoBoxSmall_762","object", 0.01},
+			{"Skin_Camo1_DZ","magazine", 0.08},
+			{"Skin_Sniper1_DZ","magazine", 0.08},
+			{"Skin_Sniper1W_DZN","magazine", 0.08},
+			{"Skin_CamoWinter_DZN","magazine", 0.04},
+			{"Skin_CamoWinterW_DZN","magazine", 0.04},
+			{"BrokenItemGPS","weapon", 0.04},
+			{"BrokenNVGoggles","weapon", 0.04},
+			{"BrokenItemRadio","generic", 0.02},
+			{"APSI","generic", 0.01}
 		};
-		itemChance[] = {0.03,0.01,0.01,0.05,0.05,0.05,0.05,0.04,0.03,0.05,0.05,2,0.5,0.1,0.05,0.05,0.08,0.08,0.08,0.04,0.04,0.04,0.04,0.02,0.01};
 	};
 	class MilitarySpecialNAC2: MilitarySpecialNAC {
 		zombieChance = 0.4;
@@ -4973,70 +5250,74 @@ class CfgBuildingLootNamalskNOSniper: CfgBuildingLootNamalskNOER7 {
 		zombieClass[] = {"z_nac_soldier","z_nac_soldier_heavy"};
 		lootChance = 0.4;
 		lootPos[] = {};
-		itemType[] = {
-			{ "M4A1_RCO_GL","weapon" },
-			{ "Saiga12K_DZN","weapon" },
-			{ "G36C","weapon" },
-			{ "G36K_camo","weapon" },
-			{ "G36_C_SD_eotech_DZN","weapon" },
-			{ "G36A_camo","weapon" },
-			{ "MG36_DZN","weapon" },
-			{ "RPK_74_DZN","weapon" },
-			{ "PK","weapon" },
-			{ "AK_47_S","weapon" },
-			{ "AKS_74_UN_kobra_DZN","weapon" },
-			{ "AKS_74_pso","weapon" },
-			{ "AK_74_GL","weapon" },
-			{ "AK_107_kobra","weapon" },
-			{ "AK_107_pso","weapon" },
-			{ "AK_107_GL_kobra","weapon" },
-			{ "AK_107_GL_pso_DZN","weapon" },
-			{ "M16A2","weapon" },
-			{ "M16A2GL","weapon" },
-			{ "M249_DZ","weapon" },
-			{ "M9SD","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "AK_74","weapon" },
-			{ "M4A1_Aim","weapon" },
-			{ "AKS_74_kobra","weapon" },
-			{ "AKS_74_U","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "M1014","weapon" },
-			{ "M4A1","weapon" },
-			{ "M14_EP1","weapon" },
-			{ "UZI_EP1","weapon" },
-			{ "Remington870_lamp","weapon" },
-			{ "glock17_EP1","weapon" },
-			{ "M240_DZ","weapon" },
-			{ "M4A1_AIM_SD_camo","weapon" },
-			{ "M16A4_ACG","weapon" },
-			{ "M4A1_HWS_GL_camo","weapon" },
-			{ "Mk_48_DZ","weapon" },
-			{ "M4A3_CCO_EP1","weapon" },
-			{ "AmmoBoxSmall_556","object" },
-			{ "AmmoBoxSmall_762","object" },
-			{ "Binocular","weapon" },
-			{ "ItemFlashlightRed","military" },
-			{ "ItemKnife","military" },
-			{ "ItemMap","military" },
-			{ "Binocular_Vector","military" },
-			{ "DZ_Assault_Pack_EP1","object" },
-			{ "DZ_Patrol_Pack_EP1","object" },
-			{ "BAF_AssaultPack_DZN","object" },
-			{ "DZ_Backpack_EP1","object" },
-			{ "","medicalNamalsk" },
-			{ "","genericNamalskNoFood" },
-			{ "","militaryNamalsk" },
-			{ "PipeBomb","magazine" },
-			{ "Skin_CamoWinter_DZN","magazine" },
-			{ "Skin_CamoWinterW_DZN","magazine" },
-			{ "Skin_Sniper1W_DZN","magazine" },
-			{ "BrokenItemGPS","weapon" },
-			{ "BrokenNVGoggles","weapon" },
-			{ "BrokenItemRadio","generic" },
-			{ "APSI","generic" }
+		lootType[] = {
+			{"M4A1_RCO_GL","weapon", 0.04},
+			{"Saiga12K_DZN","weapon", 0.12},
+			{"G36C","weapon", 0.17},
+			{"G36K_camo","weapon", 0.06},
+			{"G36_C_SD_eotech_DZN","weapon", 0.14},
+			{"G36A_camo","weapon", 0.05},
+			{"MG36_DZN","weapon", 0.01},
+			{"RPK_74_DZN","weapon", 0.06},
+			{"PK_DZN","weapon", 0.03},
+			{"AK_47_S","weapon", 0.22},
+			{"AKS_74_UN_kobra_DZN","weapon", 0.14},
+			{"AKS_74_pso","weapon", 0.04},
+			{"AK_74_GL","weapon", 0.12},
+			{"AK_107_kobra","weapon", 0.10},
+			{"AK_107_pso","weapon", 0.04},
+			{"AK_107_GL_kobra","weapon", 0.08},
+			{"AK_107_GL_pso_DZN","weapon", 0.02},
+			{"M16A2","weapon", 0.1},
+			{"M16A2GL","weapon", 0.05},
+			{"M249_DZ","weapon", 0.01},
+			{"M9SD","weapon", 0.02},
+			{"AK_47_M","weapon", 0.2},
+			{"AK_74","weapon", 0.1},
+			{"M4A1_Aim","weapon", 0.02},
+			{"AKS_74_kobra","weapon", 0.1},
+			{"AKS_74_U","weapon", 0.1},
+			{"AK_47_M","weapon", 0.1},
+			{"M1014","weapon", 0.15},
+			{"M4A1","weapon", 0.1},
+			{"M14_EP1","weapon", 0.03},
+			{"UZI_EP1","weapon", 0.2},
+			{"Remington870_lamp","weapon", 0.1},
+			{"glock17_EP1","weapon", 0.2},
+			{"M240_DZ","weapon", 0.01},
+			{"M4A1_AIM_SD_camo","weapon", 0.04},
+			{"M16A4_ACG","weapon", 0.05},
+			{"M4A1_HWS_GL_camo","weapon", 0.02},
+			{"Mk_48_DZ","weapon", 0.01},
+			{"M4A3_CCO_EP1","weapon", 0.08},
+			{"Sa58P_EP1","weapon",0.02},
+			{"Sa58V_EP1","weapon",0.02},
+			{"AmmoBoxSmall_556","object", 0.01},
+			{"AmmoBoxSmall_762","object", 0.01},
+			{"Binocular","weapon", 0.1},
+			{"ItemFlashlightRed","military", 0.05},
+			{"ItemKnife","military", 0.15},
+			{"ItemMap","military", 0.03},
+			{"Binocular_Vector","military", 0.01},
+			{"DZ_Assault_Pack_EP1","object", 0.02},
+			{"DZ_Patrol_Pack_EP1","object", 0.05},
+			{"DZ_British_ACU","object", 0.03},
+			{"DZ_Backpack_EP1","object", 0.01},
+			{"PipeBomb","magazine", 0.01},
+			{"Skin_CamoWinter_DZN","magazine", 0.08},
+			{"Skin_CamoWinterW_DZN","magazine", 0.04},
+			{"Skin_Sniper1W_DZN","magazine", 0.04},
+			{"BrokenItemGPS","weapon", 0.03},
+			{"BrokenNVGoggles","weapon", 0.03},
+			{"BrokenItemRadio","generic", 0.01},
+			{"APSI","generic", 0.01},
+			{"FoodMRE","magazine", 0.02},
+			{"FoodNutmix","magazine", 0.04},
+			{"","medicalNamalsk", 0.3},
+			{"","genericNamalskNoFood", 0.28},
+			{"","militaryNAC", 7.0},
+			{"","trash",0.30}
 		};
-		itemChance[] = {0.04,0.12,0.17,0.06,0.14,0.05,0.01,0.06,0.03,0.22,0.14,0.04,0.12,0.10,0.04,0.08,0.02,0.1,0.05,0.01,0.02,0.2,0.1,0.02,0.1,0.1,0.1,0.15,0.1,0.03,0.2,0.1,0.2,0.01,0.04,0.05,0.02,0.01,0.08,0.04,0.02,0.1,0.05,0.15,0.03,0.01,0.02,0.05,0.03,0.01,0.3,0.28,7,0.01,0.02,0.02,0.04,0.03,0.03,0.01,0.01};
 	};
 	class Land_AII_middle_floor: MilitarySpecialNAC2 {
 		zombieChance = 1;
@@ -5102,79 +5383,80 @@ class CfgBuildingLootNamalskNOSniper: CfgBuildingLootNamalskNOER7 {
 	
 	
 	// special winter 
-	
 	class MilitarySpecialNamalskWinter2: MilitarySpecialNamalsk {
-		zombieChance = 0.4;
+		zombieChance = 0.8;
 		minRoaming = 2;
 		maxRoaming = 6;
 		lootChance = 0.4;
 		lootPos[] = {};
-		itemType[] = {
-			{ "M4A1_RCO_GL","weapon" },
-			{ "Saiga12K_DZN","weapon" },
-			{ "G36C","weapon" },
-			{ "G36K_camo","weapon" },
-			{ "G36_C_SD_eotech_DZN","weapon" },
-			{ "G36A_camo","weapon" },
-			{ "MG36_DZN","weapon" },
-			{ "RPK_74_DZN","weapon" },
-			{ "PK","weapon" },
-			{ "AK_47_S","weapon" },
-			{ "AKS_74_UN_kobra_DZN","weapon" },
-			{ "AKS_74_pso","weapon" },
-			{ "AK_74_GL","weapon" },
-			{ "AK_107_kobra","weapon" },
-			{ "AK_107_pso","weapon" },
-			{ "AK_107_GL_kobra","weapon" },
-			{ "AK_107_GL_pso_DZN","weapon" },
-			{ "M16A2","weapon" },
-			{ "M16A2GL","weapon" },
-			{ "M249_DZ","weapon" },
-			{ "M9SD","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "AK_74","weapon" },
-			{ "M4A1_Aim","weapon" },
-			{ "AKS_74_kobra","weapon" },
-			{ "AKS_74_U","weapon" },
-			{ "AK_47_M","weapon" },
-			{ "M1014","weapon" },
-			{ "M4A1","weapon" },
-			{ "M14_EP1","weapon" },
-			{ "UZI_EP1","weapon" },
-			{ "Remington870_lamp","weapon" },
-			{ "glock17_EP1","weapon" },
-			{ "M240_DZ","weapon" },
-			{ "M4A1_AIM_SD_camo","weapon" },
-			{ "M16A4_ACG","weapon" },
-			{ "M4A1_HWS_GL_camo","weapon" },
-			{ "Mk_48_DZ","weapon" },
-			{ "M4A3_CCO_EP1","weapon" },
-			{ "AmmoBoxSmall_556","object" },
-			{ "AmmoBoxSmall_762","object" },
-			{ "Binocular","weapon" },
-			{ "ItemFlashlightRed","military" },
-			{ "ItemKnife","military" },
-			{ "ItemMap","military" },
-			{ "Binocular_Vector","military" },
-			{ "DZ_Assault_Pack_EP1","object" },
-			{ "DZ_Patrol_Pack_EP1","object" },
-			{ "BAF_AssaultPack_DZN","object" },
-			{ "DZ_Backpack_EP1","object" },
-			{ "","medicalNamalsk" },
-			{ "","genericNamalskNoFood" },
-			{ "","militaryNamalsk" },
-			{ "PipeBomb","magazine" },
-			{ "Skin_CamoWinter_DZN","magazine" },
-			{ "Skin_CamoWinterW_DZN","magazine" },
-			{ "Skin_Sniper1W_DZN","magazine" },
-			{ "BrokenItemGPS","weapon" },
-			{ "BrokenNVGoggles","weapon" },
-			{ "BrokenItemRadio","generic" },
-			{ "APSI","generic" },
-			{ "FoodMRE","magazine" },
-			{ "FoodNutmix","magazine" }
+		lootType[] = {
+			{"M4A1_RCO_GL","weapon", 0.04},
+			{"Saiga12K_DZN","weapon", 0.12},
+			{"G36C","weapon", 0.17},
+			{"G36K_camo","weapon", 0.06},
+			{"G36_C_SD_eotech_DZN","weapon", 0.14},
+			{"G36A_camo","weapon", 0.05},
+			{"MG36_DZN","weapon", 0.01},
+			{"RPK_74_DZN","weapon", 0.06},
+			{"PK_DZN","weapon", 0.03},
+			{"AK_47_S","weapon", 0.22},
+			{"AKS_74_UN_kobra_DZN","weapon", 0.14},
+			{"AKS_74_pso","weapon", 0.04},
+			{"AK_74_GL","weapon", 0.12},
+			{"AK_107_kobra","weapon", 0.10},
+			{"AK_107_pso","weapon", 0.04},
+			{"AK_107_GL_kobra","weapon", 0.08},
+			{"AK_107_GL_pso_DZN","weapon", 0.02},
+			{"M16A2","weapon", 0.1},
+			{"M16A2GL","weapon", 0.05},
+			{"M249_DZ","weapon", 0.01},
+			{"M9SD","weapon", 0.02},
+			{"AK_47_M","weapon", 0.2},
+			{"AK_74","weapon", 0.1},
+			{"M4A1_Aim","weapon", 0.02},
+			{"AKS_74_kobra","weapon", 0.1},
+			{"AKS_74_U","weapon", 0.1},
+			{"AK_47_M","weapon", 0.1},
+			{"M1014","weapon", 0.15},
+			{"M4A1","weapon", 0.1},
+			{"M14_EP1","weapon", 0.03},
+			{"UZI_EP1","weapon", 0.2},
+			{"Remington870_lamp","weapon", 0.1},
+			{"glock17_EP1","weapon", 0.2},
+			{"M240_DZ","weapon", 0.01},
+			{"M4A1_AIM_SD_camo","weapon", 0.04},
+			{"M16A4_ACG","weapon", 0.05},
+			{"M4A1_HWS_GL_camo","weapon", 0.02},
+			{"Mk_48_DZ","weapon", 0.01},
+			{"M4A3_CCO_EP1","weapon", 0.08},
+			{"Sa58P_EP1","weapon",0.02},
+			{"Sa58V_EP1","weapon",0.02},
+			{"AmmoBoxSmall_556","object", 0.01},
+			{"AmmoBoxSmall_762","object", 0.01},
+			{"Binocular","weapon", 0.1},
+			{"ItemFlashlightRed","military", 0.05},
+			{"ItemKnife","military", 0.15},
+			{"ItemMap","military", 0.03},
+			{"Binocular_Vector","military", 0.01},
+			{"DZ_Assault_Pack_EP1","object", 0.02},
+			{"DZ_Patrol_Pack_EP1","object", 0.05},
+			{"DZ_British_ACU","object", 0.03},
+			{"DZ_Backpack_EP1","object", 0.01},
+			{"PipeBomb","magazine", 0.01},
+			{"Skin_CamoWinter_DZN","magazine", 0.08},
+			{"Skin_CamoWinterW_DZN","magazine", 0.04},
+			{"Skin_Sniper1W_DZN","magazine", 0.04},
+			{"BrokenItemGPS","weapon", 0.03},
+			{"BrokenNVGoggles","weapon", 0.03},
+			{"BrokenItemRadio","generic", 0.01},
+			{"APSI","generic", 0.01},
+			{"FoodMRE","magazine", 0.02},
+			{"FoodNutmix","magazine", 0.04},
+			{"","medicalNamalsk", 0.3},
+			{"","genericNamalskNoFood", 0.28},
+			{"","militaryNamalsk", 7.0},
+			{"","trash",0.30}
 		};
-		itemChance[] = {0.04,0.12,0.17,0.06,0.14,0.05,0.01,0.06,0.03,0.22,0.14,0.04,0.12,0.10,0.04,0.08,0.02,0.1,0.05,0.01,0.02,0.2,0.1,0.02,0.1,0.1,0.1,0.15,0.1,0.03,0.2,0.1,0.2,0.01,0.04,0.05,0.02,0.01,0.08,0.04,0.02,0.1,0.05,0.15,0.03,0.01,0.02,0.05,0.03,0.01,0.3,0.28,7,0.01,0.02,0.02,0.04,0.03,0.03,0.01,0.01,0.02,0.04};
 	};
 	class Land_budova4_winter: MilitarySpecialNamalskWinter2 {
 		minRoaming = 5;
@@ -5226,22 +5508,21 @@ class CfgBuildingLootNamalskNOSniper: CfgBuildingLootNamalskNOER7 {
 	// MODIFIED FARM!
 	
 	class FarmNamalsk2: FarmNamalsk {
-		itemType[] = {
-			{ "ItemMatchbox","generic" },
-			{ "WeaponHolder_ItemJerrycan","object" },
-			{ "","genericNamalsk" },
-			{ "LeeEnfield","weapon" },
-			{ "Winchester1866","weapon" },
-			{ "","trash" },
-			{ "Crossbow_DZ","weapon" },
-			{ "PartWoodPile","magazine" },
-			{ "WeaponHolder_ItemHatchet","object" },
-			{ "MR43","weapon" },
-			{ "TrapBear","magazine" },
-			{"","foodNamalsk"},
-			{"WeaponHolder_ItemMachete", "object"}
+		lootType[] = {
+			{"WeaponHolder_ItemJerrycan","object", 0.02},
+			{"LeeEnfield","weapon", 0.04},
+			{"Winchester1866","weapon", 0.03},
+			{"Crossbow_DZ","weapon", 0.03},
+			{"PartWoodPile","magazine", 0.08},
+			{"WeaponHolder_ItemHatchet","object", 0.05},
+			{"MeleeMachete", "object", 0.03},
+			{"MR43","weapon", 0.06},
+			{"TrapBear","magazine", 0.01},
+			{"ItemMatchbox","generic", 0.06},
+			{"","genericNamalsk", 0.02},
+			{"","trash", 0.50},
+			{"","foodNamalsk", 0.04}
 		};
-		itemChance[] = { 0.06,0.02,0.02,0.04,0.03,0.34,0.03,0.11,0.17,0.06,0.01,0.04,0.03 };
 	};
 	
 	// and farm objects of Namalsk..
@@ -5290,7 +5571,6 @@ class CfgBuildingLootNamalskNOSniper: CfgBuildingLootNamalskNOER7 {
 		};
 	};
 	class Land_seb_bouda_plech: FarmNamalsk2 {
-		zombieChance = 0;
 		maxRoaming = 4;
 		minRoaming = 2;
 		lootChance = 0.20;
@@ -5327,7 +5607,6 @@ class CfgBuildingLootNamalskNOSniper: CfgBuildingLootNamalskNOER7 {
 	};
 	
 	class Land_marsh1: FarmNamalsk2 {
-		zombieChance = 0;
 		maxRoaming = 6;
 		minRoaming = 4;
 		lootPos[] = {
@@ -5346,7 +5625,6 @@ class CfgBuildingLootNamalskNOSniper: CfgBuildingLootNamalskNOER7 {
 	};
 	
 	class Land_marsh2: FarmNamalsk2 {
-		zombieChance = 0;
 		maxRoaming = 6;
 		minRoaming = 4;
 		lootPos[] = {
@@ -5358,7 +5636,7 @@ class CfgBuildingLootNamalskNOSniper: CfgBuildingLootNamalskNOER7 {
 			{-7.43652,-2.28467,-4.30262},
 			{-7.4292,-6.58594,-4.30256},
 			{-3.02051,-11.0151,-4.29419},
-			{-6.02832,1.48242,-0.271424]},
+			{-6.02832,1.48242,-0.271424},
 			{0.791016,10.0015,-0.573923},
 			{4.71875,9.60059,-0.873729}
 		};
@@ -5390,7 +5668,6 @@ class CfgBuildingLootNamalskNOSniper: CfgBuildingLootNamalskNOER7 {
 		};
 	};
 	class Land_jzd_stodola2: FarmNamalsk2 {
-		zombieChance = 0.25;
 		maxRoaming = 10;
 		minRoaming = 6;
 		lootPos[] = {
@@ -5406,7 +5683,6 @@ class CfgBuildingLootNamalskNOSniper: CfgBuildingLootNamalskNOER7 {
 		};
 	};
 	class Land_jzd_kr2: FarmNamalsk2 {
-		zombieChance = 0.75;
 		maxRoaming = 10;
 		minRoaming = 6;
 		lootPos[] = {
@@ -5471,7 +5747,6 @@ class CfgBuildingLootNamalskNOSniper: CfgBuildingLootNamalskNOER7 {
 		};
 	};
 	class Land_lodenice: FarmNamalsk2 {
-		zombieChance = 0;
 		lootPos[] = {
 			{-1.57422,-12.4058,-1.12817},
 			{-4.30664,5.30615,-4.1706},
@@ -5543,7 +5818,6 @@ class CfgBuildingLootNamalskNOSniper: CfgBuildingLootNamalskNOER7 {
 			};
 	};
 	class Land_jzd_stodola1: FarmNamalsk2 {
-		zombieChance = 0;
 		maxRoaming = 8;
 		minRoaming = 4;
 		lootPos[] = {
@@ -5599,10 +5873,6 @@ class CfgBuildingLootNamalskNOSniper: CfgBuildingLootNamalskNOER7 {
 			{3.58594,-2.01172,-2.35669}
 		};
 	};
-};
-
-class CfgBuildingLootNamalskHC: CfgBuildingLootNamalsk {
-	// todo
 };
 
 class CfgMusic {

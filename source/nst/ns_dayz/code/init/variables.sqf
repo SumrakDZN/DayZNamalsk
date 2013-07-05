@@ -1,5 +1,12 @@
 disableSerialization;
 
+// Enable
+// 0=False/off, 1=True/on
+dayz_Trash = 1;
+
+//
+fps_safty_check = diag_fpsmin;
+
 //Model Variables
 Bandit1_DZ = 	"Bandit1_DZ";
 BanditW1_DZ = 	"BanditW1_DZ";
@@ -12,11 +19,18 @@ Soldier1_DZ	=		"Soldier1_DZ";
 Rocket_DZ	=		"Rocket_DZ";
 
 AllPlayers = ["Soldier_Crew_PMC","Sniper1_DZ","Camo1_DZ","Soldier1_DZ","Rocket_DZ","CamoWinter_DZN","CamoWinterW_DZN","Sniper1W_DZN"];
-AllPlayersVehicles = ["Soldier_Crew_PMC","Sniper1_DZ","Camo1_DZ","Soldier1_DZ","Rocket_DZ","CamoWinter_DZN","CamoWinterW_DZN","Sniper1W_DZN","AllVehicles"];
+AllPlayersVehicles = ["GER_Soldier_EP1","Soldier_Crew_PMC","Sniper1_DZ","Camo1_DZ","Soldier1_DZ","Rocket_DZ","CamoWinter_DZN","CamoWinterW_DZN","Sniper1W_DZN","AllVehicles"];
 
-CamoWinter_DZN	=	"CamoWinter_DZN";
-CamoWinterW_DZN	=	"CamoWinterW_DZN";
-Sniper1W_DZN	=	"Sniper1W_DZN";
+MeleeWeapons = ["MeleeHatchet","MeleeCrowbar","MeleeMachete","MeleeBaseball","MeleeBaseBallBat","MeleeBaseBallBatBarbed","MeleeBaseBallBatNails"];
+MeleeMagazines = ["hatchet_swing","crowbar_swing","Machete_swing","Bat_Swing","BatBarbed_Swing","BatNails_Swing"];
+
+//New Zeds
+DayZ_NewZeds = ["z_new_milSoldier2","z_new_milSoldier3","z_new_milSoldier4","z_new_milSoldier5","z_new_milWorker2","z_new_milworker3","z_new_milworker4"];
+//Bags
+DayZ_Backpacks = ["DZ_Patrol_Pack_EP1","DZ_Assault_Pack_EP1","DZ_Czech_Vest_Puch","DZ_ALICE_Pack_EP1","DZ_TK_Assault_Pack_EP1","DZ_British_ACU","DZ_CivilBackpack_EP1","DZ_Backpack_EP1","BAF_AssaultPack_DZN"];
+
+SafeObjects = ["Land_Fire_DZ", "TentStorage", "Wire_cat1", "Sandbag1_DZ", "Hedgehog_DZ", "StashSmall", "StashMedium"];
+
 
 //Cooking
 meatraw = [
@@ -26,7 +40,8 @@ meatraw = [
     "FoodmuttonRaw",
     "FoodchickenRaw",
     "FoodrabbitRaw",
-    "FoodbaconRaw"
+    "FoodbaconRaw",
+    "FoodgoatRaw"
 ];
 meatcooked = [
     "FoodSteakCooked",
@@ -35,10 +50,18 @@ meatcooked = [
     "FoodmuttonCooked",
     "FoodchickenCooked",
     "FoodrabbitCooked",
-    "FoodbaconCooked"
+    "FoodbaconCooked",
+    "FoodgoatCooked"
 ];
 //Eating
-no_output_food = ["FoodMRE", "FoodPistachio", "FoodNutmix"]+meatcooked+meatraw;
+no_output_food = [
+	"FoodMRE",
+	"FoodPistachio",
+	"FoodNutmix",
+	"FoodCandyAnders",
+	"FoodCandyLegacys",
+	"FoodCandyMintception"
+]+meatcooked+meatraw;
 food_with_output=[
     "FoodCanBakedBeans",
     "FoodCanSardines",
@@ -52,10 +75,19 @@ food_with_output=[
 	"FoodCanDemon",
 	"FoodCanFraggleos",
 	"FoodCanHerpy",
+	"FoodCanDerpy",
 	"FoodCanOrlok",
 	"FoodCanPowell",
 	"FoodCanTylers",
-	"FoodCanUnlabeled"
+	"FoodCanUnlabeled",
+	"FoodCanRusUnlabeled",
+	"FoodCanRusPork",
+	"FoodCanRusPeas",
+	"FoodCanRusMilk",
+	"FoodCanRusCorn",
+	"FoodCanRusStew",
+	"FoodChipsSulahoops",
+	"FoodChipsMysticales"
 ];
 
 food_output = [
@@ -71,10 +103,19 @@ food_output = [
 	"FoodCanDemonEmpty",
 	"FoodCanFraggleosEmpty",
 	"FoodCanHerpyEmpty",
+	"FoodCanDerpyEmpty",
 	"FoodCanOrlokEmpty",
 	"FoodCanPowellEmpty",
 	"FoodCanTylersEmpty",
-	"FoodCanUnlabeledEmpty"
+	"FoodCanUnlabeledEmpty",
+	"FoodCanRusUnlabeledEmpty",
+	"FoodCanRusPorkEmpty",
+	"FoodCanRusPeasEmpty",
+	"FoodCanRusMilkEmpty",
+	"FoodCanRusCornEmpty",
+	"FoodCanRusStewEmpty",
+	"FoodChipsSulahoopsEmpty",
+	"FoodChipsMysticalesEmpty"
 ];
 //Drinking
 no_output_drink = ["ItemWaterbottle", "ItemWaterbottleBoiled"];
@@ -118,27 +159,36 @@ boil_tin_cans = [
 	"FoodCanDemonEmpty",
 	"FoodCanFraggleosEmpty",
 	"FoodCanHerpyEmpty",
+	"FoodCanDerpyEmpty",
 	"FoodCanOrlokEmpty",
 	"FoodCanPowellEmpty",
 	"FoodCanTylersEmpty",
 	"FoodCanUnlabeledEmpty",
-    "ItemSodaEmpty", 
+	"FoodCanRusUnlabeledEmpty",
+	"FoodCanRusStewEmpty",
+	"FoodCanRusPorkEmpty",
+	"FoodCanRusPeasEmpty",
+	"FoodCanRusMilkEmpty",
+	"FoodCanRusCornEmpty",
+    "ItemSodaEmpty",
     "ItemSodaCokeEmpty",
     "ItemSodaPepsiEmpty",
     "ItemSodaMdewEmpty",
     "ItemSodaMtngreenEmpty",
     "ItemSodaR4z0rEmpty",
     "ItemSodaClaysEmpty",
-    "ItemSodaSmashtEmpty", 
-    "ItemSodaDrwasteEmpty", 
-    "ItemSodaLemonadeEmpty", 
-    "ItemSodaLvgEmpty", 
-    "ItemSodaMzlyEmpty", 
+    "ItemSodaSmashtEmpty",
+    "ItemSodaDrwasteEmpty",
+    "ItemSodaLemonadeEmpty",
+    "ItemSodaLvgEmpty",
+    "ItemSodaMzlyEmpty",
     "ItemSodaRabbitEmpty"
 ];
 
 dayz_combatLog = "";
 canRoll = true;
+canPickup = false;
+pickupInit = false;
 
 //Hunting Variables
 dayZ_partClasses = [
@@ -170,8 +220,15 @@ Dayz_GUI_R = 0.38; // 0.7
 Dayz_GUI_G = 0.63; // -0.63
 Dayz_GUI_B = 0.26; // -0.26
 
+//actions blockers
+a_player_cooking = false;
+a_player_boil = false;
+a_player_jerryfilling = false;
+a_player_repairing = false;
+
 //Player self-action handles
 dayz_resetSelfActions = {
+	s_player_dragbody = -1;
 	s_player_fire =			-1;
 	s_player_cook =			-1;
 	s_player_boil =			-1;
@@ -203,6 +260,8 @@ dayz_resetSelfActions = {
 	s_player_barkdog = 		-1;
 	s_player_warndog = 		-1;
 	s_player_followdog = 	-1;
+	s_player_fillfuel20 = -1;
+	s_player_fillfuel5 = -1;
 };
 call dayz_resetSelfActions;
 
@@ -211,6 +270,7 @@ s_player_lastTarget =	objNull;
 s_player_repairActions = [];
 
 //Initialize Medical Variables
+force_dropBody = false;
 r_interrupt = 			false;
 r_doLoop = 				false;
 r_self = 				false;
@@ -231,6 +291,17 @@ r_fracture_legs =		false;
 r_fracture_arms =		false;
 r_player_vehicle =		player;
 r_player_blood = 		12000;
+//Blood Regen
+r_player_bloodregen = 0;
+//Blood Gain Per Sec
+r_player_bloodgainpersec = 0;
+//Blood Loss Per Sec
+r_player_bloodlosspersec = 0;
+//Blood Per Sec (gain - loss)
+r_player_bloodpersec = 0;
+//Food Stack
+r_player_foodstack = 1;
+//player skill
 r_player_lowblood = 	false;
 r_player_timeout =		0;
 r_player_bloodTotal = 	r_player_blood;
@@ -242,6 +313,9 @@ r_action_repair = 		false;
 r_action_targets = 		[];
 r_pitchWhine = 			false;
 r_isBandit =			false;
+
+//count actions
+r_action_count = 0;
 
 //ammo routine
 r_player_actions2 = [];
@@ -258,7 +332,7 @@ r_player_removeActions2 = {
 	};
 };
 
-USEC_woundHit 	= [
+USEC_woundHit 	= [  // limbs hit given by arma engine when fnc_usec_damageHandler is called
 	"",
 	"body",
 	"hands",
@@ -294,14 +368,14 @@ USEC_MinorWounds 	= [
 	"hands",
 	"legs"
 ];
-USEC_woundPoint	= [
+USEC_woundPoint = [ // translation table USEC_woundHit -> SV suffixes
 	["Pelvis","aimpoint"],
 	["aimpoint"], //,"RightShoulder","LeftShoulder"
 	["lelbow","relbow"],
 	["RightFoot","LeftFoot"],
 	["neck","pilot"]
 ];
-USEC_typeOfWounds = [
+USEC_typeOfWounds = [ // used by player_sumMedical, should contains all limbs described in USEC_woundPoint. These limbs statuses are saved by server_playerSync in HIVE if they are bleeding (medical select 8)
 	"Pelvis",
 	"aimpoint",
 	"lelbow","relbow",
@@ -316,20 +390,30 @@ dayz_zombieTargetList = [
 	["LandVehicle",200]
 ];
 dayzHit = [];
-dayzPublishObj = [];		//used for eventhandler to spawn a mirror of players tent
-dayzHideBody = objNull;
+PVDZ_obj_Publish = [];		//used for eventhandler to spawn a mirror of players tent
+PVDZ_obj_HideBody = objNull;
 
 //DayZ settings
-dayz_dawn = 6;
-dayz_dusk = 18;
+dayz_dawn = 4; //6
+dayz_dusk = 22; //18
 dayz_maxAnimals = 2;
 DAYZ_agentnumber = 0;
 dayz_animalDistance = 800;
 dayz_zSpawnDistance = 1000;
-dayz_maxLocalZombies = 40;
-dayz_maxGlobalZombies = 30;
-dayz_maxZeds = 500;
-dayz_spawnPos = getPosATL player;
+
+dayz_maxLocalZombies = 40; // max quantity of Z controlled by local gameclient, used by player_spawnCheck. Below this limit we can spawn Z
+dayz_maxMaxModels = 80; // max quantity of Man models (player or Z, dead or alive) around players. Below this limit we can spawn Z
+dayz_maxMaxWeaponHolders = 80; // max quantity of loot piles around players. Below this limit we can spawn some loot
+dayz_tagDelayWeaponHolders = 20; // prevent any new loot spawn on this building during this delay (minutes)
+dayz_tagDelayZombies = 20; // prevent any new zombie spawn into or near this building during this delay (minutes)
+dayz_spawnArea = 200; // radius around player where we can spawn loot & Z
+dayz_safeDistPlr = 50; // Any loot & Z won't be spawned closer than this distance from any player
+dayz_cantseeDist = 150; // distance from which we can spawn a Z in front of any player without ray-tracing and angle checks
+dayz_cantseefov = 70; // half player field-of-view. Visible Z won't be spawned in front of any near players
+dayz_canDelete = 300; // Z, further than this distance from its "owner", will be deleted
+dayz_lootSpawnBias = 67; // between 50 and 100. The lower it is, the lower chance some of the lootpiles will spawn
+dayz_localswarmSpawned = 10;  // how many zeds will spawn around you during a combat scenario.
+dayz_infectionTreshold = 1.25; // used to trigger infection, see fn_damageHandler.sqf
 
 //init global arrays for Loot Chances
 call compile preprocessFileLineNumbers "\nst\ns_dayz\code\init\loot_init.sqf";
@@ -339,27 +423,25 @@ if(isServer) then {
 	dayz_players = [];
 	dead_bodyCleanup = [];
 	needUpdate_objects = [];
+	Server_InfectedCamps = [];
+	dayz_spawnCrashSite_clutterCutter=0; // helicrash spawn... 0: loot hidden in grass, 1: loot lifted, 2: no grass 
 };
 
 if(!isDedicated) then {
 	//Establish Location Streaming
 	_funcGetLocation = 
 	{
+		dayz_Locations = [];
 		for "_i" from 0 to ((count _this) - 1) do 
 		{
 			private ["_location","_config","_locHdr","_position","_size","_type"];
 			//Get Location Data from config
 			_config = 	(_this select _i);
+			_position = getArray (_config >> "position");
 			_locHdr = 	configName _config;
 			_position = getArray	(_config >> "position");
 			_size = 	getNumber	(_config >> "size");
-			_type = 	getText		(_config >> "type");
-			
-			//Find the Location
-			_location = nearestLocation [_position, _type];
-			
-			//Record details
-			dayz_Locations set [count dayz_Locations, [_location,_locHdr,_size]]; 
+			dayz_Locations set [count dayz_Locations, [_position,_locHdr,_size]];
 		};
 	};
 	_cfgLocation = configFile >> "CfgTownGeneratorNamalsk";
@@ -407,15 +489,18 @@ if(!isDedicated) then {
 	dayz_playerName =		"Unknown";
 	dayz_sourceBleeding =	objNull;
 	dayz_clientPreload = 	false;
-	dayz_panicCooldown = 	0;
-	dayz_areaAffect =		2;
+	dayz_authed = false;
+	dayz_panicCooldown = 0;
+	dayz_areaAffect = 3.5;
+	dayz_monitorPeriod = 0.6; // number of seconds between each player_zombieCheck calls
 	dayz_heartBeat = 		false;
 	dayzClickTime =			0;
-	dayz_spawnDelay =		120;
-	dayz_spawnWait =		-120;
+	dayz_spawnDelay = 300;
+	dayz_spawnWait = -300;
 	dayz_lootDelay =		3;
 	dayz_lootWait =			-300;
 	dayz_spawnZombies =		0;
+	dayz_swarmSpawnZombies = 0;
 	//used to count global zeds around players
 	dayz_CurrentZombies = 0;
 	//Used to limit overall zed counts

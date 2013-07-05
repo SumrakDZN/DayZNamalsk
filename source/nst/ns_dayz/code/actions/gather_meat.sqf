@@ -1,4 +1,4 @@
-private["_item","_hasKnife","_hasKnifeBlunt","_hasHarvested","_qty","_text","_string","_type"];
+private["_item","_hasKnife","_hasKnifeBlunt","_type","_hasHarvested","_config","_isListed","_text","_dis","_sfx","_qty","_array","_string"];
 _item = _this select 3;
 _hasKnife = 	"ItemKnife" in items player;
 _hasKnifeBlunt = 	"ItemKnifeBlunt" in items player;
@@ -32,8 +32,8 @@ if ((_hasKnife or _hasKnifeBlunt) and !_hasHarvested) then {
 	if (local _item) then {
 		_array spawn local_gutObject;
 	} else {
-		dayzGutBody = _array;
-		publicVariable "dayzGutBody";
+		PVDZ_obj_GutBody = _array;
+		publicVariable "PVDZ_obj_GutBody";
 	};
 	
 	sleep 6;

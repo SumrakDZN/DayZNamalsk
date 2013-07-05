@@ -2,7 +2,7 @@
 _item spawn player_wearClothes;
 TODO: female
 */
-private["_item","_isFemale","_itemNew","_item","_onLadder","_model","_hasclothesitem","_config","_text"];
+private["_item","_onLadder","_hasclothesitem","_config","_text","_isFemale","_myModel","_humanity","_isBandit","_isHero","_itemNew","_model"];
 _item = _this;
 call gear_ui_init;
 _onLadder = (getNumber (configFile >> "CfgMovesMaleSdr" >> "States" >> (animationState player) >> "onLadder")) == 1;
@@ -12,14 +12,13 @@ _hasclothesitem = _this in magazines player;
 _config = configFile >> "CfgMagazines";
 _text = getText (_config >> _item >> "displayName");
 
-if (!_hasclothesitem) exitWith {cutText [format[(localize "str_player_31"),_text,"wear"] , "PLAIN DOWN"]};
+if (!_hasclothesitem) exitWith {cutText [format[(localize "str_player_31"),_text,(localize "str_player_31_wear")] , "PLAIN DOWN"]};
 
 if (vehicle player != player) exitWith {cutText ["You may not change clothes while in a vehicle", "PLAIN DOWN"]};
 
 _isFemale = ((typeOf player == "SurvivorW2_DZ")||(typeOf player == "BanditW1_DZ"));
 if (_isFemale) exitWith {cutText ["Currently Female Characters cannot change to this skin. This will change in a future update.", "PLAIN DOWN"]};
 
-private["_itemNew","_myModel","_humanity","_isBandit","_isHero"];
 _myModel = (typeOf player);
 _humanity = player getVariable ["humanity",0];
 _isBandit = _humanity < -2000;
